@@ -8,7 +8,7 @@ import uk.gov.companieshouse.pageObjects.ChipsHomePage;
 import uk.gov.companieshouse.pageObjects.CompanySearchPage;
 import uk.gov.companieshouse.pageObjects.OrgUnitPage;
 import uk.gov.companieshouse.testData.User;
-import uk.gov.companieshouse.utils.FileReader;
+import uk.gov.companieshouse.utils.ConfigReader;
 import uk.gov.companieshouse.utils.TestContext;
 
 public class StepDefinitions {
@@ -17,18 +17,18 @@ public class StepDefinitions {
 
     public TestContext context;
     public ChipsHomePage chipsHomePage;
-    public FileReader fileReader;
+    public ConfigReader configReader;
     public CompanySearchPage companySearchPage;
     public OrgUnitPage orgUnitPage;
 
     public StepDefinitions(TestContext context,
                            ChipsHomePage chipsHomePage,
-                           FileReader fileReader,
+                           ConfigReader configReader,
                            CompanySearchPage companySearchPage,
                            OrgUnitPage orgUnitPage) {
         this.context = context;
         this.chipsHomePage = chipsHomePage;
-        this.fileReader = fileReader;
+        this.configReader = configReader;
         this.companySearchPage = companySearchPage;
         this.orgUnitPage = orgUnitPage;
     }
@@ -36,25 +36,24 @@ public class StepDefinitions {
     @Given("I am an authorised user")
     public void iAmAnAuthorisedUser() {
         User user = new User();
-        user.setUser(fileReader.getConfigProperty("username"),
-                fileReader.getConfigProperty("password"));
+        user.setUser(configReader.getConfigProperty("username"),
+                configReader.getConfigProperty("password"));
         context.setUpUser(user);
 
     }
 
     @When("I access CHIPS")
     public void iAccessCHIPS() {
-        context.getWebDriver().get(
-                fileReader.getConfigProperty("chips_url"));
         chipsHomePage.logInUser(context.getUser().getUsername(),
                 context.getUser().getPassword());
+        context.getWebDriver().manage().window().maximize();
     }
 
     @Then("I will be able to search for company {string}")
     public void iWillBeAbleToSearchForCompany(String companyNumber) {
         log.info("Searching for company number: {}", companyNumber);
         context.getWebDriver().navigate().to(
-                fileReader.getConfigProperty("chips_url") +"/menu/companySearch");
+                configReader.getConfigProperty("chips_url") +"/menu/companySearch");
         companySearchPage.searchForCompanyNumber(companyNumber);
 
     }
@@ -67,8 +66,8 @@ public class StepDefinitions {
     @Then("I will be able to file for the correct department")
     public void iWillBeAbleToFileForTheCorrectDepartment() {
         context.getWebDriver().navigate().to(
-                fileReader.getConfigProperty("chips_url")
-                        + "menu/uam/changeOrgUnitAssignment");
+                configReader.getConfigProperty("chips_url")
+                        + "/menu/changeOrgUnitAssignment");
 
         orgUnitPage.selectOrgUnit(context.getUser().getOrgUnit());
     }

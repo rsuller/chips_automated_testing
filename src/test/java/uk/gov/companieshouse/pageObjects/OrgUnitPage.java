@@ -19,7 +19,11 @@ public class OrgUnitPage extends ElementInteraction {
     }
 
     public void selectOrgUnit(String orgUnit) {
-        selectByValue(orgUnitSelect, orgUnit);
+        try {
+            selectByValue(orgUnitSelect, orgUnit);
+        } catch (NullPointerException exception) {
+            throw new NullPointerException("The org unit " + orgUnit + " is not present. Check your UAM settings.");
+        }
         saveLink.click();
     }
 }

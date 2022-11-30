@@ -5,11 +5,11 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Properties;
 
-public class FileReader {
+public class ConfigReader {
 
     Properties properties;
 
-    public FileReader(Properties properties) {
+    public ConfigReader(Properties properties) {
         this.properties = properties;
     }
 
