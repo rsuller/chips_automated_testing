@@ -3,16 +3,16 @@ package uk.gov.companieshouse.utils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.ie.InternetExplorerOptions;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import uk.gov.companieshouse.testData.User;
+
+import java.util.logging.Logger;
 
 /**
  * Shared context to be passed in tests.
  */
 public class TestContext {
 
-    public static final Logger log = LoggerFactory.getLogger(TestContext.class);
+    public static final Logger log = Logger.getLogger("log");
     WebDriver driver;
     User user;
 

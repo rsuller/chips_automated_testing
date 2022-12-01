@@ -1,3 +1,4 @@
+@example
 Feature: An example test to access CHIPS
 
   Scenario: The example of accessing CHIPS
