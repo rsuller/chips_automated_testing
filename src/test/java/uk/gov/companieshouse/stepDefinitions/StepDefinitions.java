@@ -4,6 +4,8 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import uk.gov.companieshouse.pageObjects.ChipsHomePage;
 import uk.gov.companieshouse.pageObjects.CompanySearchPage;
 import uk.gov.companieshouse.pageObjects.OrgUnitPage;
@@ -11,11 +13,9 @@ import uk.gov.companieshouse.testData.User;
 import uk.gov.companieshouse.utils.ConfigReader;
 import uk.gov.companieshouse.utils.TestContext;
 
-import java.util.logging.Logger;
-
 public class StepDefinitions {
 
-    public static Logger log = Logger.getLogger("log");
+    public static Logger log = LoggerFactory.getLogger(StepDefinitions.class);
 
     public TestContext context;
     public ChipsHomePage chipsHomePage;
@@ -53,7 +53,7 @@ public class StepDefinitions {
 
     @Then("I will be able to search for company {string}")
     public void iWillBeAbleToSearchForCompany(String companyNumber) {
-        log.info("Searching for company number: " + companyNumber);
+        log.info("Searching for company number: {}", companyNumber);
         context.getWebDriver().navigate().to(
                 configReader.getConfigProperty("chips_url") +"/menu/companySearch");
         companySearchPage.searchForCompanyNumber(companyNumber);
