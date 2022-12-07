@@ -1,7 +1,8 @@
 package uk.gov.companieshouse.utils;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.ie.InternetExplorerOptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.gov.companieshouse.testData.User;
@@ -20,26 +21,30 @@ public class TestContext {
             /*
             Set up for Edge in IE Mode
              */
-//            System.setProperty("webdriver.ie.driver", "drivers/IEDriverServer.exe");
-//            InternetExplorerOptions ieOptions = new InternetExplorerOptions();
-//            ieOptions.attachToEdgeChrome();
-//            ieOptions.ignoreZoomSettings();
-//            ieOptions.withEdgeExecutablePath("C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe");
-//
-//            driver = new InternetExplorerDriver(ieOptions);
+            log.info("Setting up Edge in IE Mode for testing");
+
+            System.setProperty("webdriver.ie.driver", "drivers/IEDriverServer.exe");
+            InternetExplorerOptions ieOptions = new InternetExplorerOptions();
+            ieOptions.attachToEdgeChrome();
+            ieOptions.ignoreZoomSettings();
+            ieOptions.withEdgeExecutablePath("C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe");
+
+            driver = new InternetExplorerDriver(ieOptions);
 
             /*
             Set up for Edge only
+            //TODO Keep this just in case we need to compare with Edge behaviour
              */
-            System.setProperty("webdriver.edge.driver", "drivers/msedgedriver.exe");
-            driver = new EdgeDriver();
+//            log.info("Setting up Edge Browser");
+//            System.setProperty("webdriver.edge.driver", "drivers/msedgedriver.exe");
+//            driver = new EdgeDriver();
         }
         return driver;
 
     }
 
     public void setUpUser(User user) {
-       this.user = user;
+        this.user = user;
     }
 
     public User getUser() {
