@@ -1,9 +1,7 @@
 package uk.gov.companieshouse.stepDefinitions;
 
-import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.gov.companieshouse.pageObjects.ChipsHomePage;
@@ -35,21 +33,25 @@ public class StepDefinitions {
         this.orgUnitPage = orgUnitPage;
     }
 
-    @Given("I am an authorised user")
-    public void iAmAnAuthorisedUser() {
+    @Given("I am logged in as a user in the {string} organisational unit")
+    public void iAmLoggedInAsAUserInTheOrganisationalUnit(String orgUnit) {
+        // Setup user
         User user = new User();
         user.setUser(configReader.getConfigProperty("username"),
                 configReader.getConfigProperty("password"));
         context.setUpUser(user);
-
-    }
-
-    @When("I access CHIPS")
-    public void iAccessCHIPS() {
+        // Login user and open Chips
+        context.getUser().setOrgUnit(orgUnit);
         chipsHomePage.logInUser(context.getUser().getUsername(),
                 context.getUser().getPassword());
         context.getWebDriver().manage().window().maximize();
+        context.getWebDriver().navigate().to(
+                configReader.getConfigProperty("chips_url")
+                        + "/menu/changeOrgUnitAssignment");
+        //Select Org. unit
+        orgUnitPage.selectOrgUnit(context.getUser().getOrgUnit());
     }
+
 
     @Then("I will be able to search for company {string}")
     public void iWillBeAbleToSearchForCompany(String companyNumber) {
@@ -60,17 +62,4 @@ public class StepDefinitions {
 
     }
 
-    @And("I am a user of the {string} department")
-    public void iAmAUserOfTheDepartment(String orgUnit) {
-        context.getUser().setOrgUnit(orgUnit);
-    }
-
-    @Then("I will be able to file for the correct department")
-    public void iWillBeAbleToFileForTheCorrectDepartment() {
-        context.getWebDriver().navigate().to(
-                configReader.getConfigProperty("chips_url")
-                        + "/menu/changeOrgUnitAssignment");
-
-        orgUnitPage.selectOrgUnit(context.getUser().getOrgUnit());
-    }
 }
