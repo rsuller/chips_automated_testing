@@ -16,6 +16,10 @@ public class TestContext {
     WebDriver driver;
     User user;
 
+    public Env getEnv() {
+    return new Env();
+    }
+
     public WebDriver getWebDriver() {
         if (driver == null) {
             /*
