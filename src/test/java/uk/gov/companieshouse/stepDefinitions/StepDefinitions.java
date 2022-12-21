@@ -2,14 +2,19 @@ package uk.gov.companieshouse.stepDefinitions;
 
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.gov.companieshouse.pageObjects.ChipsHomePage;
 import uk.gov.companieshouse.pageObjects.CompanySearchPage;
 import uk.gov.companieshouse.pageObjects.OrgUnitPage;
+import uk.gov.companieshouse.pageObjects.ProcessStartOfDocumentPage;
 import uk.gov.companieshouse.testData.User;
 import uk.gov.companieshouse.utils.ConfigReader;
+import uk.gov.companieshouse.utils.GlobalNavBar;
 import uk.gov.companieshouse.utils.TestContext;
+
+import java.util.Date;
 
 public class StepDefinitions {
 
@@ -20,17 +25,23 @@ public class StepDefinitions {
     public ConfigReader configReader;
     public CompanySearchPage companySearchPage;
     public OrgUnitPage orgUnitPage;
+    public ProcessStartOfDocumentPage processStartOfDocumentPage;
+    public GlobalNavBar globalNavBar;
 
     public StepDefinitions(TestContext context,
                            ChipsHomePage chipsHomePage,
                            ConfigReader configReader,
                            CompanySearchPage companySearchPage,
-                           OrgUnitPage orgUnitPage) {
+                           OrgUnitPage orgUnitPage,
+                           ProcessStartOfDocumentPage processStartOfDocumentPage,
+                           GlobalNavBar globalNavBar) {
         this.context = context;
         this.chipsHomePage = chipsHomePage;
         this.configReader = configReader;
         this.companySearchPage = companySearchPage;
         this.orgUnitPage = orgUnitPage;
+        this.processStartOfDocumentPage = processStartOfDocumentPage;
+        this.globalNavBar = globalNavBar;
     }
 
     @Given("I am logged in as a user in the {string} organisational unit")
@@ -60,6 +71,13 @@ public class StepDefinitions {
                 configReader.getConfigProperty("chips_url") +"/menu/companySearch");
         companySearchPage.searchForCompanyNumber(companyNumber);
 
+    }
+
+    @When("I process the start document for form AD01")
+    public void iProcessTheStartDocumentForFormAd01() {
+        Date today = new Date();
+        globalNavBar.clickProcessFormLabel();
+        processStartOfDocumentPage.generateBarcode(today);
     }
 
 }
