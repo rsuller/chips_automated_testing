@@ -5,6 +5,7 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.ie.InternetExplorerOptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import uk.gov.companieshouse.testData.DocumentDetails;
 import uk.gov.companieshouse.testData.User;
 
 /**
@@ -15,6 +16,11 @@ public class TestContext {
     public static final Logger log = LoggerFactory.getLogger(TestContext.class);
     WebDriver driver;
     User user;
+    DocumentDetails documentDetails;
+
+    public Env getEnv() {
+    return new Env();
+    }
 
     public WebDriver getWebDriver() {
         if (driver == null) {
@@ -52,5 +58,12 @@ public class TestContext {
             throw new NullPointerException("You must set up a user to interact with CHIPS.");
         }
         return user;
+    }
+
+    public void storeDocumentDetails(String recievedDate, String barcode) {
+        documentDetails = new DocumentDetails();
+        documentDetails.setBarcode(barcode);
+        documentDetails.setReceivedDate(recievedDate);
+
     }
 }
