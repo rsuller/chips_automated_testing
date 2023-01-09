@@ -1,5 +1,7 @@
 package uk.gov.companieshouse.stepDefinitions;
 
+import static uk.gov.companieshouse.data.dbclone.sql.CompanySql.BASE_SQL_PRIVATE_LIMITED_COMPANY_ID;
+
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -68,7 +70,7 @@ public class StepDefinitions {
         Date today = new Date();
         globalNavBar.clickProcessFormLabel();
         processStartOfDocumentPage.generateBarcode(today);
-        Company company = dbClone.cloneCompanyWithParameterInternal("---\n" + "--- Private Limited Company with No sight required or Super secure PSC indicator\n" + "---\n" + "SELECT *\n" + "FROM corporate_body cb\n" + "             WHERE cb.incorporation_number not like 'c'\n" + "             AND cb.action_code_type_id = 0\n" + "             AND cb.trading_status_type_id = 1\n" + "             AND cb.corporate_body_type_id = 2\n" + "             AND cb.PROOF_TYPE_ID = 0\n" + "             AND cb.language_type_id = 1\n" + "             AND cb.register_location_type_id = 1\n" + "             AND cb.SUPER_SECURE_PSC_IND = 'N'\n" + "             AND cb.corporate_body_short_name NOT LIKE '%(cloned)%'\n" + "             AND (SELECT COUNT (1) FROM sight_required_request sr WHERE sr.corporate_body_id = cb.corporate_body_id)=0\n" + "             AND rownum <= 30\n" + "             ORDER BY dbms_random.value", null);
+        Company company = dbClone.cloneCompanyWithParameterInternal(BASE_SQL_PRIVATE_LIMITED_COMPANY_ID, null);
     }
 
 }

@@ -5,6 +5,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.gov.companieshouse.data.dataModel.Company;
+import uk.gov.companieshouse.data.dbclone.sql.CompanySql;
 import uk.gov.companieshouse.utils.TestContext;
 
 import javax.sql.DataSource;
@@ -25,7 +26,7 @@ public class DbClone {
         PageFactory.initElements(testContext.getWebDriver(), this);
     }
 
-    public Company cloneCompanyWithParameterInternal(String sql, Object parameter) {
+    public Company cloneCompanyWithParameterInternal(CompanySql sql, Object parameter) {
         boolean disableCloning;
         String env = testContext.getEnv().config.getString("chips-db-user");
         try {
@@ -37,7 +38,7 @@ public class DbClone {
         LOG.debug("Attempting to use SQL: {}", sql);
         if (disableCloning) {
             try {
-                String companyNumber = dbQueryCriteriaCompanyId(sql, parameter);
+                String companyNumber = dbQueryCriteriaCompanyId(sql.getSql(), parameter);
                 Company company = dbGetCompanyFromDb(companyNumber);
                 String message = String.format("Company selected from DB: %s %s", companyNumber, company.getName());
                 //writeToScenario(message);
@@ -50,7 +51,7 @@ public class DbClone {
             } catch (ParseException | ClassNotFoundException ex) {
                 throw new RuntimeException(ex);
             }
-            throw new RuntimeException("Could not select a company using sql: " + sql);
+            throw new RuntimeException("Could not select a company using sql: " + sql.getSql());
         }
 
         String companyNumberToClone = null;
@@ -58,7 +59,7 @@ public class DbClone {
 
         while (retryCount > 0) {
             try {
-                companyNumberToClone = dbQueryCriteriaCompanyId(sql, parameter);
+                companyNumberToClone = dbQueryCriteriaCompanyId(sql.getSql(), parameter);
                 String companyNumberCloned = dbCloneCompany(companyNumberToClone);
                 Company company = dbGetCompanyFromDb(companyNumberCloned);
                 final String message = "Environment: " + env + " - Successfully cloned company " + companyNumberToClone + " to new company " + companyNumberCloned + " [" + company.getName() + "]";
@@ -73,7 +74,7 @@ public class DbClone {
                 retryCount--;
             }
         }
-        throw new RuntimeException("Could not clone company using sql: " + sql);
+        throw new RuntimeException("Could not clone company using sql: " + sql.getSql());
     }
 
     private PreparedStatement createPreparedStatement(Connection conn, String sql, Object... params) throws SQLException {
