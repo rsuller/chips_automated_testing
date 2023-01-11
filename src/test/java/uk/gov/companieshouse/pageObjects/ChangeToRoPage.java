@@ -22,12 +22,6 @@ public class ChangeToRoPage extends ElementInteraction {
     @FindBy(how = How.ID, using = "form1:changeOfAddressScreenTabSheet:changeOfAddressScreen:registeredOffice:"
             + "address:houseNumber:field")
     private WebElement elementRoHouseNumber;
-    @FindBy(how = How.ID, using ="form1:changeOfAddressScreenTabSheet:changeOfAddressScreen"
-            + ":registeredOffice:address:country:field")
-    private WebElement elementAd01Country;
-    @FindBy(how = How.ID, using ="form1:changeOfAddressScreenTabSheet:changeOfAddressScreen"
-            + ":registeredOffice:address:country:other:field")
-    private WebElement elementAd01InvalidCountry;
     @FindBy(how = How.ID, using ="form1:changeOfAddressScreenTabSheet:changeOfAddressScreen:registeredOffice:"
             + "address:postcodefg:postcode:field")
     private WebElement elementRoPostCode;
@@ -37,19 +31,6 @@ public class ChangeToRoPage extends ElementInteraction {
     @FindBy(how = How.ID, using ="form1:changeOfAddressScreenTabSheet:changeOfAddressScreen:registeredOffice:"
             + "address:street:field")
     private WebElement elementRoStreet;
-    @FindBy(how = How.ID, using = "form1:changeOfAddressScreenTabSheet:changeOfAddressScreen:registeredOffice:"
-            + "address:country:field")
-    private WebElement elementRoCountry;
-    @FindBy(how = How.ID, using = "form1:changeOfAddressScreenTabSheet:changeOfAddressScreen:registeredOffice:"
-            + "address:careOfFieldGroup:address_careOf:field")
-    private WebElement elementCareOfField;
-    @FindBy(how = How.ID, using = "form1:changeOfAddressScreenTabSheet:changeOfAddressScreen:registeredOffice:"
-            + "address:careOfFieldGroup:address_poBox:field")
-    private WebElement elementPoBoxField;
-    @FindBy(how = How.ID, using = "form1:doc_corporateBody_registers:0:register_registerSelected:field")
-    private WebElement elementRegisterOfMembers;
-    @FindBy(how = How.ID, using = "form1:doc_corporateBody_registers:1:register_registerSelected:field")
-    private WebElement elementRegisterOfDirectors;
 
     @FindBy(how = How.ID, using = "form1:task_submit")
     private WebElement elementSave;
@@ -70,32 +51,6 @@ public class ChangeToRoPage extends ElementInteraction {
         return this;
     }
 
-    public ChangeToRoPage selectRegisterOfMembers() {
-        elementRegisterOfMembers.click();
-        return this;
-    }
-
-    public ChangeToRoPage selectRegisterOfDirectors() {
-        elementRegisterOfDirectors.click();
-        return this;
-    }
-
-    public ChangeToRoPage enterAd01Country(String value) {
-        selectByText(elementAd01Country, value);
-        return this;
-    }
-
-    /**
-     * Enter a country that is not listed in the predefined list.
-     *
-     * @param country to be entered.
-     */
-    public ChangeToRoPage enterAd01OtherCountry(String country) {
-        selectByText(elementAd01Country, "Other");
-        elementAd01InvalidCountry.sendKeys(country);
-        return this;
-    }
-
     public ChangeToRoPage enterPostCode(String string) {
         elementRoPostCode.sendKeys(string);
         return this;
@@ -104,16 +59,6 @@ public class ChangeToRoPage extends ElementInteraction {
 
     public ChangeToRoPage clickLookup() {
         elementRoLookUp.click();
-        return this;
-    }
-
-    public ChangeToRoPage enterStreetManually(String string) {
-        elementRoStreet.sendKeys(string);
-        return this;
-    }
-
-    public ChangeToRoPage selectCountry(String string) {
-        selectByText(elementRoCountry, string);
         return this;
     }
 

@@ -16,7 +16,6 @@ import uk.gov.companieshouse.testData.User;
 import uk.gov.companieshouse.utils.GlobalNavBar;
 import uk.gov.companieshouse.utils.TestContext;
 
-import java.sql.SQLException;
 import java.util.Date;
 
 public class StepDefinitions {
