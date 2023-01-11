@@ -1,7 +1,9 @@
 package uk.gov.companieshouse.utils;
 
+import org.openqa.selenium.JavascriptException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
@@ -16,6 +18,12 @@ public class ElementInteraction {
         this.testContext = testContext;
     }
 
+    /**
+     * Use JavascriptExecutor to get around a known issue with Selenium 4, where using the Select object
+     * results in "unexpected Javascript error" when trying to select from a dropdown.
+     * @param element the dropdown element.
+     * @param value the value to select.
+     */
     public void selectByText(WebElement element, String value) {
         getWebDriverWait(10).until(visibilityOf(element));
         JavascriptExecutor jexec = (JavascriptExecutor) testContext.getWebDriver();

@@ -7,16 +7,16 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import uk.gov.companieshouse.data.dataModel.Address;
 import uk.gov.companieshouse.data.dataModel.Company;
 import uk.gov.companieshouse.data.dbclone.DbClone;
-import uk.gov.companieshouse.pageObjects.ChipsHomePage;
-import uk.gov.companieshouse.pageObjects.CompanySearchPage;
-import uk.gov.companieshouse.pageObjects.OrgUnitPage;
-import uk.gov.companieshouse.pageObjects.ProcessStartOfDocumentPage;
+import uk.gov.companieshouse.enums.Forms.Form;
+import uk.gov.companieshouse.pageObjects.*;
 import uk.gov.companieshouse.testData.User;
 import uk.gov.companieshouse.utils.GlobalNavBar;
 import uk.gov.companieshouse.utils.TestContext;
 
+import java.sql.SQLException;
 import java.util.Date;
 
 public class StepDefinitions {
@@ -31,7 +31,9 @@ public class StepDefinitions {
     public GlobalNavBar globalNavBar;
     public DbClone dbClone;
 
-    public StepDefinitions(TestContext context, ChipsHomePage chipsHomePage, CompanySearchPage companySearchPage, OrgUnitPage orgUnitPage, ProcessStartOfDocumentPage processStartOfDocumentPage, GlobalNavBar globalNavBar, DbClone dbClone) {
+    public ChangeToRoPage changeToRoPage;
+
+    public StepDefinitions(TestContext context, ChipsHomePage chipsHomePage, CompanySearchPage companySearchPage, OrgUnitPage orgUnitPage, ProcessStartOfDocumentPage processStartOfDocumentPage, GlobalNavBar globalNavBar, DbClone dbClone, ChangeToRoPage changeToRoPage) {
         this.context = context;
         this.chipsHomePage = chipsHomePage;
         this.companySearchPage = companySearchPage;
@@ -39,6 +41,7 @@ public class StepDefinitions {
         this.processStartOfDocumentPage = processStartOfDocumentPage;
         this.globalNavBar = globalNavBar;
         this.dbClone = dbClone;
+        this.changeToRoPage = changeToRoPage;
     }
 
     @Given("I am logged in as a user in the {string} organisational unit")
@@ -70,7 +73,36 @@ public class StepDefinitions {
         Date today = new Date();
         globalNavBar.clickProcessFormLabel();
         processStartOfDocumentPage.generateBarcode(today);
+        processStartOfDocumentPage.selectFormType(Form.getFormByType("AD01"));
         Company company = dbClone.cloneCompanyWithParameterInternal(BASE_SQL_PRIVATE_LIMITED_COMPANY_ID, null);
+        Address address = new Address.AddressBuilder().welshAddress().build();
+        do {
+                    processStartOfDocumentPage.setCompanyNumberField(company.getNumber())
+                            .setCheckCharactersPrefixField(company.getPrefix())
+                            .setCheckCharactersSuffixField(company.getSuffix());
+        } while (!retryCloneIfCompanyNameNotPopulated());
+        processStartOfDocumentPage.clickProceedLink();
+        changeToRoPage
+                .waitUntilAd01Displayed()
+                .enterHouseNumber(address.getHouseNumber())
+                .enterPostCode(address.getPostcode())
+                .clickLookup()
+                .waitUntilStreetPopulated()
+                .saveForm();
+    }
+
+
+    /**
+     * Check if the company name is populated correctly on PSOD.
+     * Retry company cloning using the SQL initially used if it is not.
+     */
+    private boolean retryCloneIfCompanyNameNotPopulated() {
+        if (processStartOfDocumentPage.getPopulatedCompanyName().equals("")) {
+            dbClone.cloneCompanyWithParameterInternal(BASE_SQL_PRIVATE_LIMITED_COMPANY_ID, null);
+            return false;
+        } else {
+            return true;
+        }
     }
 
 }
