@@ -29,15 +29,13 @@ public class OrgUnitPage extends ElementInteraction {
     }
 
     public void selectOrgUnit(String orgUnit) {
-        log.info("Attempting to select the the org unit {}", orgUnit);
-
         // Check if user already logged into required org unit
         if (chipsBanner.getText().contains(orgUnit)) {
             log.info("User is already logged in to {}, no need to amend", orgUnit);
         } else {
             selectByText(orgUnitSelect, orgUnit);
+            log.info("Successfully selected org unit: {}", orgUnit);
         }
-
         saveLink.click();
     }
 

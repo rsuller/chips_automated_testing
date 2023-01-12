@@ -111,10 +111,11 @@ public class Address {
         }
 
         public AddressBuilder welshAddress() {
-            withHouseNumber("22");
-            withStreet("Heath Park Avenue");
-            withPostTown("Cardiff");
-            withPostcode("CF14 3RJ");
+            withHouseNumber("1");
+            withStreet("Heol Fawr");
+            withArea("Nelson");
+            withPostTown("Treharris");
+            withPostcode("CF46 6NW");
             withCountry("Wales");
             return this;
         }
