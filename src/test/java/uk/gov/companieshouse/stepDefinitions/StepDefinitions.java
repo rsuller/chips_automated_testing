@@ -71,16 +71,26 @@ public class StepDefinitions {
     public void iProcessTheStartDocumentForFormAd01() {
         Date today = new Date();
         globalNavBar.clickProcessFormLabel();
-        processStartOfDocumentPage.generateBarcode(today);
-        processStartOfDocumentPage.selectFormType(Form.getFormByType("AD01"));
         Company company = dbClone.cloneCompanyWithParameterInternal(BASE_SQL_PRIVATE_LIMITED_COMPANY_ID, null);
-        Address address = new Address.AddressBuilder().welshAddress().build();
+        processStartOfDocumentPage
+                .waitUntilDisplayed()
+                .generateBarcode(today);
+        processStartOfDocumentPage.selectFormType(Form.getFormByType("AD01"));
+
         do {
                     processStartOfDocumentPage.setCompanyNumberField(company.getNumber())
                             .setCheckCharactersPrefixField(company.getPrefix())
                             .setCheckCharactersSuffixField(company.getSuffix());
         } while (!retryCloneIfCompanyNameNotPopulated());
         processStartOfDocumentPage.clickProceedLink();
+    }
+
+    /**
+     * Complete the mandatory details for the registered office or SAIL address.
+     */
+    @Given("I complete mandatory details to change a registered office address")
+    public void completeMandatoryDetailsToChangeARegisteredOfficeAddress() {
+        Address address = new Address.AddressBuilder().welshAddress().build();
         changeToRoPage
                 .waitUntilAd01Displayed()
                 .enterHouseNumber(address.getHouseNumber())
@@ -88,6 +98,11 @@ public class StepDefinitions {
                 .clickLookup()
                 .waitUntilStreetPopulated()
                 .saveForm();
+    }
+
+    @Then("the form is submitted without rules fired")
+    public void theFormIsSubmittedWithoutFailedRules() {
+        processStartOfDocumentPage.waitUntilDisplayed();
     }
 
 

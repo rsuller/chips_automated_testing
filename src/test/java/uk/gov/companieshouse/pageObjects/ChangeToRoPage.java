@@ -4,6 +4,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import uk.gov.companieshouse.utils.ElementInteraction;
 import uk.gov.companieshouse.utils.TestContext;
 
@@ -12,6 +14,7 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.*;
 public class ChangeToRoPage extends ElementInteraction {
 
     public TestContext testContext;
+    public static final Logger log = LoggerFactory.getLogger(ChangeToRoPage.class);
 
     public ChangeToRoPage(TestContext testContext) {
         super(testContext);
@@ -43,6 +46,7 @@ public class ChangeToRoPage extends ElementInteraction {
 
     public ChangeToRoPage waitUntilStreetPopulated() {
         getWebDriverWait(5).until(attributeToBeNotEmpty(elementRoStreet, "value"));
+        log.info("Postcode lookup completed successfully for address");
         return this;
     }
 
@@ -63,6 +67,7 @@ public class ChangeToRoPage extends ElementInteraction {
     }
 
     public ChangeToRoPage saveForm() {
+        log.info("Submitting form...");
         elementSave.click();
         return this;
     }

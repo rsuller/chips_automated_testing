@@ -2,6 +2,7 @@ package uk.gov.companieshouse.pageObjects;
 
 
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
@@ -174,7 +175,7 @@ public class ProcessStartOfDocumentPage extends ElementInteraction {
         return barcode;
     }
 
-    public ProcessStartOfDocumentPage selectFormType(Form form) {
+    public void selectFormType(Form form) {
         String formName = form.getType();
         selectByText(elementFormTypeSelectKey, formName);
         // There is a known issue with Selenium 4 where after using the necessary select method above, the screen
@@ -182,8 +183,9 @@ public class ProcessStartOfDocumentPage extends ElementInteraction {
         // the cursor up and down results in the correct form being selected and required fields are displayed.
         elementFormTypeSelectKey.sendKeys(Keys.UP);
         elementFormTypeSelectKey.sendKeys(Keys.DOWN);
-        log.info("Successfully selected form: {}", formName);
-        return this;
+        elementFormTypeSelectKey.sendKeys(Keys.TAB);
+        //log.info("Successfully selected form: {}", formName);
+        getWebDriverWait(5).until(visibilityOf(elementCompanyNumberInputKey));
     }
 
     /**
@@ -215,5 +217,22 @@ public class ProcessStartOfDocumentPage extends ElementInteraction {
         elementProceedLinkKey.click();
         return this;
     }
+
+    /**
+     * Wait until the process start of document page is displayed.
+     * Log an error if the barcode field on PSOD cannot be found.
+     */
+    public ProcessStartOfDocumentPage waitUntilDisplayed() {
+        try {
+            getWebDriverWait(5).until(visibilityOf(elementBarcodeInputKey));
+            log.info("Process start of document page displayed successfully.");
+        } catch (NoSuchElementException exception) {
+            log.error("Process start of document page was not displayed.");
+            throw new NoSuchElementException("Process start of document page "
+                    + "was not displayed", exception);
+        }
+        return this;
+    }
+
 
 }
