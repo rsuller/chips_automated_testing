@@ -184,8 +184,8 @@ public class ProcessStartOfDocumentPage extends ElementInteraction {
         elementFormTypeSelectKey.sendKeys(Keys.UP);
         elementFormTypeSelectKey.sendKeys(Keys.DOWN);
         elementFormTypeSelectKey.sendKeys(Keys.TAB);
-        //log.info("Successfully selected form: {}", formName);
         getWebDriverWait(5).until(visibilityOf(elementCompanyNumberInputKey));
+        log.info("Successfully selected form: {}", formName);
     }
 
     /**
