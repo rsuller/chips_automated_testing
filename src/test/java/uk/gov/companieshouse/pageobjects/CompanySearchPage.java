@@ -1,10 +1,9 @@
-package uk.gov.companieshouse.pageObjects;
+package uk.gov.companieshouse.pageobjects;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
-import org.w3c.dom.html.HTMLInputElement;
 import uk.gov.companieshouse.utils.TestContext;
 
 public class CompanySearchPage {

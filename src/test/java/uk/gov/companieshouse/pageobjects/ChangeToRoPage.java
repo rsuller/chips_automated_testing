@@ -1,4 +1,7 @@
-package uk.gov.companieshouse.pageObjects;
+package uk.gov.companieshouse.pageobjects;
+
+import static org.openqa.selenium.support.ui.ExpectedConditions.attributeToBeNotEmpty;
+import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -9,7 +12,6 @@ import org.slf4j.LoggerFactory;
 import uk.gov.companieshouse.utils.ElementInteraction;
 import uk.gov.companieshouse.utils.TestContext;
 
-import static org.openqa.selenium.support.ui.ExpectedConditions.*;
 
 public class ChangeToRoPage extends ElementInteraction {
 
@@ -25,13 +27,13 @@ public class ChangeToRoPage extends ElementInteraction {
     @FindBy(how = How.ID, using = "form1:changeOfAddressScreenTabSheet:changeOfAddressScreen:registeredOffice:"
             + "address:houseNumber:field")
     private WebElement elementRoHouseNumber;
-    @FindBy(how = How.ID, using ="form1:changeOfAddressScreenTabSheet:changeOfAddressScreen:registeredOffice:"
+    @FindBy(how = How.ID, using = "form1:changeOfAddressScreenTabSheet:changeOfAddressScreen:registeredOffice:"
             + "address:postcodefg:postcode:field")
     private WebElement elementRoPostCode;
     @FindBy(how = How.ID, using = "form1:changeOfAddressScreenTabSheet:changeOfAddressScreen:registeredOffice:"
             + "address:postcodefg:postcodeLookup")
     private WebElement elementRoLookUp;
-    @FindBy(how = How.ID, using ="form1:changeOfAddressScreenTabSheet:changeOfAddressScreen:registeredOffice:"
+    @FindBy(how = How.ID, using = "form1:changeOfAddressScreenTabSheet:changeOfAddressScreen:registeredOffice:"
             + "address:street:field")
     private WebElement elementRoStreet;
 

@@ -1,4 +1,4 @@
-package uk.gov.companieshouse.pageObjects;
+package uk.gov.companieshouse.pageobjects;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;

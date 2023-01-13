@@ -5,8 +5,8 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.ie.InternetExplorerOptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import uk.gov.companieshouse.testData.DocumentDetails;
-import uk.gov.companieshouse.testData.User;
+import uk.gov.companieshouse.testdata.DocumentDetails;
+import uk.gov.companieshouse.testdata.User;
 
 /**
  * Shared context to be passed in tests.
@@ -19,7 +19,7 @@ public class TestContext {
     DocumentDetails documentDetails;
 
     public Env getEnv() {
-    return new Env();
+        return new Env();
     }
 
     public WebDriver getWebDriver() {
@@ -41,9 +41,9 @@ public class TestContext {
             Set up for Edge only
             //TODO Keep this just in case we need to compare with Edge behaviour
              */
-//            log.info("Setting up Edge Browser");
-//            System.setProperty("webdriver.edge.driver", "drivers/msedgedriver.exe");
-//            driver = new EdgeDriver();
+            //log.info("Setting up Edge Browser");
+            //System.setProperty("webdriver.edge.driver", "drivers/msedgedriver.exe");
+            //driver = new EdgeDriver();
         }
         return driver;
 

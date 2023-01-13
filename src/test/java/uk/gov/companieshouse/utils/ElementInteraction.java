@@ -1,12 +1,12 @@
 package uk.gov.companieshouse.utils;
 
+import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
+
+import java.time.Duration;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.time.Duration;
-
-import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
 
 public class ElementInteraction {
 

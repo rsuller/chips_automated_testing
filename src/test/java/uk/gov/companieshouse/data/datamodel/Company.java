@@ -1,12 +1,12 @@
-package uk.gov.companieshouse.data.dataModel;
+package uk.gov.companieshouse.data.datamodel;
 
-import uk.gov.ch.alphakey.SameAsService;
-import uk.gov.ch.alphakey.SameAsServiceImpl;
+import static uk.gov.companieshouse.utils.RandomStringCreator.randomAlphaString;
 
 import java.text.ParseException;
 import java.util.Date;
+import uk.gov.ch.alphakey.SameAsService;
+import uk.gov.ch.alphakey.SameAsServiceImpl;
 
-import static uk.gov.companieshouse.utils.RandomStringCreator.randomAlphaString;
 
 public class Company {
 
@@ -45,6 +45,7 @@ public class Company {
         this.incorporationDateField = companyBuilder.incorporationDateField;
         this.memberStateField = companyBuilder.memberStateField;
     }
+
     public String getCorporateBodyId() {
         return corporateBodyIdField;
     }
@@ -110,9 +111,10 @@ public class Company {
     }
 
     public String toString() {
-        return String.format("Company Details: \n Alpha Key: %s \n Corporate Body ID: %s \n Type Short: %s \n Type Long: %s \n" +
-                " Number: %s \n Supplied Number: %s \n Name: %s \n Prefix: %s \n Suffix: %s \n Name Ending: %s \n " +
-                "Sic Code: %s \n Sic Code Description: %s \n Address: %s \n Incorporation Date: %s \n Member State: %s",
+        return String.format("Company Details: \n Alpha Key: %s \n Corporate Body ID: %s \n Type Short: %s \n "
+                        + "Type Long: %s \n Number: %s \n Supplied Number: %s \n Name: %s \n Prefix: %s \n Suffix: %s "
+                        + "\n Name Ending: %s \n Sic Code: %s \n Sic Code Description: %s \n Address: %s \n "
+                        + "Incorporation Date: %s \n Member State: %s",
                 getAlphaKey(),
                 getCorporateBodyId(),
                 getTypeShort(),
@@ -131,22 +133,22 @@ public class Company {
     }
 
     public static class CompanyBuilder {
-        private  String alphaKeyField;
-        private  String corporateBodyIdField;
-        private  String typeShortField;
-        private  String typeLongField;
-        private  String numberField;
-        private  String suppliedCompanyNumField;
-        private  String nameField;
-        private  String prefixField;
-        private  String suffixField;
-        private  String nameEndingField;
-        private  String sicCodeField;
-        private  String sicDescriptionField;
-        private  String supplyCompanyNameField;
-        private  Address addressField;
-        private  String incorporationDateField;
-        private  String memberStateField;
+        private String alphaKeyField;
+        private String corporateBodyIdField;
+        private String typeShortField;
+        private String typeLongField;
+        private String numberField;
+        private String suppliedCompanyNumField;
+        private String nameField;
+        private String prefixField;
+        private String suffixField;
+        private String nameEndingField;
+        private String sicCodeField;
+        private String sicDescriptionField;
+        private String supplyCompanyNameField;
+        private Address addressField;
+        private String incorporationDateField;
+        private String memberStateField;
 
         public CompanyBuilder withTypeShort(String typeShort) {
             this.typeShortField = typeShort;

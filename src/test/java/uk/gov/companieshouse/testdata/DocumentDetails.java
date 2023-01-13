@@ -1,4 +1,4 @@
-package uk.gov.companieshouse.testData;
+package uk.gov.companieshouse.testdata;
 
 public class DocumentDetails {
 

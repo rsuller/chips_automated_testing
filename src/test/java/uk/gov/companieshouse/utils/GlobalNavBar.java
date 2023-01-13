@@ -1,5 +1,7 @@
 package uk.gov.companieshouse.utils;
 
+import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
@@ -9,9 +11,8 @@ import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import uk.gov.companieshouse.pageObjects.ProcessStartOfDocumentPage;
+import uk.gov.companieshouse.pageobjects.ProcessStartOfDocumentPage;
 
-import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
 
 public class GlobalNavBar extends ElementInteraction {
 
@@ -26,7 +27,7 @@ public class GlobalNavBar extends ElementInteraction {
     @FindBy(how = How.XPATH, using = "//td[contains(@class, 'label')][contains(text(), 'menu')]")
     private WebElement mainMenuElement;
 
-    @FindBy(how = How.CSS, using=  "div[class='bannerrow']>[class='bannerright']>"
+    @FindBy(how = How.CSS, using = "div[class='bannerrow']>[class='bannerright']>"
             + "[title='Process Start of Document']")
     private WebElement statusLink;
 
