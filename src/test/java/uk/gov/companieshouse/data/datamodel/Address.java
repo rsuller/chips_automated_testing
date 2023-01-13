@@ -1,4 +1,4 @@
-package uk.gov.companieshouse.data.dataModel;
+package uk.gov.companieshouse.data.datamodel;
 
 public class Address {
 
@@ -54,8 +54,8 @@ public class Address {
 
     @Override
     public String toString() {
-        return String.format("House number: %s \n Street: %s \n Area: %s \n PostTown: %s \n Region: %s \n Postcode: %s \n" +
-                "Country: %s",
+        return String.format("House number: %s \n Street: %s \n Area: %s \n PostTown: %s \n Region: %s \n "
+                        + "Postcode: %s \n Country: %s",
                 getHouseNumber(),
                 getStreet(),
                 getArea(),

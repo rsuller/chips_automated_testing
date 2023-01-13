@@ -1,6 +1,10 @@
-package uk.gov.companieshouse.pageObjects;
+package uk.gov.companieshouse.pageobjects;
 
+import static org.openqa.selenium.support.ui.ExpectedConditions.attributeToBeNotEmpty;
+import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
@@ -13,10 +17,7 @@ import uk.gov.companieshouse.enums.Forms.Form;
 import uk.gov.companieshouse.utils.BarcodeGenerator;
 import uk.gov.companieshouse.utils.ElementInteraction;
 import uk.gov.companieshouse.utils.TestContext;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
-import static org.openqa.selenium.support.ui.ExpectedConditions.*;
 
 public class ProcessStartOfDocumentPage extends ElementInteraction {
 
@@ -30,6 +31,7 @@ public class ProcessStartOfDocumentPage extends ElementInteraction {
         this.barcodeGenerator = new BarcodeGenerator();
         PageFactory.initElements(testContext.getWebDriver(),this);
     }
+
     @FindBy(how = How.ID, using = "form1:task_processStartOfDocumentValidator_startOfDocument_barcode:field")
     private WebElement elementBarcodeInputKey;
     @FindBy(how = How.ID, using = "form1:formType:field")

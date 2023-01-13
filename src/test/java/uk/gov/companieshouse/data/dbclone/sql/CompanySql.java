@@ -1,13 +1,12 @@
 package uk.gov.companieshouse.data.dbclone.sql;
 
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.StringUtils;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
 
 public enum CompanySql {
     BASE_SQL_PRIVATE_LIMITED_COMPANY_ID(

@@ -1,17 +1,24 @@
 package uk.gov.companieshouse.data.dbclone;
 
 import com.typesafe.config.ConfigException;
+
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Types;
+import java.text.ParseException;
+import java.util.Properties;
+import javax.sql.DataSource;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import uk.gov.companieshouse.data.dataModel.Company;
+import uk.gov.companieshouse.data.datamodel.Company;
 import uk.gov.companieshouse.data.dbclone.sql.CompanySql;
 import uk.gov.companieshouse.utils.TestContext;
-
-import javax.sql.DataSource;
-import java.sql.*;
-import java.text.ParseException;
-import java.util.Properties;
 
 public class DbClone {
 
@@ -62,13 +69,15 @@ public class DbClone {
                 companyNumberToClone = dbQueryCriteriaCompanyId(sql.getSql(), parameter);
                 String companyNumberCloned = dbCloneCompany(companyNumberToClone);
                 Company company = dbGetCompanyFromDb(companyNumberCloned);
-                final String message = "Environment: " + env + " - Successfully cloned company " + companyNumberToClone + " to new company " + companyNumberCloned + " [" + company.getName() + "]";
+                final String message = "Environment: " + env + " - Successfully cloned company " + companyNumberToClone
+                        + " to new company " + companyNumberCloned + " [" + company.getName() + "]";
 
                 //writeToScenario(message);
                 LOG.info(message);
                 return company;
             } catch (Exception ex) {
-                String message = "Environment: " + env + " - Error attempting clone for company number " + companyNumberToClone + ":\n " + ex.getMessage();
+                String message = "Environment: " + env + " - Error attempting clone for company number " + companyNumberToClone
+                        + ":\n " + ex.getMessage();
                 //writeToScenario(message);
                 LOG.error(message, ex);
                 retryCount--;
@@ -98,8 +107,8 @@ public class DbClone {
             throw new RuntimeException(ex);
         }
         do {
-            PreparedStatement pStm = createPreparedStatement(conn, sql, intParameter);
-            ResultSet resultSet = pStm.executeQuery();
+            PreparedStatement preparedStatement = createPreparedStatement(conn, sql, intParameter);
+            ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
             companyNumber = resultSet.getString("incorporation_number");
         } while (companyNumber == null);
@@ -122,12 +131,13 @@ public class DbClone {
         }
     }
 
-    private Company dbGetCompanyFromDb(String companyNumber) throws SQLException, ParseException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+    private Company dbGetCompanyFromDb(String companyNumber) throws SQLException, ParseException,
+            ClassNotFoundException, InstantiationException, IllegalAccessException {
         final String sql = "select * from corporate_body cb where cb.incorporation_number = ?";
 
         Connection conn = dbGetConnection();
-        PreparedStatement pStm = createPreparedStatement(conn, sql, companyNumber);
-        ResultSet rs = pStm.executeQuery();
+        PreparedStatement preparedStatement = createPreparedStatement(conn, sql, companyNumber);
+        ResultSet rs = preparedStatement.executeQuery();
         {
             rs.next();
             String alphaKey = rs.getString("corporate_body_name_alphakey");
@@ -136,7 +146,14 @@ public class DbClone {
             String nameEnding = rs.getString("corporate_body_name").replace(companyName, "").trim();
             Date incorporationDate = rs.getDate("incorporation_date");
 
-            return new Company.CompanyBuilder().createDefaultCompany().withNumber(companyNumber).withName(companyName).withNameEnding(nameEnding).withIncorporationDate(incorporationDate).withCorporateBodyId(corporateBodyId).withAlphaKey(alphaKey).build();
+            return new Company.CompanyBuilder().createDefaultCompany()
+                    .withNumber(companyNumber)
+                    .withName(companyName)
+                    .withNameEnding(nameEnding)
+                    .withIncorporationDate(incorporationDate)
+                    .withCorporateBodyId(corporateBodyId)
+                    .withAlphaKey(alphaKey)
+                    .build();
         }
     }
 
