@@ -1,12 +1,15 @@
 package uk.gov.companieshouse.pageObjects;
 
 
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import uk.gov.companieshouse.enums.Forms.Form;
 import uk.gov.companieshouse.utils.BarcodeGenerator;
 import uk.gov.companieshouse.utils.ElementInteraction;
 import uk.gov.companieshouse.utils.TestContext;
@@ -171,5 +174,65 @@ public class ProcessStartOfDocumentPage extends ElementInteraction {
         setBarcodeField(barcode);
         return barcode;
     }
+
+    public void selectFormType(Form form) {
+        String formName = form.getType();
+        selectByText(elementFormTypeSelectKey, formName);
+        // There is a known issue with Selenium 4 where after using the necessary select method above, the screen
+        // does not refresh and hidden company name/number fields are not displayed. The following methods moving
+        // the cursor up and down results in the correct form being selected and required fields are displayed.
+        elementFormTypeSelectKey.sendKeys(Keys.UP);
+        elementFormTypeSelectKey.sendKeys(Keys.DOWN);
+        elementFormTypeSelectKey.sendKeys(Keys.TAB);
+        getWebDriverWait(5).until(visibilityOf(elementCompanyNumberInputKey));
+        log.info("Successfully selected form: {}", formName);
+    }
+
+    /**
+     * Wait until company name populated after CHIPS lookup.
+     * returns the company name, or a blank string if not populated.
+     */
+    public String getPopulatedCompanyName() {
+        //Wait for company name to be populated
+        getWebDriverWait(1000);
+        return elementCompanyNameOutput.getText();
+    }
+
+    public ProcessStartOfDocumentPage setCompanyNumberField(String companyNumber) {
+        elementCompanyNumberInputKey.sendKeys(companyNumber);
+        return this;
+    }
+
+    public ProcessStartOfDocumentPage setCheckCharactersPrefixField(final String checkPrefix) {
+        elementCheckCharactersPrefixInputKey.sendKeys(checkPrefix);
+        return this;
+    }
+
+    public ProcessStartOfDocumentPage setCheckCharactersSuffixField(final String checkSuffix) {
+        elementCheckCharactersSuffixInputKey.sendKeys(checkSuffix);
+        return this;
+    }
+
+    public ProcessStartOfDocumentPage clickProceedLink() {
+        elementProceedLinkKey.click();
+        return this;
+    }
+
+    /**
+     * Wait until the process start of document page is displayed.
+     * Log an error if the barcode field on PSOD cannot be found.
+     */
+    public ProcessStartOfDocumentPage waitUntilDisplayed() {
+        try {
+            getWebDriverWait(5).until(visibilityOf(elementBarcodeInputKey));
+            log.info("Process start of document page displayed successfully.");
+        } catch (NoSuchElementException exception) {
+            log.error("Process start of document page was not displayed.");
+            throw new NoSuchElementException("Process start of document page "
+                    + "was not displayed", exception);
+        }
+        return this;
+    }
+
 
 }
