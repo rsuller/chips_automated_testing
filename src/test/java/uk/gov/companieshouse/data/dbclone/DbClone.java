@@ -1,7 +1,6 @@
 package uk.gov.companieshouse.data.dbclone;
 
 import com.typesafe.config.ConfigException;
-
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.Date;
@@ -12,7 +11,6 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.text.ParseException;
 import java.util.Properties;
-import javax.sql.DataSource;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,8 +22,6 @@ public class DbClone {
 
     public TestContext testContext;
     private static final Logger LOG = LoggerFactory.getLogger(DbClone.class);
-
-    private volatile DataSource dataSource;
 
 
     public DbClone(TestContext testContext) {
@@ -109,10 +105,12 @@ public class DbClone {
         do {
             PreparedStatement preparedStatement = createPreparedStatement(conn, sql, intParameter);
             ResultSet resultSet = preparedStatement.executeQuery();
-            resultSet.next();
-            companyNumber = resultSet.getString("incorporation_number");
+            if (resultSet.next()) {
+                companyNumber = resultSet.getString("incorporation_number");
+            }
         } while (companyNumber == null);
 
+        conn.close();
         return companyNumber;
     }
 
@@ -126,7 +124,7 @@ public class DbClone {
             cstmt.registerOutParameter(1, Types.VARCHAR);
             cstmt.setString(2, companyNumber);
             cstmt.executeUpdate();
-
+            conn.close();
             return cstmt.getNString(1);
         }
     }
@@ -134,18 +132,16 @@ public class DbClone {
     private Company dbGetCompanyFromDb(String companyNumber) throws SQLException, ParseException,
             ClassNotFoundException, InstantiationException, IllegalAccessException {
         final String sql = "select * from corporate_body cb where cb.incorporation_number = ?";
-
         Connection conn = dbGetConnection();
         PreparedStatement preparedStatement = createPreparedStatement(conn, sql, companyNumber);
         ResultSet rs = preparedStatement.executeQuery();
-        {
-            rs.next();
+        if (rs.next()) {
             String alphaKey = rs.getString("corporate_body_name_alphakey");
             String corporateBodyId = rs.getString("corporate_body_id");
             String companyName = rs.getString("corporate_body_short_name").replace("(cloned)", "");
             String nameEnding = rs.getString("corporate_body_name").replace(companyName, "").trim();
             Date incorporationDate = rs.getDate("incorporation_date");
-
+            conn.close();
             return new Company.CompanyBuilder().createDefaultCompany()
                     .withNumber(companyNumber)
                     .withName(companyName)
@@ -154,6 +150,8 @@ public class DbClone {
                     .withCorporateBodyId(corporateBodyId)
                     .withAlphaKey(alphaKey)
                     .build();
+        } else {
+            throw new RuntimeException("Unable to get company from DB");
         }
     }
 
