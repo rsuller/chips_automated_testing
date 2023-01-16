@@ -104,7 +104,7 @@ public class BarcodeGenerator {
         char[] barcode = new char[]{'0', '0', '0', '0', '0', '0', '0', '0'};
 
         do {
-            int randomNumber = new Double(Math.floor(new Random().nextFloat() * 524287)).intValue();
+            int randomNumber = Double.valueOf(Math.floor(new Random().nextFloat() * 524287)).intValue();
             String randomNumberBin = "0000000000000000000" + Integer.toBinaryString(randomNumber);
             randomNumberBin = randomNumberBin.substring(randomNumberBin.length() - 19);
             int count = 0;

@@ -50,7 +50,7 @@ public class Env {
     File searchConfigFileInClasspath(String filename) {
         List files;
         try {
-            Stream<Path> paths = Files.walk((new File(ConfigConstants.PROJECT_DIR)).toPath());
+            Stream<Path> paths = Files.walk(new File(ConfigConstants.PROJECT_DIR).toPath());
             Throwable var4 = null;
 
             try {

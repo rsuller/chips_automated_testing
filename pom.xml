@@ -147,6 +147,44 @@
 
     <build>
         <plugins>
+            <!-- Just for code quality reasons see http://maven.apache.org/plugins/maven-pmd-plugin/index.html-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-pmd-plugin</artifactId>
+                <version>3.20.0</version>
+                <executions>
+                    <execution>
+                        <id>pmd-report</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>pmd</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>cpd-report</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>cpd</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <sourceEncoding>utf-8</sourceEncoding>
+                    <failOnViolation>true</failOnViolation>
+                    <printFailingErrors>true</printFailingErrors>
+                    <minimumTokens>50</minimumTokens>
+                    <format>html</format>
+                    <format>xml</format>
+                    <targetJdk>1.8</targetJdk>
+                    <includeTests>true</includeTests>
+                    <linkXRef>false</linkXRef>
+                    <verbose>true</verbose>
+                    <skipEmptyReport>false</skipEmptyReport>
+                    <excludeFromFailureFile>exclude-cpd.properties</excludeFromFailureFile>
+                    <excludeFromFailureFile>exclude-pmd.properties</excludeFromFailureFile>
+                </configuration>
+            </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -194,6 +232,20 @@
 
         <pluginManagement>
             <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-pmd-plugin</artifactId>
+                    <version>3.20.0</version>
+                    <executions>
+                        <execution>
+                            <phase>compile</phase>
+                            <goals>
+                                <goal>check</goal>
+                                <goal>cpd-check</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-checkstyle-plugin</artifactId>
