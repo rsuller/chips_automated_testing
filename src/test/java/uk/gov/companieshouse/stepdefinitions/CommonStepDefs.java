@@ -10,11 +10,9 @@ import java.util.Date;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import uk.gov.companieshouse.data.datamodel.Address;
 import uk.gov.companieshouse.data.datamodel.Company;
 import uk.gov.companieshouse.data.dbclone.DbClone;
 import uk.gov.companieshouse.enums.Forms.Form;
-import uk.gov.companieshouse.pageobjects.ChangeToRoPage;
 import uk.gov.companieshouse.pageobjects.ChipsHomePage;
 import uk.gov.companieshouse.pageobjects.CompanySearchPage;
 import uk.gov.companieshouse.pageobjects.OrgUnitPage;
@@ -24,9 +22,9 @@ import uk.gov.companieshouse.utils.GlobalNavBar;
 import uk.gov.companieshouse.utils.TestContext;
 
 
-public class StepDefinitions {
+public class CommonStepDefs {
 
-    public static Logger log = LoggerFactory.getLogger(StepDefinitions.class);
+    public static Logger log = LoggerFactory.getLogger(CommonStepDefs.class);
 
     public TestContext context;
     public ChipsHomePage chipsHomePage;
@@ -36,11 +34,10 @@ public class StepDefinitions {
     public GlobalNavBar globalNavBar;
     public DbClone dbClone;
 
-    public ChangeToRoPage changeToRoPage;
 
-    public StepDefinitions(TestContext context, ChipsHomePage chipsHomePage, CompanySearchPage companySearchPage,
-                           OrgUnitPage orgUnitPage, ProcessStartOfDocumentPage processStartOfDocumentPage,
-                           GlobalNavBar globalNavBar, DbClone dbClone, ChangeToRoPage changeToRoPage) {
+    public CommonStepDefs(TestContext context, ChipsHomePage chipsHomePage, CompanySearchPage companySearchPage,
+                          OrgUnitPage orgUnitPage, ProcessStartOfDocumentPage processStartOfDocumentPage,
+                          GlobalNavBar globalNavBar, DbClone dbClone) {
         this.context = context;
         this.chipsHomePage = chipsHomePage;
         this.companySearchPage = companySearchPage;
@@ -48,7 +45,6 @@ public class StepDefinitions {
         this.processStartOfDocumentPage = processStartOfDocumentPage;
         this.globalNavBar = globalNavBar;
         this.dbClone = dbClone;
-        this.changeToRoPage = changeToRoPage;
     }
 
     @Given("I am logged in as a user in the {string} organisational unit")
@@ -66,7 +62,6 @@ public class StepDefinitions {
         orgUnitPage.selectOrgUnit(context.getUser().getOrgUnit());
     }
 
-
     @Then("I will be able to search for company {string}")
     public void willBeAbleToSearchForCompany(String companyNumber) {
         log.info("Searching for company number: {}", companyNumber);
@@ -75,15 +70,15 @@ public class StepDefinitions {
 
     }
 
-    @When("I process the start document for form AD01")
-    public void processTheStartDocumentForFormAd01() {
+    @When("I process the start document for form {string}")
+    public void processTheStartDocumentForForm(String formType) {
         Date today = new Date();
         globalNavBar.clickProcessFormLabel();
         Company company = dbClone.cloneCompanyWithParameterInternal(BASE_SQL_PRIVATE_LIMITED_COMPANY_ID, null);
         processStartOfDocumentPage
                 .waitUntilDisplayed()
                 .generateBarcode(today);
-        processStartOfDocumentPage.selectFormType(Form.getFormByType("AD01"));
+        processStartOfDocumentPage.selectFormType(Form.getFormByType(formType));
 
         do {
             processStartOfDocumentPage.setCompanyNumberField(company.getNumber())
@@ -93,26 +88,10 @@ public class StepDefinitions {
         processStartOfDocumentPage.clickProceedLink();
     }
 
-    /**
-     * Complete the mandatory details for the registered office or SAIL address.
-     */
-    @Given("I complete mandatory details to change a registered office address")
-    public void completeMandatoryDetailsToChangeARegisteredOfficeAddress() {
-        Address address = new Address.AddressBuilder().welshAddress().build();
-        changeToRoPage
-                .waitUntilAd01Displayed()
-                .enterHouseNumber(address.getHouseNumber())
-                .enterPostCode(address.getPostcode())
-                .clickLookup()
-                .waitUntilStreetPopulated()
-                .saveForm();
-    }
-
     @Then("the form is submitted without rules fired")
     public void theFormIsSubmittedWithoutFailedRules() {
         processStartOfDocumentPage.waitUntilDisplayed();
     }
-
 
     /**
      * Check if the company name is populated correctly on PSOD.
