@@ -3,13 +3,16 @@ package uk.gov.companieshouse.enums;
 public class Forms {
     public enum Form {
 
-        AD01("AD01", "");
+        AD01("AD01", "", false),
+        DS01("DS01", "", true);
         private final String type;
         private final String title;
+        private final boolean highRiskForm;
 
-        Form(final String type, final String title) {
+        Form(final String type, final String title, final boolean highRiskForm) {
             this.type = type;
             this.title = title;
+            this.highRiskForm = highRiskForm;
         }
 
         public String getType() {
@@ -18,6 +21,10 @@ public class Forms {
 
         public String getTitle() {
             return title;
+        }
+
+        public boolean isHighRiskForm() {
+            return highRiskForm;
         }
 
         /**
