@@ -10,7 +10,9 @@ import org.apache.commons.lang3.StringUtils;
 
 public enum CompanySql {
     BASE_SQL_PRIVATE_LIMITED_COMPANY_ID(
-            "base/private_limited_company_id.sql");
+            "base/private_limited_company_id.sql"),
+    DISSOLUTION_COMPANY_NO_PREV_DISS_REQUEST_FILED(
+            "dissolution/company_no_prev_diss_request_filed.sql");
 
     private String sql;
 

@@ -29,6 +29,17 @@ public class ElementInteraction {
                 + "{ if(select.options[i].text == arguments[1]){ select.options[i].selected = true; } }", element, value);
     }
 
+    /**
+     * Use JavascriptExecutor to get around an issue with Chips, where using the sendKeys
+     * method results in errors tryin to type into the hidden text boxes in PSOD.
+     * @param element the text box element.
+     * @param value the value to select.
+     */
+    public void typeText(WebElement element, String value) {
+        JavascriptExecutor jse = (JavascriptExecutor)testContext.getWebDriver();
+        jse.executeScript("arguments[0].value='" + value + "';", element);
+    }
+
     public WebDriverWait getWebDriverWait(int secondsToWait) {
         return new WebDriverWait(testContext.getWebDriver(), Duration.ofSeconds(secondsToWait));
     }

@@ -13,7 +13,10 @@ import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import uk.gov.companieshouse.data.datamodel.Company;
+import uk.gov.companieshouse.data.dbclone.DbClone;
 import uk.gov.companieshouse.enums.Forms.Form;
+import uk.gov.companieshouse.testdata.SqlDetails;
 import uk.gov.companieshouse.utils.BarcodeGenerator;
 import uk.gov.companieshouse.utils.ElementInteraction;
 import uk.gov.companieshouse.utils.TestContext;
@@ -23,13 +26,18 @@ public class ProcessStartOfDocumentPage extends ElementInteraction {
 
     public TestContext testContext;
     private BarcodeGenerator barcodeGenerator;
+    private DbClone dbClone;
+    public SqlDetails sqlDetails;
     public static final Logger log = LoggerFactory.getLogger(ProcessStartOfDocumentPage.class);
 
-    public ProcessStartOfDocumentPage(TestContext testContext) {
+    public ProcessStartOfDocumentPage(TestContext testContext, BarcodeGenerator barcodeGenerator, DbClone dbClone,
+                                      SqlDetails sqlDetails) {
         super(testContext);
         this.testContext = testContext;
-        this.barcodeGenerator = new BarcodeGenerator();
-        PageFactory.initElements(testContext.getWebDriver(),this);
+        this.barcodeGenerator = barcodeGenerator;
+        this.dbClone = dbClone;
+        this.sqlDetails = sqlDetails;
+        PageFactory.initElements(testContext.getWebDriver(), this);
     }
 
     @FindBy(how = How.ID, using = "form1:task_processStartOfDocumentValidator_startOfDocument_barcode:field")
@@ -177,19 +185,6 @@ public class ProcessStartOfDocumentPage extends ElementInteraction {
         return barcode;
     }
 
-    public void selectFormType(Form form) {
-        String formName = form.getType();
-        selectByText(elementFormTypeSelectKey, formName);
-        // There is a known issue with Selenium 4 where after using the necessary select method above, the screen
-        // does not refresh and hidden company name/number fields are not displayed. The following methods moving
-        // the cursor up and down results in the correct form being selected and required fields are displayed.
-        elementFormTypeSelectKey.sendKeys(Keys.UP);
-        elementFormTypeSelectKey.sendKeys(Keys.DOWN);
-        elementFormTypeSelectKey.sendKeys(Keys.TAB);
-        getWebDriverWait(5).until(visibilityOf(elementCompanyNumberInputKey));
-        log.info("Successfully selected form: {}", formName);
-    }
-
     /**
      * Wait until company name populated after CHIPS lookup.
      * returns the company name, or a blank string if not populated.
@@ -198,21 +193,6 @@ public class ProcessStartOfDocumentPage extends ElementInteraction {
         //Wait for company name to be populated
         getWebDriverWait(1000);
         return elementCompanyNameOutput.getText();
-    }
-
-    public ProcessStartOfDocumentPage setCompanyNumberField(String companyNumber) {
-        elementCompanyNumberInputKey.sendKeys(companyNumber);
-        return this;
-    }
-
-    public ProcessStartOfDocumentPage setCheckCharactersPrefixField(final String checkPrefix) {
-        elementCheckCharactersPrefixInputKey.sendKeys(checkPrefix);
-        return this;
-    }
-
-    public ProcessStartOfDocumentPage setCheckCharactersSuffixField(final String checkSuffix) {
-        elementCheckCharactersSuffixInputKey.sendKeys(checkSuffix);
-        return this;
     }
 
     public ProcessStartOfDocumentPage clickProceedLink() {
@@ -236,5 +216,119 @@ public class ProcessStartOfDocumentPage extends ElementInteraction {
         return this;
     }
 
+    /**
+     * Complete the company identification fields on the process start of document screen.
+     *
+     * @param company        the company object containing the company details to fill in
+     * @param highRiskForm flag identifying whether to complete high risk or low risk form fields
+     *                       (triple keying or not)
+     */
+    public ProcessStartOfDocumentPage processForm(Company company, String formType, boolean highRiskForm) {
+        Date today = new Date();
+        waitUntilDisplayed().generateBarcode(today);
+        selectFormType(Form.getFormByType(formType));
+        // Attempt to fill in the fields using the Company data from the DB
+        // Call the retry method if not populated correctly.
+        do {
+            if (company != null) {
+                if (!highRiskForm) {
+                    getWebDriverWait(5).until(visibilityOf(elementCompanyNumberInputKey));
+                    log.info("Successfully selected low risk form: {}", formType);
+                    setCompanyNumberField(company.getNumber())
+                            .setCheckCharactersPrefixField(company.getPrefix())
+                            .setCheckCharactersSuffixField(company.getSuffix());
+                } else {
+                    log.info("Successfully selected low risk form: {}", formType);
+                    setCompanyNumber1Field(company.getNumber())
+                            .setCompanyNumber1NameField(company.getName())
+                            .setCompanyNumber2Field(company.getNumber())
+                            .setCompanyNumber2NameField(company.getName())
+                            .setCompanySelect(company.getName(), company.getNameEnding());
+                }
+            }
+        } while (!retryCloneIfCompanyNameNotPopulated());
+        clickProceedLink();
+        return this;
+    }
+
+    private void selectFormType(Form form) {
+        String formName = form.getType();
+        selectByText(elementFormTypeSelectKey, formName);
+        // There is a known issue with Selenium 4 where after using the necessary select method above, the screen
+        // does not refresh and hidden company name/number fields are not displayed. The following methods moving
+        // the cursor up and down results in the correct form being selected and required fields are displayed.
+        elementFormTypeSelectKey.sendKeys(Keys.UP);
+        elementFormTypeSelectKey.sendKeys(Keys.DOWN);
+    }
+
+    /**
+     * Check if the company name is populated correctly on PSOD.
+     * Retry company cloning using the SQL initially used if it is not.
+     */
+    private boolean retryCloneIfCompanyNameNotPopulated() {
+        if (getPopulatedCompanyName().equals("")) {
+            dbClone.cloneCompanyWithParameterInternal(sqlDetails.getCompanySql(),
+                    sqlDetails.getSqlParameter());
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    private ProcessStartOfDocumentPage setCompanyNumberField(String companyNumber) {
+        elementCompanyNumberInputKey.sendKeys(companyNumber);
+        return this;
+    }
+
+    private ProcessStartOfDocumentPage setCheckCharactersPrefixField(final String checkPrefix) {
+        elementCheckCharactersPrefixInputKey.sendKeys(checkPrefix);
+        return this;
+    }
+
+    private ProcessStartOfDocumentPage setCheckCharactersSuffixField(final String checkSuffix) {
+        elementCheckCharactersSuffixInputKey.sendKeys(checkSuffix);
+        return this;
+    }
+
+    private ProcessStartOfDocumentPage setCompanyNumber1Field(String companyNumber) {
+        elementCompanyNumber1HiddenInputKey.click();
+        typeText(elementCompanyNumber1InputKey, companyNumber);
+        return this;
+    }
+
+    private ProcessStartOfDocumentPage setCompanyNumber1NameField(String companyName) {
+        elementCompanyNumber1NameHiddenInputKey.click();
+        typeText(elementCompanyNumber1NameInputKey, companyName.trim());
+        return this;
+    }
+
+    private ProcessStartOfDocumentPage setCompanyNumber2Field(String companyNumber) {
+        elementCompanyNumber2HiddenInputKey.click();
+        typeText(elementCompanyNumber2InputKey, companyNumber);
+        return this;
+    }
+
+    private ProcessStartOfDocumentPage setCompanyNumber2NameField(String companyName) {
+        elementCompanyNumber2NameHiddenInputKey.click();
+        typeText(elementCompanyNumber2NameInputKey, companyName);
+        // move the cursor to make the hidden company select appear
+        elementCompanyNumber2NameInputKey.sendKeys(Keys.LEFT);
+        return this;
+    }
+
+    /**
+     * Select the company from the dropdown list.
+     *
+     * @param companyName the company name
+     * @param nameEnding  its name ending
+     */
+    private ProcessStartOfDocumentPage setCompanySelect(String companyName, String nameEnding) {
+        selectByText(
+                elementCompanyListSelect,
+                (companyName.trim() + " " + nameEnding).trim()
+        );
+        elementCompanyListSelect.sendKeys(Keys.RETURN);
+        return this;
+    }
 
 }

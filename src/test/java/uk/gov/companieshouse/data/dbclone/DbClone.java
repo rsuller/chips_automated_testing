@@ -16,16 +16,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.gov.companieshouse.data.datamodel.Company;
 import uk.gov.companieshouse.data.dbclone.sql.CompanySql;
+import uk.gov.companieshouse.testdata.SqlDetails;
 import uk.gov.companieshouse.utils.TestContext;
 
 public class DbClone {
 
     public TestContext testContext;
+    public SqlDetails sqlDetails;
     private static final Logger LOG = LoggerFactory.getLogger(DbClone.class);
 
 
-    public DbClone(TestContext testContext) {
+    public DbClone(TestContext testContext, SqlDetails sqlDetails) {
         this.testContext = testContext;
+        this.sqlDetails = sqlDetails;
         PageFactory.initElements(testContext.getWebDriver(), this);
     }
 
@@ -46,6 +49,8 @@ public class DbClone {
                 String message = String.format("Company selected from DB: %s %s", companyNumber, company.getName());
                 //writeToScenario(message);
                 LOG.info(message);
+                sqlDetails.setCompanySql(sql);
+                sqlDetails.setSqlParameter(parameter);
                 return company;
             } catch (SQLException | InstantiationException | IllegalAccessException ex) {
                 String message = "No company data found for the given query in environment: " + env;

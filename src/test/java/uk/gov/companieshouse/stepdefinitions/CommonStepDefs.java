@@ -1,18 +1,10 @@
 package uk.gov.companieshouse.stepdefinitions;
 
-import static uk.gov.companieshouse.data.dbclone.sql.CompanySql.BASE_SQL_PRIVATE_LIMITED_COMPANY_ID;
-
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
-
-import java.util.Date;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import uk.gov.companieshouse.data.datamodel.Company;
 import uk.gov.companieshouse.data.dbclone.DbClone;
-import uk.gov.companieshouse.enums.Forms.Form;
 import uk.gov.companieshouse.pageobjects.ChipsHomePage;
 import uk.gov.companieshouse.pageobjects.CompanySearchPage;
 import uk.gov.companieshouse.pageobjects.OrgUnitPage;
@@ -33,7 +25,6 @@ public class CommonStepDefs {
     public ProcessStartOfDocumentPage processStartOfDocumentPage;
     public GlobalNavBar globalNavBar;
     public DbClone dbClone;
-
 
     public CommonStepDefs(TestContext context, ChipsHomePage chipsHomePage, CompanySearchPage companySearchPage,
                           OrgUnitPage orgUnitPage, ProcessStartOfDocumentPage processStartOfDocumentPage,
@@ -70,40 +61,11 @@ public class CommonStepDefs {
 
     }
 
-    @When("I process the start document for form {string}")
-    public void processTheStartDocumentForForm(String formType) {
-        Date today = new Date();
-        globalNavBar.clickProcessFormLabel();
-        Company company = dbClone.cloneCompanyWithParameterInternal(BASE_SQL_PRIVATE_LIMITED_COMPANY_ID, null);
-        processStartOfDocumentPage
-                .waitUntilDisplayed()
-                .generateBarcode(today);
-        processStartOfDocumentPage.selectFormType(Form.getFormByType(formType));
-
-        do {
-            processStartOfDocumentPage.setCompanyNumberField(company.getNumber())
-                    .setCheckCharactersPrefixField(company.getPrefix())
-                    .setCheckCharactersSuffixField(company.getSuffix());
-        } while (!retryCloneIfCompanyNameNotPopulated());
-        processStartOfDocumentPage.clickProceedLink();
-    }
-
     @Then("the form is submitted without rules fired")
     public void theFormIsSubmittedWithoutFailedRules() {
         processStartOfDocumentPage.waitUntilDisplayed();
     }
 
-    /**
-     * Check if the company name is populated correctly on PSOD.
-     * Retry company cloning using the SQL initially used if it is not.
-     */
-    private boolean retryCloneIfCompanyNameNotPopulated() {
-        if (processStartOfDocumentPage.getPopulatedCompanyName().equals("")) {
-            dbClone.cloneCompanyWithParameterInternal(BASE_SQL_PRIVATE_LIMITED_COMPANY_ID, null);
-            return false;
-        } else {
-            return true;
-        }
-    }
+
 
 }
