@@ -1,5 +1,5 @@
 @chips @dissolution @ds01
-Feature: ad01 Form
+Feature: DS01 Form
 
 * This form is used to strike off a company from the Register
 * DS01 cannot be filed on a dissolved company
