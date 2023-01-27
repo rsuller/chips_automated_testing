@@ -5,10 +5,13 @@ import io.cucumber.java.en.Then;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.gov.companieshouse.data.dbclone.DbClone;
+import uk.gov.companieshouse.enums.Forms.Form;
 import uk.gov.companieshouse.pageobjects.ChipsHomePage;
+import uk.gov.companieshouse.pageobjects.CompanyDetailsScreen;
 import uk.gov.companieshouse.pageobjects.CompanySearchPage;
 import uk.gov.companieshouse.pageobjects.OrgUnitPage;
 import uk.gov.companieshouse.pageobjects.ProcessStartOfDocumentPage;
+import uk.gov.companieshouse.testdata.DocumentDetails;
 import uk.gov.companieshouse.testdata.User;
 import uk.gov.companieshouse.utils.GlobalNavBar;
 import uk.gov.companieshouse.utils.TestContext;
@@ -20,22 +23,27 @@ public class CommonStepDefs {
 
     public TestContext context;
     public ChipsHomePage chipsHomePage;
-    public CompanySearchPage companySearchPage;
+    public CompanyDetailsScreen companyDetailsScreen;
     public OrgUnitPage orgUnitPage;
     public ProcessStartOfDocumentPage processStartOfDocumentPage;
     public GlobalNavBar globalNavBar;
     public DbClone dbClone;
+    public DocumentDetails documentDetails;
+    public CompanySearchPage companySearchPage;
 
-    public CommonStepDefs(TestContext context, ChipsHomePage chipsHomePage, CompanySearchPage companySearchPage,
+    public CommonStepDefs(TestContext context, ChipsHomePage chipsHomePage, CompanyDetailsScreen companyDetailsScreen,
                           OrgUnitPage orgUnitPage, ProcessStartOfDocumentPage processStartOfDocumentPage,
-                          GlobalNavBar globalNavBar, DbClone dbClone) {
+                          GlobalNavBar globalNavBar, DbClone dbClone, DocumentDetails documentDetails,
+                          CompanySearchPage companySearchPage) {
         this.context = context;
         this.chipsHomePage = chipsHomePage;
-        this.companySearchPage = companySearchPage;
+        this.companyDetailsScreen = companyDetailsScreen;
         this.orgUnitPage = orgUnitPage;
         this.processStartOfDocumentPage = processStartOfDocumentPage;
         this.globalNavBar = globalNavBar;
         this.dbClone = dbClone;
+        this.documentDetails = documentDetails;
+        this.companySearchPage = companySearchPage;
     }
 
     @Given("I am logged in as a user in the {string} organisational unit")
@@ -53,19 +61,21 @@ public class CommonStepDefs {
         orgUnitPage.selectOrgUnit(context.getUser().getOrgUnit());
     }
 
-    @Then("I will be able to search for company {string}")
-    public void willBeAbleToSearchForCompany(String companyNumber) {
-        log.info("Searching for company number: {}", companyNumber);
-        context.getWebDriver().navigate().to(context.getEnv().config.getString("chips_url") + "/menu/companySearch");
-        companySearchPage.searchForCompanyNumber(companyNumber);
-
-    }
-
     @Then("the form is submitted without rules fired")
     public void theFormIsSubmittedWithoutFailedRules() {
         processStartOfDocumentPage.waitUntilDisplayed();
     }
 
-
+    @Then("^company history information is updated with the accepted (.*) transaction$")
+    public void companyHistoryInformationIsUpdated(String formName) {
+        Form form = Form.getFormByType(formName);
+        companySearchPage
+                .findCompanyByNumberFromMenu()
+                .openCompanyDetails();
+        companyDetailsScreen
+                .waitUntilDisplayed()
+                .getExpectedTransactionFromHistory(form.getType(), documentDetails.getReceivedDate(), "ACCEPTED",
+                        form.getTransactionHistoryDescription(), "WEB LOGIC");
+    }
 
 }
