@@ -16,11 +16,12 @@ import org.slf4j.LoggerFactory;
 import uk.gov.companieshouse.data.datamodel.Company;
 import uk.gov.companieshouse.data.dbclone.DbClone;
 import uk.gov.companieshouse.enums.Forms.Form;
+import uk.gov.companieshouse.testdata.CompanyDetails;
+import uk.gov.companieshouse.testdata.DocumentDetails;
 import uk.gov.companieshouse.testdata.SqlDetails;
 import uk.gov.companieshouse.utils.BarcodeGenerator;
 import uk.gov.companieshouse.utils.ElementInteraction;
 import uk.gov.companieshouse.utils.TestContext;
-
 
 public class ProcessStartOfDocumentPage extends ElementInteraction {
 
@@ -28,15 +29,20 @@ public class ProcessStartOfDocumentPage extends ElementInteraction {
     private BarcodeGenerator barcodeGenerator;
     private DbClone dbClone;
     public SqlDetails sqlDetails;
+    public CompanyDetails companyDetails;
+    public DocumentDetails documentDetails;
+
     public static final Logger log = LoggerFactory.getLogger(ProcessStartOfDocumentPage.class);
 
     public ProcessStartOfDocumentPage(TestContext testContext, BarcodeGenerator barcodeGenerator, DbClone dbClone,
-                                      SqlDetails sqlDetails) {
+                                      SqlDetails sqlDetails, CompanyDetails companyDetails, DocumentDetails documentDetails) {
         super(testContext);
         this.testContext = testContext;
         this.barcodeGenerator = barcodeGenerator;
         this.dbClone = dbClone;
         this.sqlDetails = sqlDetails;
+        this.companyDetails = companyDetails;
+        this.documentDetails = documentDetails;
         PageFactory.initElements(testContext.getWebDriver(), this);
     }
 
@@ -154,7 +160,8 @@ public class ProcessStartOfDocumentPage extends ElementInteraction {
 
             if (generatedDateString.equals(originalDateString)) {
                 log.info("Barcode {} generated for date: {}", barcode, generatedDateString);
-                testContext.storeDocumentDetails(barcode, generatedDateString);
+                documentDetails.setBarcode(barcode);
+                documentDetails.setReceivedDate(generatedDateString);
                 break;
             }
 
@@ -246,6 +253,7 @@ public class ProcessStartOfDocumentPage extends ElementInteraction {
                             .setCompanySelect(company.getName(), company.getNameEnding());
                 }
             }
+            setCompanyContext(company);
         } while (!retryCloneIfCompanyNameNotPopulated());
         clickProceedLink();
         return this;
@@ -328,6 +336,12 @@ public class ProcessStartOfDocumentPage extends ElementInteraction {
                 (companyName.trim() + " " + nameEnding).trim()
         );
         elementCompanyListSelect.sendKeys(Keys.RETURN);
+        return this;
+    }
+
+    private ProcessStartOfDocumentPage setCompanyContext(Company company) {
+        companyDetails.setCompanyNumber(company.getNumber());
+        companyDetails.setCompanyName(company.getName());
         return this;
     }
 

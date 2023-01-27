@@ -12,3 +12,4 @@ Feature: DS01 Form
     When I process the start document for form DS01
     And I complete mandatory details to strike off the company from the register
     Then the form is submitted without rules fired
+    And company history information is updated with the accepted DS01 transaction
