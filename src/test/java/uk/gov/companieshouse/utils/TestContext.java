@@ -60,10 +60,4 @@ public class TestContext {
         return user;
     }
 
-    public void storeDocumentDetails(String recievedDate, String barcode) {
-        documentDetails = new DocumentDetails();
-        documentDetails.setBarcode(barcode);
-        documentDetails.setReceivedDate(recievedDate);
-
-    }
 }

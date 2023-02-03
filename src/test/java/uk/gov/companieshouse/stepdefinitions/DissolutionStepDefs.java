@@ -41,6 +41,7 @@ public class DissolutionStepDefs {
     public void completeMandatoryDetailsToStrikeOffTheCompanyFromTheRegister() {
         Address address = new Address.AddressBuilder().welshAddress().build();
         dissolutionPage
+                .waitUntilFormDisplayed(Form.DS01.getTitle())
                 .enterSignatureDate()
                 .enterHouseNumber(address.getHouseNumber())
                 .enterPostcode(address.getPostcode())

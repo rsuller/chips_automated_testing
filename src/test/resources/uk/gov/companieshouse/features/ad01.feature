@@ -9,3 +9,4 @@ Feature: ad01 Form
     When I process the start document for form AD01
     And I complete mandatory details to change a registered office address
     Then the form is submitted without rules fired
+    And company history information is updated with the accepted AD01 transaction

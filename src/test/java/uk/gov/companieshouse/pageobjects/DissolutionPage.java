@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.gov.companieshouse.utils.ElementInteraction;
@@ -39,7 +40,14 @@ public class DissolutionPage extends ElementInteraction {
     private WebElement elementSave;
     @FindBy(how = How.ID, using = "form1:task_pend")
     private WebElement elementPendLink;
+    @FindBy(how = How.CSS, using = "div[class='subheader'] > span[class='subtitle']")
+    private WebElement elementPageSubTitle;
 
+    public DissolutionPage waitUntilFormDisplayed(String pageSubTitle) {
+        getWebDriverWait(10).until(ExpectedConditions.textToBePresentInElement(
+                elementPageSubTitle, pageSubTitle));
+        return this;
+    }
 
     public DissolutionPage enterSignatureDate() {
         Date today = new Date();

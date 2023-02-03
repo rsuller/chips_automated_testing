@@ -1,12 +1,12 @@
 package uk.gov.companieshouse.pageobjects;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.attributeToBeNotEmpty;
-import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.gov.companieshouse.utils.ElementInteraction;
@@ -39,10 +39,12 @@ public class ChangeToRoPage extends ElementInteraction {
 
     @FindBy(how = How.ID, using = "form1:task_submit")
     private WebElement elementSave;
+    @FindBy(how = How.CSS, using = "div[class='subheader'] > span[class='subtitle']")
+    private WebElement elementPageSubTitle;
 
-
-    public ChangeToRoPage waitUntilAd01Displayed() {
-        getWebDriverWait(10).until(visibilityOf(elementRoHouseNumber));
+    public ChangeToRoPage waitUntilFormDisplayed(String pageSubTitle) {
+        getWebDriverWait(10).until(ExpectedConditions.textToBePresentInElement(
+                elementPageSubTitle, pageSubTitle));
         return this;
     }
 
