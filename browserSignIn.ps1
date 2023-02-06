@@ -4,7 +4,7 @@ param (
     [string]
     $browserSignInValue
 )
-if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) { Start-Process powershell.exe "-NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`"" -Verb RunAs; exit }
+if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) { Start-Process powershell.exe "-NoProfile -NonInteractive -ExecutionPolicy Bypass -File `"$PSCommandPath`"" -Verb RunAs; exit }
 
 
 
@@ -27,10 +27,10 @@ $browserSignInValue = Get-browserSignInValue -ErrorAction Stop;
 Write-Output "$(Get-Date -format 'u') Microsoft Edge browserSignIn registry value $browserSignInValue found on machine"
 If ($browserSignInValue -eq 2) {
 
-    Write-Output "$(Get-Date -format 'u') Setting browserSignIn value to 0..."
+    Write-Host "$(Get-Date -format 'u') Setting browserSignIn value to 0..."
     Set-ItemProperty -Path 'HKLM:\SOFTWARE\Policies\Microsoft\Edge\' -Name BrowserSignIn -Value 0 -Type DWord
 
 
 } else {
-Write-Output "$(Get-Date -format 'u') browserSignIn value is already 0, continuing with test."
+Write-Host "$(Get-Date -format 'u') browserSignIn value is already 0, continuing with test."
 }

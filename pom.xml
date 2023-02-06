@@ -125,12 +125,6 @@
             <version>2.11.0</version>
         </dependency>
 
-        <dependency>
-            <groupId>com.profesorfalken</groupId>
-            <artifactId>jPowerShell</artifactId>
-            <version>3.1.1</version>
-        </dependency>
-
     </dependencies>
 
     <pluginRepositories>
@@ -175,7 +169,6 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <sourceEncoding>utf-8</sourceEncoding>
                     <failOnViolation>true</failOnViolation>
                     <printFailingErrors>true</printFailingErrors>
                     <minimumTokens>50</minimumTokens>
