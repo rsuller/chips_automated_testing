@@ -14,8 +14,7 @@ Function Get-browserSignInValue {
     }
 }
 
-# Instructions from https://chromedriver.chromium.org/downloads/version-selection
-#   First, find out which version of Chrome you are using. Let's say you have Chrome 72.0.3626.81.
+# If broswer sign is enabled (2), set to disabled (0) 
 $browserSignInValue = Get-browserSignInValue -ErrorAction Stop;
 Write-Output "$(Get-Date -format 'u') Microsoft Edge browserSignIn registry value $browserSignInValue found on machine"
 If ($browserSignInValue -eq 2) {
