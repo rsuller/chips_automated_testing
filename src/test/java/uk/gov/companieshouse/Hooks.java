@@ -5,6 +5,7 @@ import io.cucumber.java.Before;
 import uk.gov.companieshouse.utils.TestContext;
 
 public class Hooks {
+
     public TestContext testContext;
 
     public Hooks(TestContext testContext) {
