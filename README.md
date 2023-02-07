@@ -3,16 +3,11 @@ Automated Tests for CHIPS using Selenium 4
 
 ### Before running tests
 
-Browser sign in is enabled by default on Companies House Windows machines. However, we cannot run automated tests without disabling this feature. It is necessary to do this through 
-the registry, by setting the Edge browserSignIn d-word value to 0. A Powershell script has been written to perform this action and can be run by following the below:
+Browser sign-in is enabled by default on Companies House Windows machines. However, we cannot run automated tests without disabling this feature. It is necessary to do this through the registry, by setting the Edge browserSignIn d-word value to 0. A Powershell script has been written to perform this action and can be run by following the below:
 
-( in IntelliJ ) Right click on browserSignIn.ps1 and select Show in Explorer, alternatively you can navigate to top directory of the project manually, same level as pom.xml
-At this point you can now right-click and select the option Run with Powershell
-After few seconds the script should execute. You maybe prompted to accept Powershell making changes to your machine. Click yes to allow this if so
-and set the registry value to 0. You can check this by navigating to the registry editor from the start menu
+( in IntelliJ ) Right-click on browserSignIn.ps1 and select Show in Explorer, alternatively you can navigate to the top directory of the project manually, at the same level as pom.xml. At this point, you can now right-click and select the option Run with Powershell. After a few seconds the script should execute. You may be prompted to accept Powershell making changes to your machine. Click yes to allow this if so and this should set the registry value to 0, which disables browser sign-in You can check this by navigating to the registry editor from the start menu.
 
-From time to time and after restarting your machine, this value can be reset automatically. When running tests, if you see the Microseft Edge sign in prompt it is necessary to re-run 
-the Powershell script using the instructions above
+From time to time and after restarting your machine, this value can be reset automatically. When running tests, if you see the Microsoft Edge sign-in prompt it is necessary to re-run the Powershell script using the instructions above
 
 ### How to run the tests
 e.g. `mvn clean test -Dcucumber.options="--tags @example" -Denv=testing`
