@@ -1,11 +1,4 @@
- [CmdletBinding()]
-param (
-    [Parameter(Mandatory = $false)]
-    [string]
-    $browserSignInValue
-)
 if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) { Start-Process powershell.exe "-NoProfile -NonInteractive -ExecutionPolicy Bypass -File `"$PSCommandPath`"" -Verb RunAs; exit }
-
 
 
 Function Get-browserSignInValue {
