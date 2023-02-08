@@ -41,7 +41,5 @@ public class Logout extends ElementInteraction {
         }
         return this;
     }
+
 }
-
-
-
