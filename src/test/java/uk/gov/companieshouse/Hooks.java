@@ -2,8 +2,8 @@ package uk.gov.companieshouse;
 
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
+import uk.gov.companieshouse.pageobjects.GlobalNavBar;
 import uk.gov.companieshouse.pageobjects.Logout;
-import uk.gov.companieshouse.utils.GlobalNavBar;
 import uk.gov.companieshouse.utils.TestContext;
 
 public class Hooks {

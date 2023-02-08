@@ -1,4 +1,4 @@
-package uk.gov.companieshouse.utils;
+package uk.gov.companieshouse.pageobjects;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
 
@@ -11,7 +11,8 @@ import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import uk.gov.companieshouse.pageobjects.ProcessStartOfDocumentPage;
+import uk.gov.companieshouse.utils.ElementInteraction;
+import uk.gov.companieshouse.utils.TestContext;
 
 
 public class GlobalNavBar extends ElementInteraction {
