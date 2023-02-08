@@ -9,8 +9,8 @@ import uk.gov.companieshouse.data.datamodel.Company;
 import uk.gov.companieshouse.data.dbclone.DbClone;
 import uk.gov.companieshouse.enums.Forms.Form;
 import uk.gov.companieshouse.pageobjects.ChangeToRoPage;
+import uk.gov.companieshouse.pageobjects.GlobalNavBar;
 import uk.gov.companieshouse.pageobjects.ProcessStartOfDocumentPage;
-import uk.gov.companieshouse.utils.GlobalNavBar;
 import uk.gov.companieshouse.utils.TestContext;
 
 

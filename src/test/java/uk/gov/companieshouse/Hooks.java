@@ -2,14 +2,21 @@ package uk.gov.companieshouse;
 
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
+import uk.gov.companieshouse.pageobjects.GlobalNavBar;
+import uk.gov.companieshouse.pageobjects.Logout;
 import uk.gov.companieshouse.utils.TestContext;
 
 public class Hooks {
 
     public TestContext testContext;
+    public GlobalNavBar globalNavBar;
+    public Logout logout;
 
-    public Hooks(TestContext testContext) {
+    public Hooks(TestContext testContext, GlobalNavBar globalNavBar, Logout logout)
+    {
         this.testContext = testContext;
+        this.globalNavBar = globalNavBar;
+        this.logout = logout;
     }
 
     @Before
@@ -20,6 +27,9 @@ public class Hooks {
 
     @After
     public void tearDown() {
+        globalNavBar.clickLogoutLabel();
+        testContext.getWebDriver().switchTo().alert().accept();
+        logout.clickIgnoreOpenBatches();
         testContext.getWebDriver().close();
     }
 }

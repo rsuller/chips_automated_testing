@@ -9,11 +9,11 @@ import uk.gov.companieshouse.enums.Forms.Form;
 import uk.gov.companieshouse.pageobjects.ChipsHomePage;
 import uk.gov.companieshouse.pageobjects.CompanyDetailsScreen;
 import uk.gov.companieshouse.pageobjects.CompanySearchPage;
+import uk.gov.companieshouse.pageobjects.GlobalNavBar;
 import uk.gov.companieshouse.pageobjects.OrgUnitPage;
 import uk.gov.companieshouse.pageobjects.ProcessStartOfDocumentPage;
 import uk.gov.companieshouse.testdata.DocumentDetails;
 import uk.gov.companieshouse.testdata.User;
-import uk.gov.companieshouse.utils.GlobalNavBar;
 import uk.gov.companieshouse.utils.TestContext;
 
 
