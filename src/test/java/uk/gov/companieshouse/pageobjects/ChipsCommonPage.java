@@ -1,6 +1,5 @@
 package uk.gov.companieshouse.pageobjects;
 
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
@@ -29,9 +28,5 @@ public class ChipsCommonPage extends ElementInteraction {
     public void enterUraBarcode() {
         residentialAddressLink.click();
         uraBarcodeInputField.sendKeys(URA_BARCODE);
-    }
-
-    public void clearField(WebElement webElement) {
-        webElement.sendKeys(Keys.chord(Keys.CONTROL,"a", Keys.DELETE));
     }
 }
