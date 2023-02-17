@@ -3,10 +3,11 @@ package uk.gov.companieshouse.utils;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
 
 import java.time.Duration;
+
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 
 public class ElementInteraction {
 
@@ -42,5 +43,9 @@ public class ElementInteraction {
 
     public WebDriverWait getWebDriverWait(int secondsToWait) {
         return new WebDriverWait(testContext.getWebDriver(), Duration.ofSeconds(secondsToWait));
+    }
+
+    public void clearField(WebElement webElement) {
+        webElement.sendKeys(Keys.chord(Keys.CONTROL,"a", Keys.DELETE));
     }
 }

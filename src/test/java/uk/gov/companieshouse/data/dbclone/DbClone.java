@@ -1,6 +1,7 @@
 package uk.gov.companieshouse.data.dbclone;
 
 import com.typesafe.config.ConfigException;
+
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.Date;
@@ -11,6 +12,7 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.text.ParseException;
 import java.util.Properties;
+
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +20,7 @@ import uk.gov.companieshouse.data.datamodel.Company;
 import uk.gov.companieshouse.data.dbclone.sql.CompanySql;
 import uk.gov.companieshouse.testdata.SqlDetails;
 import uk.gov.companieshouse.utils.TestContext;
+
 
 public class DbClone {
 
@@ -170,5 +173,9 @@ public class DbClone {
         prop.setProperty("user", user);
         prop.setProperty("password", pass);
         return DriverManager.getConnection(url, prop);
+    }
+
+    public Company cloneCompany(CompanySql sql) {
+        return cloneCompanyWithParameterInternal(sql, null);
     }
 }
