@@ -5,6 +5,7 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
 import java.time.Duration;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 
@@ -38,6 +39,11 @@ public class ElementInteraction {
     public void typeText(WebElement element, String value) {
         JavascriptExecutor jse = (JavascriptExecutor)testContext.getWebDriver();
         jse.executeScript("arguments[0].value='" + value + "';", element);
+    }
+
+    public void doubleClick(WebElement element) {
+        Actions actions = new Actions(testContext.getWebDriver());
+        actions.doubleClick(element).perform();
     }
 
     public WebDriverWait getWebDriverWait(int secondsToWait) {

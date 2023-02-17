@@ -1,4 +1,4 @@
-package uk.gov.companieshouse.data.dbclone.sql;
+package uk.gov.companieshouse.data.dbUtil.sql;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,7 +12,9 @@ public enum CompanySql {
     BASE_SQL_PRIVATE_LIMITED_COMPANY_ID(
             "base/private_limited_company_id.sql"),
     DISSOLUTION_COMPANY_NO_PREV_DISS_REQUEST_FILED(
-            "dissolution/company_no_prev_diss_request_filed.sql");
+            "dissolution/company_no_prev_diss_request_filed.sql"),
+    BASE_SQL_PRIVATE_LIMITED_COMPANY_RO_LOCATION_UNSPECIFIED(
+            "base/private_limited_company_ro_location_unspecified.sql");
 
     private String sql;
 

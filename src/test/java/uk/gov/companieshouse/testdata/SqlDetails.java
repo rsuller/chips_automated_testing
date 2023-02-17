@@ -1,6 +1,6 @@
 package uk.gov.companieshouse.testdata;
 
-import uk.gov.companieshouse.data.dbclone.sql.CompanySql;
+import uk.gov.companieshouse.data.dbUtil.sql.CompanySql;
 
 public class SqlDetails {
 

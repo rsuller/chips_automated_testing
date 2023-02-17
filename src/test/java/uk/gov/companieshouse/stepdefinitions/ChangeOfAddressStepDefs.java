@@ -1,12 +1,12 @@
 package uk.gov.companieshouse.stepdefinitions;
 
-import static uk.gov.companieshouse.data.dbclone.sql.CompanySql.BASE_SQL_PRIVATE_LIMITED_COMPANY_ID;
+import static uk.gov.companieshouse.data.dbUtil.sql.CompanySql.BASE_SQL_PRIVATE_LIMITED_COMPANY_ID;
 
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
 import uk.gov.companieshouse.data.datamodel.Address;
 import uk.gov.companieshouse.data.datamodel.Company;
-import uk.gov.companieshouse.data.dbclone.DbClone;
+import uk.gov.companieshouse.data.dbUtil.DbUtil;
 import uk.gov.companieshouse.enums.Forms.Form;
 import uk.gov.companieshouse.pageobjects.ChangeToRoPage;
 import uk.gov.companieshouse.pageobjects.GlobalNavBar;
@@ -19,22 +19,22 @@ public class ChangeOfAddressStepDefs {
     public TestContext context;
     public ChangeToRoPage changeToRoPage;
     public GlobalNavBar globalNavBar;
-    public DbClone dbClone;
+    public DbUtil dbUtil;
     public ProcessStartOfDocumentPage processStartOfDocumentPage;
 
-    public ChangeOfAddressStepDefs(TestContext context, ChangeToRoPage changeToRoPage, GlobalNavBar globalNavBar, DbClone dbClone,
+    public ChangeOfAddressStepDefs(TestContext context, ChangeToRoPage changeToRoPage, GlobalNavBar globalNavBar, DbUtil dbUtil,
                                    ProcessStartOfDocumentPage processStartOfDocumentPage) {
         this.context = context;
         this.changeToRoPage = changeToRoPage;
         this.globalNavBar = globalNavBar;
-        this.dbClone = dbClone;
+        this.dbUtil = dbUtil;
         this.processStartOfDocumentPage = processStartOfDocumentPage;
     }
 
     @When("I process the start document for form AD01")
     public void processTheStartDocumentForFormAD01() {
         globalNavBar.clickProcessFormLabel();
-        Company company = dbClone.cloneCompanyWithParameterInternal(BASE_SQL_PRIVATE_LIMITED_COMPANY_ID, null);
+        Company company = dbUtil.cloneCompanyWithParameterInternal(BASE_SQL_PRIVATE_LIMITED_COMPANY_ID, null);
         processStartOfDocumentPage.processForm(company, "AD01", Form.AD01.isHighRiskForm());
     }
 

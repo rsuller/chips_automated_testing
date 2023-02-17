@@ -4,7 +4,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import uk.gov.companieshouse.data.dbclone.DbClone;
+import uk.gov.companieshouse.data.dbUtil.DbUtil;
 import uk.gov.companieshouse.enums.Forms.Form;
 import uk.gov.companieshouse.pageobjects.ChipsHomePage;
 import uk.gov.companieshouse.pageobjects.CompanyDetailsScreen;
@@ -27,13 +27,13 @@ public class CommonStepDefs {
     public OrgUnitPage orgUnitPage;
     public ProcessStartOfDocumentPage processStartOfDocumentPage;
     public GlobalNavBar globalNavBar;
-    public DbClone dbClone;
+    public DbUtil dbUtil;
     public DocumentDetails documentDetails;
     public CompanySearchPage companySearchPage;
 
     public CommonStepDefs(TestContext context, ChipsHomePage chipsHomePage, CompanyDetailsScreen companyDetailsScreen,
                           OrgUnitPage orgUnitPage, ProcessStartOfDocumentPage processStartOfDocumentPage,
-                          GlobalNavBar globalNavBar, DbClone dbClone, DocumentDetails documentDetails,
+                          GlobalNavBar globalNavBar, DbUtil dbUtil, DocumentDetails documentDetails,
                           CompanySearchPage companySearchPage) {
         this.context = context;
         this.chipsHomePage = chipsHomePage;
@@ -41,7 +41,7 @@ public class CommonStepDefs {
         this.orgUnitPage = orgUnitPage;
         this.processStartOfDocumentPage = processStartOfDocumentPage;
         this.globalNavBar = globalNavBar;
-        this.dbClone = dbClone;
+        this.dbUtil = dbUtil;
         this.documentDetails = documentDetails;
         this.companySearchPage = companySearchPage;
     }
