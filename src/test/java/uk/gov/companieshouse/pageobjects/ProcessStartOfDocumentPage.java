@@ -1,5 +1,11 @@
 package uk.gov.companieshouse.pageobjects;
 
+import static org.openqa.selenium.support.ui.ExpectedConditions.attributeToBeNotEmpty;
+import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
@@ -17,12 +23,6 @@ import uk.gov.companieshouse.testdata.SqlDetails;
 import uk.gov.companieshouse.utils.BarcodeGenerator;
 import uk.gov.companieshouse.utils.ElementInteraction;
 import uk.gov.companieshouse.utils.TestContext;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import static org.openqa.selenium.support.ui.ExpectedConditions.attributeToBeNotEmpty;
-import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
 
 public class ProcessStartOfDocumentPage extends ElementInteraction {
 
@@ -227,9 +227,9 @@ public class ProcessStartOfDocumentPage extends ElementInteraction {
     /**
      * Complete the company identification fields on the process start of document screen.
      *
-     * @param company        the company object containing the company details to fill in
+     * @param company      the company object containing the company details to fill in
      * @param highRiskForm flag identifying whether to complete high risk or low risk form fields
-     *                       (triple keying or not)
+     *                     (triple keying or not)
      */
     public ProcessStartOfDocumentPage processForm(Company company, String formType, boolean highRiskForm) {
         Date today = new Date();

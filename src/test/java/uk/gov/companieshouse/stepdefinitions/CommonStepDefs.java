@@ -1,5 +1,8 @@
 package uk.gov.companieshouse.stepdefinitions;
 
+import static uk.gov.companieshouse.data.dbclone.sql.CompanySql.BASE_SQL_PRIVATE_LIMITED_COMPANY_ID;
+import static uk.gov.companieshouse.data.dbclone.sql.CompanySql.DISSOLUTION_COMPANY_NO_PREV_DISS_REQUEST_FILED;
+
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -18,10 +21,6 @@ import uk.gov.companieshouse.pageobjects.ProcessStartOfDocumentPage;
 import uk.gov.companieshouse.testdata.DocumentDetails;
 import uk.gov.companieshouse.testdata.User;
 import uk.gov.companieshouse.utils.TestContext;
-
-import static uk.gov.companieshouse.data.dbclone.sql.CompanySql.BASE_SQL_PRIVATE_LIMITED_COMPANY_ID;
-import static uk.gov.companieshouse.data.dbclone.sql.CompanySql.DISSOLUTION_COMPANY_NO_PREV_DISS_REQUEST_FILED;
-
 
 public class CommonStepDefs {
 
@@ -85,7 +84,7 @@ public class CommonStepDefs {
     }
 
     @And("I process the start document for form {string}")
-    public void iProcessTheStartDocumentForForm(String formType) {
+    public void processTheStartDocumentForForm(String formType) {
         globalNavBar.clickProcessFormLabel();
         Company company = null;
         switch (formType) {

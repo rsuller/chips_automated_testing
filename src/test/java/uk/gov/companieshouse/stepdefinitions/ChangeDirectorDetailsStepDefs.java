@@ -18,7 +18,7 @@ public class ChangeDirectorDetailsStepDefs {
     }
 
     @When("I change the {string} detail of the director")
-    public void iChangeTheDetailOfTheDirector(String typeOfChange) {
+    public void changeTheDetailOfTheDirector(String typeOfChange) {
         changeOfficerPage.directorDetailToChange(typeOfChange.toLowerCase());
 
     }

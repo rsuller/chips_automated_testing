@@ -1,5 +1,7 @@
 package uk.gov.companieshouse.pageobjects;
 
+import java.util.Date;
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
@@ -9,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import uk.gov.companieshouse.utils.DateFormat;
 import uk.gov.companieshouse.utils.TestContext;
 
-import java.util.Date;
 
 public class ChangeOfficerPage extends ChipsCommonPage {
     TestContext testContext;
@@ -27,7 +28,8 @@ public class ChangeOfficerPage extends ChipsCommonPage {
     @FindBy(how = How.ID, using = "form1:task_save")
     private WebElement save;
 
-    @FindBy(how = How.ID, using = "form1:changeOfficerDetailsTabSubView:forenames:appointmentChangeModifiedOfficer_officer_personName_middlenames:field")
+    @FindBy(how = How.ID, using = "form1:changeOfficerDetailsTabSubView:forenames:appointmentChangeModifiedOfficer_"
+            + "officer_personName_middlenames:field")
     private WebElement middleNameField;
 
     @FindBy(how = How.ID, using = "form1:task_appointments:0:surname")

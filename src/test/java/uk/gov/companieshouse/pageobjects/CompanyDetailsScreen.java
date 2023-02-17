@@ -1,5 +1,9 @@
 package uk.gov.companieshouse.pageobjects;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
@@ -12,10 +16,6 @@ import org.slf4j.LoggerFactory;
 import uk.gov.companieshouse.testdata.CompanyDetails;
 import uk.gov.companieshouse.utils.ElementInteraction;
 import uk.gov.companieshouse.utils.TestContext;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 
 public class CompanyDetailsScreen extends ElementInteraction {
