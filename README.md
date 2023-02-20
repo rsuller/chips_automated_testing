@@ -10,7 +10,7 @@ Browser sign-in is enabled by default on Companies House Windows machines. Howev
 From time to time and after restarting your machine, this value can be reset automatically. When running tests, if you see the Microsoft Edge sign-in prompt it is necessary to re-run the Powershell script using the instructions above
 
 ### How to run the tests
-e.g. `mvn clean test -Dcucumber.options="--tags @example" -Denv=testing`
+e.g. `mvn clean test -Dcucumber.filter.tags="@example" -Denv=testing`
 
 See [Cucumber.io](https://cucumber.io/docs/cucumber/) for details on the Cucumber Framework & cucumber options.
 

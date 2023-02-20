@@ -5,6 +5,7 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
@@ -290,6 +291,7 @@ public class ProcessStartOfDocumentPage extends ElementInteraction {
                             .setCompanySelect(company.getName(), company.getNameEnding());
                 }
             }
+            assert company != null;
             setCompanyContext(company);
         } while (!retryCloneIfCompanyNameNotPopulated());
     }

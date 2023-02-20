@@ -32,6 +32,10 @@ public class DbUtil {
         PageFactory.initElements(testContext.getWebDriver(), this);
     }
 
+    public Company cloneCompany(CompanySql sql) {
+        return cloneCompanyWithParameterInternal(sql, null);
+    }
+
     public Company cloneCompanyWithParameterInternal(CompanySql sql, Object parameter) {
         boolean disableCloning;
         String env = testContext.getEnv().config.getString("chips-db-user");
@@ -203,4 +207,5 @@ public class DbUtil {
         prop.setProperty("password", pass);
         return DriverManager.getConnection(url, prop);
     }
+
 }

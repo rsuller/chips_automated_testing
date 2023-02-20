@@ -3,6 +3,7 @@ package uk.gov.companieshouse.pageobjects;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
@@ -71,7 +72,7 @@ public class CompanyDetailsScreen extends ElementInteraction {
                 log.error("{} transaction  not found, no more pages to check",
                         formToFind);
                 throw new RuntimeException("The expected " + formToFind
-                        + " tranasaction was not found");
+                        + " transaction was not found");
             }
         }
         return this;
