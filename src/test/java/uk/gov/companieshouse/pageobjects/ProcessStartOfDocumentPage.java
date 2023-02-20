@@ -15,7 +15,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.gov.companieshouse.data.datamodel.Company;
-import uk.gov.companieshouse.data.dbUtil.DbUtil;
+import uk.gov.companieshouse.data.dbutil.DbUtil;
 import uk.gov.companieshouse.enums.Forms.Form;
 import uk.gov.companieshouse.testdata.CompanyDetails;
 import uk.gov.companieshouse.testdata.DocumentDetails;

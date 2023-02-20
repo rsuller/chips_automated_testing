@@ -1,4 +1,4 @@
-package uk.gov.companieshouse.data.dbUtil;
+package uk.gov.companieshouse.data.dbutil;
 
 import com.typesafe.config.ConfigException;
 import java.sql.CallableStatement;
@@ -15,7 +15,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.gov.companieshouse.data.datamodel.Company;
-import uk.gov.companieshouse.data.dbUtil.sql.CompanySql;
+import uk.gov.companieshouse.data.dbutil.sql.CompanySql;
 import uk.gov.companieshouse.testdata.SqlDetails;
 import uk.gov.companieshouse.utils.TestContext;
 

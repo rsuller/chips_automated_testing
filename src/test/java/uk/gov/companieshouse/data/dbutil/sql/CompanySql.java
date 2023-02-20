@@ -1,4 +1,4 @@
-package uk.gov.companieshouse.data.dbUtil.sql;
+package uk.gov.companieshouse.data.dbutil.sql;
 
 import java.io.BufferedReader;
 import java.io.IOException;
