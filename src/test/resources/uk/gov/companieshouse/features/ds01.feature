@@ -1,4 +1,4 @@
-@chips @dissolution @ds01
+@dissolution @ds01
 Feature: DS01 Form
 
 * This form is used to strike off a company from the Register

@@ -15,7 +15,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.gov.companieshouse.data.datamodel.Company;
-import uk.gov.companieshouse.data.dbclone.DbClone;
+import uk.gov.companieshouse.data.dbutil.DbUtil;
 import uk.gov.companieshouse.enums.Forms.Form;
 import uk.gov.companieshouse.testdata.CompanyDetails;
 import uk.gov.companieshouse.testdata.DocumentDetails;
@@ -28,19 +28,19 @@ public class ProcessStartOfDocumentPage extends ElementInteraction {
 
     public TestContext testContext;
     private BarcodeGenerator barcodeGenerator;
-    private DbClone dbClone;
+    private DbUtil dbUtil;
     public SqlDetails sqlDetails;
     public CompanyDetails companyDetails;
     public DocumentDetails documentDetails;
 
     public static final Logger log = LoggerFactory.getLogger(ProcessStartOfDocumentPage.class);
 
-    public ProcessStartOfDocumentPage(TestContext testContext, BarcodeGenerator barcodeGenerator, DbClone dbClone,
+    public ProcessStartOfDocumentPage(TestContext testContext, BarcodeGenerator barcodeGenerator, DbUtil dbUtil,
                                       SqlDetails sqlDetails, CompanyDetails companyDetails, DocumentDetails documentDetails) {
         super(testContext);
         this.testContext = testContext;
         this.barcodeGenerator = barcodeGenerator;
-        this.dbClone = dbClone;
+        this.dbUtil = dbUtil;
         this.sqlDetails = sqlDetails;
         this.companyDetails = companyDetails;
         this.documentDetails = documentDetails;
@@ -116,11 +116,11 @@ public class ProcessStartOfDocumentPage extends ElementInteraction {
     @FindBy(how = How.ID, using = "form1:task_startOfDocument_attachments:field:save")
     private WebElement elementSaveAttachmentsLink;
 
-    // elements for the liquidation confirmation pop up
+    // elements for the confirmation pop up
     @FindBy(how = How.ID, using = "form1:task_yes")
-    private WebElement elementLiquidationYesLink;
+    private WebElement elementPopupYesLink;
     @FindBy(how = How.ID, using = "form1:task_no")
-    private WebElement elementLiquidationNoLink;
+    private WebElement elementPopupNoLink;
 
 
     /**
@@ -234,12 +234,49 @@ public class ProcessStartOfDocumentPage extends ElementInteraction {
     public ProcessStartOfDocumentPage processForm(Company company, String formType, boolean highRiskForm) {
         Date today = new Date();
         waitUntilDisplayed().generateBarcode(today);
-        selectFormType(Form.getFormByType(formType));
+        fillInPsodFields(company, highRiskForm, formType);
+        clickProceedLink();
+        return this;
+    }
+
+    /**
+     * Complete the Process Start Of Document screen for FES document.
+     *
+     * @param form           the form to select
+     * @param company        the pertinent company
+     * @param twoCompanyForm flags form as 'high risk' that requires double entry of company
+     *                       name and number
+     * @return the domain reached
+     */
+    public ProcessStartOfDocumentPage processFesForm(
+            String form,
+            Company company,
+            boolean twoCompanyForm
+    ) {
+        if (company != null) {
+            setCompanyContext(company);
+        }
+        fillInPsodFields(company, twoCompanyForm, form);
+        clickProceedLink();
+        clickPsodPopUpYesLink();
+        return this;
+    }
+
+    /**
+     * Complete the company identification fields on the process start of document screen
+     * extracted out to a utility method as it is used in multiple locations.
+     *
+     * @param company        the company object containing the company details to fill in
+     * @param twoCompanyForm flag identifying whether to complete high risk or low risk form fields
+     *                       (double keying or not)
+     */
+    private void fillInPsodFields(Company company, boolean twoCompanyForm, String formType) {
         // Attempt to fill in the fields using the Company data from the DB
         // Call the retry method if not populated correctly.
+        selectFormType(Form.getFormByType(formType));
         do {
             if (company != null) {
-                if (!highRiskForm) {
+                if (!twoCompanyForm) {
                     getWebDriverWait(5).until(visibilityOf(elementCompanyNumberInputKey));
                     log.info("Successfully selected low risk form: {}", formType);
                     setCompanyNumberField(company.getNumber())
@@ -257,8 +294,6 @@ public class ProcessStartOfDocumentPage extends ElementInteraction {
             assert company != null;
             setCompanyContext(company);
         } while (!retryCloneIfCompanyNameNotPopulated());
-        clickProceedLink();
-        return this;
     }
 
     private void selectFormType(Form form) {
@@ -271,13 +306,18 @@ public class ProcessStartOfDocumentPage extends ElementInteraction {
         elementFormTypeSelectKey.sendKeys(Keys.DOWN);
     }
 
+    public ProcessStartOfDocumentPage clickPsodPopUpYesLink() {
+        elementPopupYesLink.click();
+        return this;
+    }
+
     /**
      * Check if the company name is populated correctly on PSOD.
      * Retry company cloning using the SQL initially used if it is not.
      */
     private boolean retryCloneIfCompanyNameNotPopulated() {
         if (getPopulatedCompanyName().equals("")) {
-            dbClone.cloneCompanyWithParameterInternal(sqlDetails.getCompanySql(),
+            dbUtil.cloneCompanyWithParameterInternal(sqlDetails.getCompanySql(),
                     sqlDetails.getSqlParameter());
             return false;
         } else {

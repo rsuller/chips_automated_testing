@@ -1,7 +1,6 @@
-package uk.gov.companieshouse.data.dbclone;
+package uk.gov.companieshouse.data.dbutil;
 
 import com.typesafe.config.ConfigException;
-
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.Date;
@@ -12,27 +11,29 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.text.ParseException;
 import java.util.Properties;
-
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.gov.companieshouse.data.datamodel.Company;
-import uk.gov.companieshouse.data.dbclone.sql.CompanySql;
+import uk.gov.companieshouse.data.dbutil.sql.CompanySql;
 import uk.gov.companieshouse.testdata.SqlDetails;
 import uk.gov.companieshouse.utils.TestContext;
 
-
-public class DbClone {
+public class DbUtil {
 
     public TestContext testContext;
     public SqlDetails sqlDetails;
-    private static final Logger LOG = LoggerFactory.getLogger(DbClone.class);
+    private static final Logger LOG = LoggerFactory.getLogger(DbUtil.class);
 
 
-    public DbClone(TestContext testContext, SqlDetails sqlDetails) {
+    public DbUtil(TestContext testContext, SqlDetails sqlDetails) {
         this.testContext = testContext;
         this.sqlDetails = sqlDetails;
         PageFactory.initElements(testContext.getWebDriver(), this);
+    }
+
+    public Company cloneCompany(CompanySql sql) {
+        return cloneCompanyWithParameterInternal(sql, null);
     }
 
     public Company cloneCompanyWithParameterInternal(CompanySql sql, Object parameter) {
@@ -44,7 +45,7 @@ public class DbClone {
             LOG.warn("No config found for: disable-company-cloning. Setting to false.");
             disableCloning = false;
         }
-        LOG.debug("Attempting to use SQL: {}", sql);
+        LOG.info("Attempting to use SQL: {}", sql);
         if (disableCloning) {
             try {
                 String companyNumber = dbQueryCriteriaCompanyId(sql.getSql(), parameter);
@@ -88,6 +89,38 @@ public class DbClone {
             }
         }
         throw new RuntimeException("Could not clone company using sql: " + sql.getSql());
+    }
+
+    /**
+     * get transaction documentID.
+     */
+    public String getDocumentId(final String barcode) {
+        final String sql = "select input_document_id "
+                + "from transaction_doc_xml "
+                + "inner join transaction "
+                + "using (transaction_id) "
+                + "where form_barcode = ?";
+        int maxTries = 20;
+        String docId = null;
+        for (int i = 1; i <= maxTries; ++i) {
+            LOG.info("Polling DB looking for the Document ID of barcode {}. Attempt {} of {} ",
+                    barcode, i, maxTries);
+            try (Connection connection = dbGetConnection();
+                 PreparedStatement stmt = createPreparedStatement(connection, sql, barcode);
+                 ResultSet rs = stmt.executeQuery()) {
+                rs.next();
+                docId = rs.getString("input_document_id");
+                LOG.info("Document ID found: {}.  Continuing with test", docId);
+                break;
+            } catch (SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException exception) {
+                if (i == maxTries) {
+                    LOG.error("Error attempting to find document ID: {}", exception.getMessage());
+                    return null;
+                }
+                LOG.info("Document ID not found, retrying");
+            }
+        }
+        return docId;
     }
 
     private PreparedStatement createPreparedStatement(Connection conn, String sql, Object... params) throws SQLException {
@@ -175,7 +208,4 @@ public class DbClone {
         return DriverManager.getConnection(url, prop);
     }
 
-    public Company cloneCompany(CompanySql sql) {
-        return cloneCompanyWithParameterInternal(sql, null);
-    }
 }

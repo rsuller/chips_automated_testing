@@ -1,4 +1,4 @@
-@chips @ad @ad01
+@company_addresses @ad01
 Feature: ad01 Form
 
 * This form is used to change the Registered Office Address of a company

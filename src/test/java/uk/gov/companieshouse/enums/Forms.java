@@ -4,6 +4,7 @@ public class Forms {
     public enum Form {
 
         AD01("AD01", "AD01: Change to registered office address", false, "REGISTERED OFFICE CHANGED"),
+        AP01("AP01", "AP01", false, "APPOINTMENT OF DIRECTOR"),
         CH01("CH01", "Change Officers", false, "DIRECTOR'S CHANGE OF PARTICULA..."),
         DS01("DS01", "Process Voluntary Dissolution Form DS01/LLDS01", true, "APPLICATION FOR STRIKING-OFF");
         private final String type;

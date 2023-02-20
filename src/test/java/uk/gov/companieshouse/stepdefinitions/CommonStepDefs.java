@@ -1,7 +1,7 @@
 package uk.gov.companieshouse.stepdefinitions;
 
-import static uk.gov.companieshouse.data.dbclone.sql.CompanySql.BASE_SQL_PRIVATE_LIMITED_COMPANY_ID;
-import static uk.gov.companieshouse.data.dbclone.sql.CompanySql.DISSOLUTION_COMPANY_NO_PREV_DISS_REQUEST_FILED;
+import static uk.gov.companieshouse.data.dbutil.sql.CompanySql.BASE_SQL_PRIVATE_LIMITED_COMPANY_ID;
+import static uk.gov.companieshouse.data.dbutil.sql.CompanySql.DISSOLUTION_COMPANY_NO_PREV_DISS_REQUEST_FILED;
 
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -9,8 +9,8 @@ import io.cucumber.java.en.Then;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.gov.companieshouse.data.datamodel.Company;
-import uk.gov.companieshouse.data.dbclone.DbClone;
-import uk.gov.companieshouse.data.dbclone.sql.CompanySql;
+import uk.gov.companieshouse.data.dbutil.DbUtil;
+import uk.gov.companieshouse.data.dbutil.sql.CompanySql;
 import uk.gov.companieshouse.enums.Forms.Form;
 import uk.gov.companieshouse.pageobjects.ChipsHomePage;
 import uk.gov.companieshouse.pageobjects.CompanyDetailsScreen;
@@ -22,6 +22,7 @@ import uk.gov.companieshouse.testdata.DocumentDetails;
 import uk.gov.companieshouse.testdata.User;
 import uk.gov.companieshouse.utils.TestContext;
 
+
 public class CommonStepDefs {
 
     public static Logger log = LoggerFactory.getLogger(CommonStepDefs.class);
@@ -32,13 +33,13 @@ public class CommonStepDefs {
     public OrgUnitPage orgUnitPage;
     public ProcessStartOfDocumentPage processStartOfDocumentPage;
     public GlobalNavBar globalNavBar;
-    public DbClone dbClone;
+    public DbUtil dbUtil;
     public DocumentDetails documentDetails;
     public CompanySearchPage companySearchPage;
 
     public CommonStepDefs(TestContext context, ChipsHomePage chipsHomePage, CompanyDetailsScreen companyDetailsScreen,
                           OrgUnitPage orgUnitPage, ProcessStartOfDocumentPage processStartOfDocumentPage,
-                          GlobalNavBar globalNavBar, DbClone dbClone, DocumentDetails documentDetails,
+                          GlobalNavBar globalNavBar, DbUtil dbUtil, DocumentDetails documentDetails,
                           CompanySearchPage companySearchPage) {
         this.context = context;
         this.chipsHomePage = chipsHomePage;
@@ -46,7 +47,7 @@ public class CommonStepDefs {
         this.orgUnitPage = orgUnitPage;
         this.processStartOfDocumentPage = processStartOfDocumentPage;
         this.globalNavBar = globalNavBar;
-        this.dbClone = dbClone;
+        this.dbUtil = dbUtil;
         this.documentDetails = documentDetails;
         this.companySearchPage = companySearchPage;
     }
@@ -89,13 +90,13 @@ public class CommonStepDefs {
         Company company = null;
         switch (formType) {
             case "CH01":
-                company = dbClone.cloneCompany(CompanySql.BASE_SQL_LTD_COMPANY_WITH_ACTIVE_DIRECTOR);
+                company = dbUtil.cloneCompany(CompanySql.BASE_SQL_LTD_COMPANY_WITH_ACTIVE_DIRECTOR);
                 break;
             case "AD01":
-                company = dbClone.cloneCompany(BASE_SQL_PRIVATE_LIMITED_COMPANY_ID);
+                company = dbUtil.cloneCompany(BASE_SQL_PRIVATE_LIMITED_COMPANY_ID);
                 break;
             case "DS01":
-                company = dbClone.cloneCompany(DISSOLUTION_COMPANY_NO_PREV_DISS_REQUEST_FILED);
+                company = dbUtil.cloneCompany(DISSOLUTION_COMPANY_NO_PREV_DISS_REQUEST_FILED);
                 break;
             default:
                 log.error("There is no current option for form {}", formType);
