@@ -1,10 +1,16 @@
 package uk.gov.companieshouse.stepdefinitions;
 
+import static uk.gov.companieshouse.data.dbutil.sql.CompanySql.BASE_SQL_PRIVATE_LIMITED_COMPANY_ID;
+import static uk.gov.companieshouse.data.dbutil.sql.CompanySql.DISSOLUTION_COMPANY_NO_PREV_DISS_REQUEST_FILED;
+
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import uk.gov.companieshouse.data.dbUtil.DbUtil;
+import uk.gov.companieshouse.data.datamodel.Company;
+import uk.gov.companieshouse.data.dbutil.DbUtil;
+import uk.gov.companieshouse.data.dbutil.sql.CompanySql;
 import uk.gov.companieshouse.enums.Forms.Form;
 import uk.gov.companieshouse.pageobjects.ChipsHomePage;
 import uk.gov.companieshouse.pageobjects.CompanyDetailsScreen;
@@ -78,4 +84,27 @@ public class CommonStepDefs {
                         form.getTransactionHistoryDescription(), "WEB LOGIC");
     }
 
+    @And("I process the start document for form {string}")
+    public void processTheStartDocumentForForm(String formType) {
+        globalNavBar.clickProcessFormLabel();
+        Company company = null;
+        switch (formType) {
+            case "CH01":
+                company = dbUtil.cloneCompany(CompanySql.BASE_SQL_LTD_COMPANY_WITH_ACTIVE_DIRECTOR);
+                break;
+            case "AD01":
+                company = dbUtil.cloneCompany(BASE_SQL_PRIVATE_LIMITED_COMPANY_ID);
+                break;
+            case "DS01":
+                company = dbUtil.cloneCompany(DISSOLUTION_COMPANY_NO_PREV_DISS_REQUEST_FILED);
+                break;
+            default:
+                log.error("There is no current option for form {}", formType);
+                break;
+
+        }
+        processStartOfDocumentPage.processForm(company, formType, Form.getFormByType(formType).isHighRiskForm());
+
+
+    }
 }

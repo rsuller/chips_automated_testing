@@ -1,12 +1,12 @@
 package uk.gov.companieshouse.stepdefinitions;
 
-import static uk.gov.companieshouse.data.dbUtil.sql.CompanySql.BASE_SQL_PRIVATE_LIMITED_COMPANY_ID;
+import static uk.gov.companieshouse.data.dbutil.sql.CompanySql.BASE_SQL_PRIVATE_LIMITED_COMPANY_ID;
 
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
 import uk.gov.companieshouse.data.datamodel.Address;
 import uk.gov.companieshouse.data.datamodel.Company;
-import uk.gov.companieshouse.data.dbUtil.DbUtil;
+import uk.gov.companieshouse.data.dbutil.DbUtil;
 import uk.gov.companieshouse.enums.Forms.Form;
 import uk.gov.companieshouse.pageobjects.ChangeToRoPage;
 import uk.gov.companieshouse.pageobjects.GlobalNavBar;

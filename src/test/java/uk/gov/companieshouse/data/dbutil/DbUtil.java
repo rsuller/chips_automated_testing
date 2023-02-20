@@ -1,4 +1,4 @@
-package uk.gov.companieshouse.data.dbUtil;
+package uk.gov.companieshouse.data.dbutil;
 
 import com.typesafe.config.ConfigException;
 import java.sql.CallableStatement;
@@ -15,7 +15,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.gov.companieshouse.data.datamodel.Company;
-import uk.gov.companieshouse.data.dbUtil.sql.CompanySql;
+import uk.gov.companieshouse.data.dbutil.sql.CompanySql;
 import uk.gov.companieshouse.testdata.SqlDetails;
 import uk.gov.companieshouse.utils.TestContext;
 
@@ -30,6 +30,10 @@ public class DbUtil {
         this.testContext = testContext;
         this.sqlDetails = sqlDetails;
         PageFactory.initElements(testContext.getWebDriver(), this);
+    }
+
+    public Company cloneCompany(CompanySql sql) {
+        return cloneCompanyWithParameterInternal(sql, null);
     }
 
     public Company cloneCompanyWithParameterInternal(CompanySql sql, Object parameter) {
@@ -203,4 +207,5 @@ public class DbUtil {
         prop.setProperty("password", pass);
         return DriverManager.getConnection(url, prop);
     }
+
 }

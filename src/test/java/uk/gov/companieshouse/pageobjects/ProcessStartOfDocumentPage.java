@@ -5,6 +5,7 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
@@ -14,7 +15,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.gov.companieshouse.data.datamodel.Company;
-import uk.gov.companieshouse.data.dbUtil.DbUtil;
+import uk.gov.companieshouse.data.dbutil.DbUtil;
 import uk.gov.companieshouse.enums.Forms.Form;
 import uk.gov.companieshouse.testdata.CompanyDetails;
 import uk.gov.companieshouse.testdata.DocumentDetails;
@@ -290,6 +291,7 @@ public class ProcessStartOfDocumentPage extends ElementInteraction {
                             .setCompanySelect(company.getName(), company.getNameEnding());
                 }
             }
+            assert company != null;
             setCompanyContext(company);
         } while (!retryCloneIfCompanyNameNotPopulated());
     }
