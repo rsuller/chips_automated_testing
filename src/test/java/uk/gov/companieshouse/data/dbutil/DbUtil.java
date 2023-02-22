@@ -17,10 +17,9 @@ import org.slf4j.LoggerFactory;
 import uk.gov.companieshouse.data.datamodel.Company;
 import uk.gov.companieshouse.data.dbutil.sql.CompanySql;
 import uk.gov.companieshouse.testdata.SqlDetails;
-import uk.gov.companieshouse.utils.ElementInteraction;
 import uk.gov.companieshouse.utils.TestContext;
 
-public class DbUtil extends ElementInteraction {
+public class DbUtil {
 
     public TestContext testContext;
     public SqlDetails sqlDetails;
@@ -28,7 +27,6 @@ public class DbUtil extends ElementInteraction {
 
 
     public DbUtil(TestContext testContext, SqlDetails sqlDetails) {
-        super(testContext);
         this.testContext = testContext;
         this.sqlDetails = sqlDetails;
         PageFactory.initElements(testContext.getWebDriver(), this);
@@ -101,7 +99,7 @@ public class DbUtil extends ElementInteraction {
                 + "from transaction_doc_xml "
                 + "inner join transaction "
                 + "using (transaction_id) "
-                + "where form_barcode = ? ";
+                + "where form_barcode = ?";
         int maxTries = 50;
         String docId = null;
         for (int i = 1; i <= maxTries; ++i) {

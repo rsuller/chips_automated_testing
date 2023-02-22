@@ -170,7 +170,6 @@ public class FesProcessor extends ElementInteraction {
     }
 
     private String checkDocumentSubmission() {
-        // Waiting for the submission to go through
         String barcode = documentDetails.getBarcode();
         String documentId = dbUtil.getDocumentId(barcode);
         if (documentId == null) {
