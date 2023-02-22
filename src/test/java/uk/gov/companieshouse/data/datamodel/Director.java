@@ -1,18 +1,25 @@
 package uk.gov.companieshouse.data.datamodel;
 
+import static uk.gov.companieshouse.enums.TestDataForenames.getRandomTestForename;
+import static uk.gov.companieshouse.enums.TestDataSurnames.getRandomTestSurname;
+
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import uk.gov.companieshouse.utils.DateFormat;
+
 
 public class Director {
 
-    private final Date dateOfAppointmentField;
+    private final String dateOfAppointmentField;
     private final String titleField;
     private final String titleOtherField;
+    private final String partialDobField;
     private final String forenameField;
     private final String middleNamesField;
     private final String surnameField;
     private final String countryUsuallyResidentField;
-    private final Date dobField;
+    private final String dobField;
     private final String countryField;
     private final String countryOtherField;
     private final String uraBarcodeField;
@@ -33,10 +40,11 @@ public class Director {
         this.dateOfAppointmentField = directorBuilder.dateOfAppointmentField;
         this.titleField = directorBuilder.titleField;
         this.titleOtherField = directorBuilder.titleOtherField;
+        this.partialDobField = directorBuilder.partialDobField;
         this.forenameField = directorBuilder.forenameField;
         this.middleNamesField = directorBuilder.middleNamesField;
         this.surnameField = directorBuilder.surnameField;
-        this.countryUsuallyResidentField = directorBuilder.countryUsuallyResidentField;;
+        this.countryUsuallyResidentField = directorBuilder.countryUsuallyResidentField;
         this.dobField = directorBuilder.dobField;
         this.countryField = directorBuilder.countryField;
         this.countryOtherField = directorBuilder.countryOtherField;
@@ -52,47 +60,52 @@ public class Director {
         this.residentialAddressField = directorBuilder.residentialAddressField;
     }
 
-    public Date getDateOfAppointmentField() {
+    public String getDateOfAppointment() {
         return dateOfAppointmentField;
     }
 
-    public String getTitleField() {
+    public String getTitle() {
         return titleField;
     }
 
-    public String getTitleOtherField() {
+    public String getTitleOther() {
         return titleOtherField;
     }
 
-    public String getForenameField() {
+    public String getPartialDob() {
+        return partialDobField;
+    }
+
+    public String getForename() {
         return forenameField;
     }
 
-    public String getMiddleNamesField() {
+    public String getMiddleNames() {
         return middleNamesField;
     }
 
-    public String getSurnameField() {
+    public String getSurname() {
         return surnameField;
     }
 
-    public String getCountryUsuallyResidentField() {
+    public String getCountryUsuallyResident() {
         return countryUsuallyResidentField;
     }
 
-    public Date getDobField() {
+    public String getDob() {
         return dobField;
     }
 
-    public String getCountryField() {
+    public String getCountry() {
         return countryField;
     }
 
-    public String getCountryOtherField() {
+    public String getCountryOther() {
         return countryOtherField;
     }
 
-    public String getUraBarcodeField() {
+
+    public String getUraBarcode() {
         return uraBarcodeField;
     }
 
@@ -112,15 +125,15 @@ public class Director {
         this.noChangeToUra = noChangeToUra;
     }
 
-    public List<String> getNationalityField() {
+    public List<String> getNationality() {
         return nationalityField;
     }
 
-    public String getOccupationField() {
+    public String getOccupation() {
         return occupationField;
     }
 
-    public Address getServiceAddressField() {
+    public Address getServiceAddress() {
         return serviceAddressField;
     }
 
@@ -128,29 +141,29 @@ public class Director {
         return serviceAddressHouseNumberField;
     }
 
-    public String getResidentialAddressHouseNumberField() {
+    public String getResidentialAddressHouseNumber() {
         return residentialAddressHouseNumberField;
     }
 
-    public String getResidentialAddressPostCodeField() {
+    public String getResidentialAddressPostCode() {
         return residentialAddressPostCodeField;
     }
 
-    public Address getResidentialAddressField() {
+    public Address getResidentialAddress() {
         return residentialAddressField;
     }
 
 
     public static class DirectorBuilder {
-        private Date dateOfAppointmentField;
-
+        private String dateOfAppointmentField;
         private String titleField;
         private String titleOtherField;
+        private String partialDobField;
         private String forenameField;
         private String middleNamesField;
         private String surnameField;
         private String countryUsuallyResidentField;
-        private Date dobField;
+        private String dobField;
         private String countryField;
         private String countryOtherField;
         private String uraBarcodeField;
@@ -164,7 +177,7 @@ public class Director {
         private String residentialAddressPostCodeField;
         private Address residentialAddressField;
 
-        public DirectorBuilder withDateOfAppointment(final Date dateOfAppointment) {
+        public DirectorBuilder withDateOfAppointment(final String dateOfAppointment) {
             this.dateOfAppointmentField = dateOfAppointment;
             return this;
         }
@@ -176,6 +189,11 @@ public class Director {
 
         public DirectorBuilder withTitleOther(final String titleOther) {
             this.titleOtherField = titleOther;
+            return this;
+        }
+
+        public DirectorBuilder withPatialDateOfBirth(final String partialDob) {
+            this.partialDobField = partialDob;
             return this;
         }
 
@@ -199,7 +217,7 @@ public class Director {
             return this;
         }
 
-        public DirectorBuilder withDateOfBirth(final Date dob) {
+        public DirectorBuilder withDateOfBirth(final String dob) {
             this.dobField = dob;
             return this;
         }
@@ -229,13 +247,35 @@ public class Director {
             return this;
         }
 
-        public DirectorBuilder withAddress(final Address address) {
+        public DirectorBuilder withServiceAddress(final Address address) {
             this.serviceAddressField = address;
             return this;
         }
 
         public DirectorBuilder withResidentialAddress(final Address address) {
             this.residentialAddressField = address;
+            return this;
+        }
+
+        /**
+         * Build a new Director that will be used with service address always ro checkbox ticked.
+         * Therefore, service address is not necessary.
+         */
+        public DirectorBuilder createDefaultDirector() {
+            final Address residentialAddress = new Address.AddressBuilder().welshAddress().build();
+            final Address serviceAddress = new Address.AddressBuilder().englishAddress().build();
+            withDateOfAppointment(DateFormat.getDateAsString(new Date()));
+            withPatialDateOfBirth("01/1990");
+            withTitle("DR");
+            withForename(getRandomTestForename());
+            withSurname(getRandomTestSurname());
+            withServiceAddress(serviceAddress);
+            withNationalities(Arrays.asList("Welsh", "Irish"));
+            withOccupation("DIRECTOR");
+            withDateOfBirth("01/01/1990");
+            withCountryUsuallyResident(serviceAddress.getCountry());
+            withResidentialAddress(residentialAddress);
+            withCountry(residentialAddress.getCountry());
             return this;
         }
 
@@ -246,9 +286,9 @@ public class Director {
     }
 
     public static void main(String[] args) {
-        // Build a default Welsh Address
-
-
+        // Build a default Director
+        Director director = new Director.DirectorBuilder().build();
+        System.out.println(director);
     }
 
 }

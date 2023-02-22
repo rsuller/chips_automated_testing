@@ -17,9 +17,10 @@ import org.slf4j.LoggerFactory;
 import uk.gov.companieshouse.data.datamodel.Company;
 import uk.gov.companieshouse.data.dbutil.sql.CompanySql;
 import uk.gov.companieshouse.testdata.SqlDetails;
+import uk.gov.companieshouse.utils.ElementInteraction;
 import uk.gov.companieshouse.utils.TestContext;
 
-public class DbUtil {
+public class DbUtil extends ElementInteraction {
 
     public TestContext testContext;
     public SqlDetails sqlDetails;
@@ -27,6 +28,7 @@ public class DbUtil {
 
 
     public DbUtil(TestContext testContext, SqlDetails sqlDetails) {
+        super(testContext);
         this.testContext = testContext;
         this.sqlDetails = sqlDetails;
         PageFactory.initElements(testContext.getWebDriver(), this);
@@ -99,8 +101,8 @@ public class DbUtil {
                 + "from transaction_doc_xml "
                 + "inner join transaction "
                 + "using (transaction_id) "
-                + "where form_barcode = ?";
-        int maxTries = 20;
+                + "where form_barcode = ? ";
+        int maxTries = 50;
         String docId = null;
         for (int i = 1; i <= maxTries; ++i) {
             LOG.info("Polling DB looking for the Document ID of barcode {}. Attempt {} of {} ",
