@@ -4,14 +4,11 @@ import static uk.gov.companieshouse.enums.TestDataForenames.getRandomTestForenam
 import static uk.gov.companieshouse.enums.TestDataSurnames.getRandomTestSurname;
 
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
-import uk.gov.companieshouse.utils.DateFormat;
 
 
 public class Director {
 
-    private final String dateOfAppointmentField;
     private final String titleField;
     private final String titleOtherField;
     private final String partialDobField;
@@ -28,16 +25,12 @@ public class Director {
     private final List<String> nationalityField;
     private final String occupationField;
     private final Address serviceAddressField;
-    private final String  serviceAddressHouseNumberField;
-    private final String  residentialAddressHouseNumberField;
-    private final String residentialAddressPostCodeField;
     private final Address residentialAddressField;
 
     /**
      * Create a new director with default values.
      */
     private Director(DirectorBuilder directorBuilder) {
-        this.dateOfAppointmentField = directorBuilder.dateOfAppointmentField;
         this.titleField = directorBuilder.titleField;
         this.titleOtherField = directorBuilder.titleOtherField;
         this.partialDobField = directorBuilder.partialDobField;
@@ -54,14 +47,7 @@ public class Director {
         this.nationalityField = directorBuilder.nationalityField;
         this.occupationField = directorBuilder.occupationField;
         this.serviceAddressField = directorBuilder.serviceAddressField;
-        this.serviceAddressHouseNumberField = directorBuilder.serviceAddressHouseNumberField;
-        this.residentialAddressHouseNumberField = directorBuilder.residentialAddressHouseNumberField;
-        this.residentialAddressPostCodeField = directorBuilder.residentialAddressPostCodeField;
         this.residentialAddressField = directorBuilder.residentialAddressField;
-    }
-
-    public String getDateOfAppointment() {
-        return dateOfAppointmentField;
     }
 
     public String getTitle() {
@@ -137,25 +123,13 @@ public class Director {
         return serviceAddressField;
     }
 
-    public String getServiceAddressHouseNumberField() {
-        return serviceAddressHouseNumberField;
-    }
-
-    public String getResidentialAddressHouseNumber() {
-        return residentialAddressHouseNumberField;
-    }
-
-    public String getResidentialAddressPostCode() {
-        return residentialAddressPostCodeField;
-    }
-
     public Address getResidentialAddress() {
         return residentialAddressField;
     }
 
 
     public static class DirectorBuilder {
-        private String dateOfAppointmentField;
+
         private String titleField;
         private String titleOtherField;
         private String partialDobField;
@@ -172,15 +146,7 @@ public class Director {
         private List<String> nationalityField;
         private String occupationField;
         private Address serviceAddressField;
-        private String  serviceAddressHouseNumberField;
-        private String  residentialAddressHouseNumberField;
-        private String residentialAddressPostCodeField;
         private Address residentialAddressField;
-
-        public DirectorBuilder withDateOfAppointment(final String dateOfAppointment) {
-            this.dateOfAppointmentField = dateOfAppointment;
-            return this;
-        }
 
         public DirectorBuilder withTitle(final String title) {
             this.titleField = title;
@@ -264,7 +230,6 @@ public class Director {
         public DirectorBuilder createDefaultDirector() {
             final Address residentialAddress = new Address.AddressBuilder().welshAddress().build();
             final Address serviceAddress = new Address.AddressBuilder().englishAddress().build();
-            withDateOfAppointment(DateFormat.getDateAsString(new Date()));
             withPatialDateOfBirth("01/1990");
             withTitle("DR");
             withForename(getRandomTestForename());
@@ -283,12 +248,6 @@ public class Director {
             return new Director(this);
         }
 
-    }
-
-    public static void main(String[] args) {
-        // Build a default Director
-        Director director = new Director.DirectorBuilder().build();
-        System.out.println(director);
     }
 
 }

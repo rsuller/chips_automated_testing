@@ -31,7 +31,7 @@ public class Forms {
             return highRiskForm;
         }
 
-        public String gettransactionHistoryPartialDescription() {
+        public String getTransactionHistoryPartialDescription() {
             return transactionHistoryPartialDescription;
         }
 

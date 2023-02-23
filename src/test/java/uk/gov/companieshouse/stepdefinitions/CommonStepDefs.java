@@ -81,7 +81,7 @@ public class CommonStepDefs {
         companyDetailsScreen
                 .waitUntilDisplayed()
                 .getExpectedTransactionFromHistory(form.getType(), documentDetails.getReceivedDate(), "ACCEPTED",
-                        form.gettransactionHistoryPartialDescription());
+                        form.getTransactionHistoryPartialDescription());
     }
 
     @And("I process the start document for form {string}")

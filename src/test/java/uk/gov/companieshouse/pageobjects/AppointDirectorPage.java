@@ -2,6 +2,7 @@ package uk.gov.companieshouse.pageobjects;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.attributeToBeNotEmpty;
 
+import java.util.Date;
 import java.util.List;
 
 import org.openqa.selenium.Keys;
@@ -14,6 +15,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.gov.companieshouse.data.datamodel.Director;
+import uk.gov.companieshouse.utils.DateFormat;
 import uk.gov.companieshouse.utils.ElementInteraction;
 import uk.gov.companieshouse.utils.TestContext;
 
@@ -109,7 +111,7 @@ public class AppointDirectorPage extends ElementInteraction {
     }
 
     private AppointDirectorPage completeAppointmentDetailsTab(Director director) {
-        enterDateOfAppointment(director.getDateOfAppointment())
+        enterDateOfAppointment(DateFormat.getDateAsString(new Date()))
                 .enterPartialDob(director.getPartialDob())
                 .selectTitle(director.getTitle())
                 .enterForename(director.getForename())
