@@ -4,19 +4,19 @@ public class Forms {
     public enum Form {
 
         AD01("AD01", "AD01: Change to registered office address", false, "REGISTERED OFFICE CHANGED"),
-        AP01("AP01", "AP01", false, "APPOINTMENT OF DIRECTOR"),
+        AP01("AP01", "AP01", false, "DIRECTOR APPOINTED"),
         CH01("CH01", "Change Officers", false, "DIRECTOR'S CHANGE OF PARTICULA..."),
         DS01("DS01", "Process Voluntary Dissolution Form DS01/LLDS01", true, "APPLICATION FOR STRIKING-OFF");
         private final String type;
         private final String title;
         private final boolean highRiskForm;
-        private final String transactionHistoryDescription;
+        private final String transactionHistoryPartialDescription;
 
-        Form(final String type, final String title, final boolean highRiskForm, final String transactionHistoryDescription) {
+        Form(final String type, final String title, final boolean highRiskForm, final String transactionHistoryPartialDescription) {
             this.type = type;
             this.title = title;
             this.highRiskForm = highRiskForm;
-            this.transactionHistoryDescription = transactionHistoryDescription;
+            this.transactionHistoryPartialDescription = transactionHistoryPartialDescription;
         }
 
         public String getType() {
@@ -31,8 +31,8 @@ public class Forms {
             return highRiskForm;
         }
 
-        public String getTransactionHistoryDescription() {
-            return transactionHistoryDescription;
+        public String getTransactionHistoryPartialDescription() {
+            return transactionHistoryPartialDescription;
         }
 
         /**

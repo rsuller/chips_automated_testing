@@ -257,6 +257,7 @@ public class ProcessStartOfDocumentPage extends ElementInteraction {
             setCompanyContext(company);
         }
         fillInPsodFields(company, twoCompanyForm, form);
+        documentDetails.setReceivedDate(getGeneratedReceiptDate());
         clickProceedLink();
         clickPsodPopUpYesLink();
         return this;

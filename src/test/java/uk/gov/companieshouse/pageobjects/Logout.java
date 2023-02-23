@@ -3,6 +3,7 @@ package uk.gov.companieshouse.pageobjects;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
 
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
@@ -34,9 +35,9 @@ public class Logout extends ElementInteraction {
      */
     public Logout clickIgnoreOpenBatches() {
         try {
-            getWebDriverWait(10).until(visibilityOf(elementIgnoreOpenBatches));
+            getWebDriverWait(20).until(visibilityOf(elementIgnoreOpenBatches));
             elementIgnoreOpenBatches.click();
-        } catch (NoSuchElementException exception) {
+        } catch (NoSuchElementException | TimeoutException exception) {
             log.info("There are no batches to be closed.");
         }
         return this;

@@ -148,7 +148,7 @@ public class TeamWorkPage extends ElementInteraction {
      */
     private TeamWorkPage clickLastWorkObjectRowForDocumentType(String type) {
         try {
-            getWebDriverWait(3);
+            getWebDriverWait(5).until(visibilityOf(allocateWorkObjectLink));
             final List<WebElement> rows = getWorkObjectRowsByDocumentType(type);
             rows.get(rows.size() - 1).click();
             return this;

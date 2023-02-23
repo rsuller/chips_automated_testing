@@ -100,7 +100,7 @@ public class DbUtil {
                 + "inner join transaction "
                 + "using (transaction_id) "
                 + "where form_barcode = ?";
-        int maxTries = 20;
+        int maxTries = 50;
         String docId = null;
         for (int i = 1; i <= maxTries; ++i) {
             LOG.info("Polling DB looking for the Document ID of barcode {}. Attempt {} of {} ",

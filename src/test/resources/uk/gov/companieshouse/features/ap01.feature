@@ -45,7 +45,7 @@ Feature: AP01 - Appoint a director
     Given I am logged in as a user in the "<org_unit>" organisational unit
     When I process a FES "AP01" for a company registered in "<country>"
     And I complete mandatory details to appoint a FES'd director
-    #Then company history information is updated with the accepted "AP01" transaction
+    Then company history information is updated with the accepted AP01 transaction
     Examples:
       | org_unit  | country   |
       | CFS (FES) | Eng/Wales |

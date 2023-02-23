@@ -76,7 +76,7 @@ public class MyWorkPage extends ElementInteraction {
         }
     }
 
-    private MyWorkPage waitUntilOpened() {
+    public MyWorkPage waitUntilOpened() {
         getWebDriverWait(10).until(ExpectedConditions.textToBePresentInElement(elementMwPageTitle, "My Work"));
         return this;
     }
