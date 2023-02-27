@@ -45,7 +45,7 @@ public class ChangeOfAddressStepDefs {
     public void completeMandatoryDetailsToChangeARegisteredOfficeAddress() {
         Address address = new Address.AddressBuilder().welshAddress().build();
         changeToRoPage
-                .waitUntilFormDisplayed(Form.AD01.getTitle())
+                .waitUntilFormDisplayed(Form.AD01)
                 .enterHouseNumber(address.getHouseNumber())
                 .enterPostCode(address.getPostcode())
                 .clickLookup()

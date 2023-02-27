@@ -1,26 +1,22 @@
 package uk.gov.companieshouse.pageobjects;
 
-import static org.openqa.selenium.support.ui.ExpectedConditions.attributeToBeNotEmpty;
-
 import java.util.Date;
 import java.util.List;
-
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.gov.companieshouse.data.datamodel.Director;
+import uk.gov.companieshouse.enums.Forms;
 import uk.gov.companieshouse.utils.DateFormat;
-import uk.gov.companieshouse.utils.ElementInteraction;
 import uk.gov.companieshouse.utils.TestContext;
 
 
-public class AppointDirectorPage extends ElementInteraction {
+public class AppointDirectorPage extends ChipsCommonPage<AppointDirectorPage> {
 
     public TestContext testContext;
     public static final Logger log = LoggerFactory.getLogger(AppointDirectorPage.class);
@@ -31,10 +27,6 @@ public class AppointDirectorPage extends ElementInteraction {
         PageFactory.initElements(testContext.getWebDriver(), this);
     }
 
-    @FindBy(how = How.ID, using = "form1:task_save")
-    private WebElement elementSave;
-    @FindBy(how = How.CSS, using = "div[class='subheader'] > span[class='subtitle']")
-    private WebElement elementPageSubTitle;
     @FindBy(how = How.ID, using = "form1:officerDetailsTabSubView:officer_actionDate:field")
     private WebElement elementDateOfAppointment;
     @FindBy(how = How.ID, using = "form1:officerDetailsTabSubView:doc_corporateBody_appointments_"
@@ -93,20 +85,14 @@ public class AppointDirectorPage extends ElementInteraction {
     @FindBy(how = How.ID, using = "form1:officerDetailsTabSubView:selectedNationalityList:field")
     private WebElement elementSelectedNationality;
 
-
-    public AppointDirectorPage waitUntilFormDisplayed(String pageSubTitle) {
-        getWebDriverWait(10).until(ExpectedConditions.textToBePresentInElement(
-                elementPageSubTitle, pageSubTitle));
-        return this;
-    }
-
     /**
      * Enter form details with default information and multiple nationalities.
      */
     public AppointDirectorPage enterMandatoryFormDetails(Director director) {
+        waitUntilFormDisplayed(Forms.Form.AP01);
         completeAppointmentDetailsTab(director);
         completeResidentialAddressTab(director);
-        clickSave();
+        saveForm();
         return this;
     }
 
@@ -173,7 +159,7 @@ public class AppointDirectorPage extends ElementInteraction {
     }
 
     private AppointDirectorPage waitUntilSaStreetPopulated() {
-        getWebDriverWait(5).until(attributeToBeNotEmpty(elementSaStreet, "value"));
+        waitElementTextNotEmpty(elementSaStreet);
         log.info("Postcode lookup completed successfully for service address");
         return this;
     }
@@ -232,7 +218,7 @@ public class AppointDirectorPage extends ElementInteraction {
     }
 
     private AppointDirectorPage waitUntilRoStreetPopulated() {
-        getWebDriverWait(5).until(attributeToBeNotEmpty(elementRoStreet, "value"));
+        waitElementTextNotEmpty(elementRoStreet);
         log.info("Postcode lookup completed successfully for residential address");
         return this;
     }
@@ -255,12 +241,6 @@ public class AppointDirectorPage extends ElementInteraction {
 
     private AppointDirectorPage enterOtherUraCountry(String country) {
         typeText(elementInvalidUraCountry, country);
-        return this;
-    }
-
-    private AppointDirectorPage clickSave() {
-        elementSave.click();
-        log.info("Submitting form...");
         return this;
     }
 

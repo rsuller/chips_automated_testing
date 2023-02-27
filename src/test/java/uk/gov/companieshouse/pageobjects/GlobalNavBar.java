@@ -1,7 +1,5 @@
 package uk.gov.companieshouse.pageobjects;
 
-import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
@@ -71,7 +69,7 @@ public class GlobalNavBar extends ElementInteraction {
     }
 
     public GlobalNavBar clickStatusLink() {
-        getWebDriverWait(5).until(visibilityOf(mainMenuElement));
+        waitUntilElementDisplayed(mainMenuElement);
         statusLink.click();
         return this;
 
@@ -95,15 +93,8 @@ public class GlobalNavBar extends ElementInteraction {
      * Wait for main menu nav bar to be displayed.
      *
      */
-    public GlobalNavBar waitUntilDisplayed(final int timeout) {
-        getWebDriverWait(timeout).until(visibilityOf(mainMenuElement));
-        try {
-            mainMenuElement.isDisplayed();
-        } catch (NoSuchElementException exception) {
-            log.error("Main menu bar was not displayed.");
-            throw new NoSuchElementException("Main menu bar "
-                    + "was not displayed", exception);
-        }
+    public GlobalNavBar waitUntilDisplayed() {
+        waitUntilElementDisplayed(mainMenuElement);
         return this;
     }
 

@@ -1,13 +1,16 @@
 package uk.gov.companieshouse.utils;
 
+import static org.openqa.selenium.support.ui.ExpectedConditions.attributeToBeNotEmpty;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
 
 import java.time.Duration;
 
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class ElementInteraction {
@@ -25,7 +28,7 @@ public class ElementInteraction {
      * @param value the value to select.
      */
     public void selectByText(WebElement element, String value) {
-        getWebDriverWait(10).until(visibilityOf(element));
+        waitUntilElementDisplayed(element);
         JavascriptExecutor jexec = (JavascriptExecutor) testContext.getWebDriver();
         jexec.executeScript("var select = arguments[0]; for(var i = 0; i < select.options.length; i++)"
                 + "{ if(select.options[i].text == arguments[1]){ select.options[i].selected = true; } }", element, value);
@@ -54,4 +57,30 @@ public class ElementInteraction {
     public void clearField(WebElement webElement) {
         webElement.sendKeys(Keys.chord(Keys.CONTROL,"a", Keys.DELETE));
     }
+
+    public void waitForSpecificTextInElement(WebElement element, String text) {
+        try {
+            getWebDriverWait(10).until(ExpectedConditions.textToBePresentInElement(element, text));
+        } catch (TimeoutException exception) {
+            throw new TimeoutException("Expected value: " + text + " not found in element: " + element);
+        }
+    }
+
+    public void waitElementTextNotEmpty(WebElement element) {
+        try {
+            getWebDriverWait(10).until(attributeToBeNotEmpty(element, "value"));
+        } catch (TimeoutException exception) {
+            throw new TimeoutException("The following element was not populated with expected text: " + element);
+        }
+    }
+
+    public void waitUntilElementDisplayed(WebElement element) {
+        try {
+            getWebDriverWait(10).until(visibilityOf(element));
+        } catch (TimeoutException exception) {
+            throw new TimeoutException("The following element was not displayed as expected: " + element);
+        }
+
+    }
+
 }

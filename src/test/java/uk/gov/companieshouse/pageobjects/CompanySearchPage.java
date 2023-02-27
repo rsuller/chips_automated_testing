@@ -1,7 +1,5 @@
 package uk.gov.companieshouse.pageobjects;
 
-import static org.openqa.selenium.support.ui.ExpectedConditions.textToBePresentInElement;
-
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
@@ -69,7 +67,7 @@ public class CompanySearchPage extends ElementInteraction {
     }
 
     private CompanySearchPage waitCompanySearch() {
-        getWebDriverWait(5).until(textToBePresentInElement(elementSearchTitle, "Company Search"));
+        waitForSpecificTextInElement(elementSearchTitle, "Company Search");
         return this;
     }
 
@@ -79,8 +77,7 @@ public class CompanySearchPage extends ElementInteraction {
     }
 
     private CompanySearchPage verifyCompanyNumber(String companyNumber) {
-        getWebDriverWait(5).until(textToBePresentInElement(
-                elementSearchResultCompanyNumber, companyNumber));
+        waitForSpecificTextInElement(elementSearchResultCompanyNumber, companyNumber);
         log.info("Company number {} found.", companyNumber);
         return this;
     }
