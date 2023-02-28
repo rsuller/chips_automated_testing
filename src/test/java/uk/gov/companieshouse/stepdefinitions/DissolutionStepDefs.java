@@ -40,8 +40,9 @@ public class DissolutionStepDefs {
     @When("I complete mandatory details to strike off the company from the register")
     public void completeMandatoryDetailsToStrikeOffTheCompanyFromTheRegister() {
         Address address = new Address.AddressBuilder().welshAddress().build();
+        dissolutionPage.waitUntilFormDisplayed(Form.DS01);
         dissolutionPage
-                .waitUntilFormDisplayed(Form.DS01.getTitle())
+                .waitUntilFormDisplayed(Form.DS01)
                 .enterSignatureDate()
                 .enterHouseNumber(address.getHouseNumber())
                 .enterPostcode(address.getPostcode())

@@ -6,7 +6,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.gov.companieshouse.utils.ElementInteraction;
@@ -77,7 +76,7 @@ public class MyWorkPage extends ElementInteraction {
     }
 
     public MyWorkPage waitUntilOpened() {
-        getWebDriverWait(10).until(ExpectedConditions.textToBePresentInElement(elementMwPageTitle, "My Work"));
+        waitForSpecificTextInElement(elementMwPageTitle, "My Work");
         return this;
     }
 

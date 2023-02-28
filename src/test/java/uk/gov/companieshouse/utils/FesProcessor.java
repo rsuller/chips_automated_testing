@@ -114,7 +114,7 @@ public class FesProcessor extends ElementInteraction {
      * @param company  The company to allocate.
      */
     public FesProcessor allocateWorkAndPsodFes(String formType, Company company) {
-        globalNavBar.waitUntilDisplayed(5);
+        globalNavBar.waitUntilDisplayed();
         teamWorkPage.filterTeamWorkSummaryByCompanyNumber(company.getNumber())
                 .allocateMostRecentWorkObjectOfType(formType, "weblogic");
         myWorkPage

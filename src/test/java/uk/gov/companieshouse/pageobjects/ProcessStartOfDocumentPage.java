@@ -1,13 +1,8 @@
 package uk.gov.companieshouse.pageobjects;
 
-import static org.openqa.selenium.support.ui.ExpectedConditions.attributeToBeNotEmpty;
-import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
@@ -129,14 +124,14 @@ public class ProcessStartOfDocumentPage extends ElementInteraction {
      * @param barcode the barcode
      */
     public ProcessStartOfDocumentPage setBarcodeField(String barcode) {
-        getWebDriverWait(5).until(visibilityOf(elementBarcodeInputKey));
+        waitUntilElementDisplayed(elementBarcodeInputKey);
         elementBarcodeInputKey.sendKeys(barcode);
         return waitUntilReceiptDatePopulated();
     }
 
 
     public String getGeneratedReceiptDate() {
-        getWebDriverWait(5).until(attributeToBeNotEmpty(elementReceiptDateInputKey, "value"));
+        waitElementTextNotEmpty(elementReceiptDateInputKey);
         return elementReceiptDateInputKey.getAttribute("value");
     }
 
@@ -213,14 +208,8 @@ public class ProcessStartOfDocumentPage extends ElementInteraction {
      * Log an error if the barcode field on PSOD cannot be found.
      */
     public ProcessStartOfDocumentPage waitUntilDisplayed() {
-        try {
-            getWebDriverWait(5).until(visibilityOf(elementBarcodeInputKey));
+            waitUntilElementDisplayed(elementBarcodeInputKey);
             log.info("Process start of document page displayed successfully.");
-        } catch (NoSuchElementException exception) {
-            log.error("Process start of document page was not displayed.");
-            throw new NoSuchElementException("Process start of document page "
-                    + "was not displayed", exception);
-        }
         return this;
     }
 
@@ -275,10 +264,11 @@ public class ProcessStartOfDocumentPage extends ElementInteraction {
         // Attempt to fill in the fields using the Company data from the DB
         // Call the retry method if not populated correctly.
         selectFormType(Form.getFormByType(formType));
+
         do {
             if (company != null) {
                 if (!twoCompanyForm) {
-                    getWebDriverWait(5).until(visibilityOf(elementCompanyNumberInputKey));
+                    waitUntilElementDisplayed(elementCompanyNumberInputKey);
                     log.info("Successfully selected low risk form: {}", formType);
                     setCompanyNumberField(company.getNumber())
                             .setCheckCharactersPrefixField(company.getPrefix())

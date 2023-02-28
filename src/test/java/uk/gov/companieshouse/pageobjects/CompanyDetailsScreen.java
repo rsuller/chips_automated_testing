@@ -10,7 +10,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.gov.companieshouse.testdata.CompanyDetails;
@@ -77,8 +76,7 @@ public class CompanyDetailsScreen extends ElementInteraction {
     }
 
     public CompanyDetailsScreen waitUntilDisplayed() {
-        getWebDriverWait(10).until(ExpectedConditions.textToBePresentInElement(
-                elementViewCompanyTitle, "View Company Details"));
+        waitForSpecificTextInElement(elementViewCompanyTitle, "View Company Details");
         return this;
     }
 

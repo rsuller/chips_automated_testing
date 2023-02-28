@@ -1,7 +1,5 @@
 package uk.gov.companieshouse.pageobjects;
 
-import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
-
 import java.util.ArrayList;
 import java.util.List;
 import org.openqa.selenium.By;
@@ -100,7 +98,7 @@ public class TeamWorkPage extends ElementInteraction {
 
     private TeamWorkPage clickTeamWorkTab() {
         teamWorkTabLink.click();
-        getWebDriverWait(5).until(visibilityOf(taskFilterColumnSelect));
+        waitUntilElementDisplayed(taskFilterColumnSelect);
         return this;
     }
 
@@ -113,14 +111,14 @@ public class TeamWorkPage extends ElementInteraction {
      * returns a selected filter value.
      */
     private TeamWorkPage enterFilterValue(String value) {
-        getWebDriverWait(10).until(visibilityOf(customValueEntryField));
+        waitUntilElementDisplayed(customValueEntryField);
         typeText(customValueEntryField, value);
         return this;
     }
 
     private TeamWorkPage clickFilterButton() {
         taskQueueFilterLink.click();
-        getWebDriverWait(10).until(visibilityOf(taskQueueFilterLink));
+        waitUntilElementDisplayed(taskQueueFilterLink);
         return this;
     }
 
@@ -147,8 +145,8 @@ public class TeamWorkPage extends ElementInteraction {
      * Clicks latest work item for document type and logs error if not found.
      */
     private TeamWorkPage clickLastWorkObjectRowForDocumentType(String type) {
+        waitUntilElementDisplayed(allocateWorkObjectLink);
         try {
-            getWebDriverWait(5).until(visibilityOf(allocateWorkObjectLink));
             final List<WebElement> rows = getWorkObjectRowsByDocumentType(type);
             rows.get(rows.size() - 1).click();
             return this;
@@ -160,7 +158,7 @@ public class TeamWorkPage extends ElementInteraction {
 
     private TeamWorkPage clickAllocateLink() {
         allocateWorkObjectLink.click();
-        getWebDriverWait(10).until(visibilityOf(allocateUserSelect));
+        waitUntilElementDisplayed(allocateUserSelect);
         return this;
     }
 
