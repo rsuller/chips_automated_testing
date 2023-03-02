@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -15,7 +17,8 @@ public enum CompanySql {
             "dissolution/company_no_prev_diss_request_filed.sql"),
     BASE_SQL_PRIVATE_LIMITED_COMPANY_RO_LOCATION_UNSPECIFIED(
             "base/private_limited_company_ro_location_unspecified.sql"),
-    BASE_SQL_LTD_COMPANY_WITH_ACTIVE_DIRECTOR("base/ltd_company_with_active_director.sql");
+    BASE_SQL_LTD_COMPANY_WITH_ACTIVE_DIRECTOR("base/ltd_company_with_active_director.sql"),
+    BASE_SQL_lTD_WITH_ACTIVE_CORPORATE_DIRECTOR("base/ltd_company_with_active_corporate_director.sql");
 
     private String sql;
 
@@ -36,7 +39,8 @@ public enum CompanySql {
         try {
             String resource = resourceIn.replaceAll("^/+", "");
             BufferedReader reader = new BufferedReader(
-                    new InputStreamReader(getClass().getResourceAsStream("/sql/" + resource)));
+                    new InputStreamReader(
+                            Objects.requireNonNull(getClass().getResourceAsStream("/sql/" + resource))));
             // split string by new lines
             String[] rawSql = IOUtils.toString(reader).split("(\r\n|\r|\n)");
 
@@ -50,7 +54,7 @@ public enum CompanySql {
                 lines.add(line.replaceAll("^\\s+", ""));
             }
 
-            // join the strings again and remove any semi colons that may exist
+            // join the strings again and remove any semicolons that may exist
             // at the end
             this.sql = StringUtils.join(lines, " ").replaceAll(";+$", "");
         } catch (IOException ex) {
