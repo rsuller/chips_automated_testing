@@ -217,13 +217,11 @@ public class ProcessStartOfDocumentPage extends ElementInteraction {
      * Complete the company identification fields on the process start of document screen.
      *
      * @param company      the company object containing the company details to fill in
-     * @param highRiskForm flag identifying whether to complete high risk or low risk form fields
-     *                     (triple keying or not)
      */
-    public ProcessStartOfDocumentPage processForm(Company company, String formType, boolean highRiskForm) {
+    public ProcessStartOfDocumentPage processForm(Company company, Form form) {
         Date today = new Date();
         waitUntilDisplayed().generateBarcode(today);
-        fillInPsodFields(company, highRiskForm, formType);
+        fillInPsodFields(company, form.isHighRiskForm(), form.getType());
         clickProceedLink();
         return this;
     }

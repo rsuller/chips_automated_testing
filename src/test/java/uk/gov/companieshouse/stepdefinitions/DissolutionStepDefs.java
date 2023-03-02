@@ -34,7 +34,7 @@ public class DissolutionStepDefs {
     public void processTheStartDocumentForFormDs01() {
         globalNavBar.clickProcessFormLabel();
         Company company = dbUtil.cloneCompanyWithParameterInternal(DISSOLUTION_COMPANY_NO_PREV_DISS_REQUEST_FILED, null);
-        processStartOfDocumentPage.processForm(company, "DS01", Form.DS01.isHighRiskForm());
+        processStartOfDocumentPage.processForm(company, Form.getFormByType("DS01"));
     }
 
     @When("I complete mandatory details to strike off the company from the register")

@@ -106,8 +106,7 @@ public class CommonStepDefs {
                 break;
 
         }
-        processStartOfDocumentPage.processForm(company, formType, Form.getFormByType(formType).isHighRiskForm());
-
+        processStartOfDocumentPage.processForm(company, Form.getFormByType(formType));
 
     }
 }
