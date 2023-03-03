@@ -8,7 +8,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.gov.companieshouse.enums.Forms;
@@ -98,7 +97,7 @@ public class ChangeOfficerPage extends ChipsCommonPage<ChangeOfficerPage> {
     }
 
     private void enterChangeDateAsToday() {
-        getWebDriverWait(10).until(ExpectedConditions.visibilityOf(dateField));
+        waitUntilElementDisplayed(dateField);
         dateField.sendKeys(DateFormat.getDateAsString(new Date()));
     }
 
