@@ -35,7 +35,7 @@ public class ChangeOfAddressStepDefs {
     public void processTheStartDocumentForFormAD01() {
         globalNavBar.clickProcessFormLabel();
         Company company = dbUtil.cloneCompanyWithParameterInternal(BASE_SQL_PRIVATE_LIMITED_COMPANY_ID, null);
-        processStartOfDocumentPage.processForm(company, "AD01", Form.AD01.isHighRiskForm());
+        processStartOfDocumentPage.processForm(company, Form.getFormByType("AD01"));
     }
 
     /**
