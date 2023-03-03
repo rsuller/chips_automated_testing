@@ -45,7 +45,8 @@ public class ElementInteraction extends WebDriverWaitConditions {
 
 
     public void clearField(WebElement webElement) {
-        webElement.sendKeys(Keys.chord(Keys.CONTROL,"a", Keys.DELETE));
+        webElement.sendKeys(Keys.CONTROL,"a");
+        webElement.sendKeys(Keys.DELETE);
     }
 
 }
