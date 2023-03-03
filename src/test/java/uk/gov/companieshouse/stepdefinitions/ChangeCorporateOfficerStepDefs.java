@@ -12,12 +12,12 @@ public class ChangeCorporateOfficerStepDefs {
     }
 
     @And("I select a {string} to change")
-    public void iSelectACorporateDirectorToChange(String officerType) {
+    public void selectACorporateDirectorToChange(String officerType) {
         changeOfficerPage.selectActiveCorporateDirector(officerType);
     }
 
     @When("I change the corporate officer's details")
-    public void iChangeTheCorporateOfficerDetails() {
+    public void changeTheCorporateOfficerDetails() {
         changeOfficerPage.changeDetailOfCorporateOfficer();
     }
 

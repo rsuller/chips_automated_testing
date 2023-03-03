@@ -3,12 +3,13 @@ package uk.gov.companieshouse.utils;
 import static org.openqa.selenium.support.ui.ExpectedConditions.attributeToBeNotEmpty;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
 
+import java.time.Duration;
+
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.time.Duration;
 public class WebDriverWaitConditions {
 
     public TestContext testContext;
