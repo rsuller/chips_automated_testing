@@ -31,3 +31,7 @@ e.g.
                 testContext.getEnv().config.getString("chips_url"));
     }
 ```
+
+### Contributing
+Please follow the standard protocol for adding Pull Requests.
+We ask that you adhere to any instruction in the `PULL_REQUEST_TEMPLATE.md` file.
