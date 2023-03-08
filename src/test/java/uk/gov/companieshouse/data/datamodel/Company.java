@@ -2,7 +2,6 @@ package uk.gov.companieshouse.data.datamodel;
 
 import static uk.gov.companieshouse.utils.RandomStringCreator.randomAlphaString;
 
-import java.text.ParseException;
 import java.util.Date;
 import uk.gov.ch.alphakey.SameAsService;
 import uk.gov.ch.alphakey.SameAsServiceImpl;
@@ -110,6 +109,9 @@ public class Company {
         return addressField;
     }
 
+    /**
+     * Get company details as a string.
+     */
     public String toString() {
         return String.format("Company Details: \n Alpha Key: %s \n Corporate Body ID: %s \n Type Short: %s \n "
                         + "Type Long: %s \n Number: %s \n Supplied Number: %s \n Name: %s \n Prefix: %s \n Suffix: %s "
@@ -239,7 +241,10 @@ public class Company {
             return this;
         }
 
-        public CompanyBuilder createDefaultCompany() throws ParseException {
+        /**
+         * Create a company with default values shown.
+         */
+        public CompanyBuilder createDefaultCompany() {
             withAlphaKey("");
             withCorporateBodyId("12345678");
             withTypeShort("LTD");
@@ -275,17 +280,6 @@ public class Company {
         String companyNumber = getNumber();
         String prefix = companyNumber.substring(0, 2);
         return prefix.equals("OC") || prefix.equals("SO") || prefix.equals("NC");
-    }
-
-    public static void main(String[] args) throws ParseException {
-        // Create default company
-        Company company = new Company.CompanyBuilder().createDefaultCompany().build();
-
-        System.out.println(company);
-
-        // Create company which specified name
-        Company company1 = new Company.CompanyBuilder().createDefaultCompany().withName("This is a Test").build();
-        System.out.println(company1);
     }
 
 }

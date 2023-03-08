@@ -30,6 +30,9 @@ public class ProcessStartOfDocumentPage extends ElementInteraction {
 
     public static final Logger log = LoggerFactory.getLogger(ProcessStartOfDocumentPage.class);
 
+    /**
+     * Required constructor for class.
+     */
     public ProcessStartOfDocumentPage(TestContext testContext, BarcodeGenerator barcodeGenerator, DbUtil dbUtil,
                                       SqlDetails sqlDetails, CompanyDetails companyDetails, DocumentDetails documentDetails) {
         super(testContext);
@@ -143,6 +146,10 @@ public class ProcessStartOfDocumentPage extends ElementInteraction {
         return this;
     }
 
+    /**
+     * Generate a barcode for specific date.
+     * @param date the date to genrate a barcode for.
+     */
     public String generateBarcode(Date date) {
         Date today = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -174,6 +181,9 @@ public class ProcessStartOfDocumentPage extends ElementInteraction {
         return barcode;
     }
 
+    /**
+     * Clear the barcode and receipt date field in the event of the error being displayed.
+     */
     public void clearBarcodeAndDate() {
         if ("The date on the barcode is over 25 days old.".equals(messagePopup.getText())) {
             messageClose.click();
@@ -182,6 +192,10 @@ public class ProcessStartOfDocumentPage extends ElementInteraction {
         elementBarcodeInputKey.clear();
     }
 
+    /**
+     * Call the generate barcode method and fill in the barcode field.
+     * @param date the date for which the barcode should be generated for.
+     */
     public String generateAndEnterBarcode(Date date) {
         String barcode = barcodeGenerator.generateNewStyleBarcode(date);
         setBarcodeField(barcode);

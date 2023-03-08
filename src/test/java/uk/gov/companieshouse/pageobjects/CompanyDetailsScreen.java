@@ -24,6 +24,9 @@ public class CompanyDetailsScreen extends ElementInteraction {
     public TestContext testContext;
     public CompanyDetails companyDetails;
 
+    /**
+     * Required constructor for class.
+     */
     public CompanyDetailsScreen(TestContext testContext, CompanyDetails companyDetails) {
         super(testContext);
         this.testContext = testContext;

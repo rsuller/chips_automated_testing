@@ -10,6 +10,9 @@ public class User {
         this.orgUnit = orgUnit;
     }
 
+    /**
+     * Get org unit or use the default option if not available.
+     */
     public String getOrgUnit() {
         if (null == orgUnit) {
             // Return a default org unit

@@ -30,6 +30,10 @@ public class Env {
         this(ConfigConstants.ENVIRONMENT);
     }
 
+    /**
+     * Initialise the environment.
+     * @param env which specific environment to initialise
+     */
     public Env(String env) {
         this.log = LoggerFactory.getLogger(this.getClass().getName());
         Optional param = Optional.ofNullable(env);

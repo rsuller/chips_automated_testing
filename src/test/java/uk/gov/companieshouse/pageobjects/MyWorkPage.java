@@ -29,6 +29,9 @@ public class MyWorkPage extends ElementInteraction {
     public TestContext testContext;
     private GlobalNavBar globalNavBar;
 
+    /**
+     * Required constructor for class.
+     */
     public MyWorkPage(TestContext testContext, GlobalNavBar globalNavBar) {
         super(testContext);
         PageFactory.initElements(testContext.getWebDriver(), this);
@@ -37,6 +40,9 @@ public class MyWorkPage extends ElementInteraction {
 
     }
 
+    /**
+     * Open my work page from the main menu.
+     */
     public MyWorkPage goToMyWorkPage() {
         globalNavBar.clickMenuItem("My Work");
         waitUntilOpened().sortDateDescending();

@@ -24,6 +24,10 @@ public class ConfigReader {
         }
     }
 
+    /**
+     * Load a specific property from the config file.
+     * @param property the property to load.
+     */
     public String getConfigProperty(String property) {
         loadProperties();
         if (null == properties.getProperty(property)) {

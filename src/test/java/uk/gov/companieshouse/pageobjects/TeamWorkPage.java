@@ -40,6 +40,9 @@ public class TeamWorkPage extends ElementInteraction {
     private static final Logger LOG = LoggerFactory.getLogger(TeamWorkPage.class);
     public TestContext testContext;
 
+    /**
+     * Required constructor for class.
+     */
     public TeamWorkPage(TestContext testContext) {
         super(testContext);
         this.testContext = testContext;

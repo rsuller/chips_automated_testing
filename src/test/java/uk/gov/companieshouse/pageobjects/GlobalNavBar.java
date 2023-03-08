@@ -32,6 +32,9 @@ public class GlobalNavBar extends ElementInteraction {
 
 
 
+    /**
+     * Required constructor for class.
+     */
     public GlobalNavBar(TestContext testContext) {
         super(testContext);
         this.testContext = testContext;
@@ -66,13 +69,6 @@ public class GlobalNavBar extends ElementInteraction {
                     + "test video for details");
         }
         return this;
-    }
-
-    public GlobalNavBar clickStatusLink() {
-        waitUntilElementDisplayed(mainMenuElement);
-        statusLink.click();
-        return this;
-
     }
 
     private String getBannerText() {

@@ -110,6 +110,9 @@ public class Address {
             return this;
         }
 
+        /**
+         * Create a new address with default values for an address based in Wales.
+         */
         public AddressBuilder welshAddress() {
             withHouseNumber("1");
             withStreet("Heol Fawr");
@@ -120,6 +123,9 @@ public class Address {
             return this;
         }
 
+        /**
+         * Create a new address with default values for an address based in England.
+         */
         public AddressBuilder englishAddress() {
             withHouseNumber("16");
             withStreet("Smith Barry Cresent");
@@ -134,27 +140,6 @@ public class Address {
         public Address build() {
             return new Address(this);
         }
-
-    }
-
-    public static void main(String[] args) {
-        // Build a default Welsh Address
-        Address address = new Address.AddressBuilder().welshAddress().build();
-
-        // Build a default English Address
-        Address address1 = new Address.AddressBuilder().englishAddress().build();
-
-        // Print specific value
-        System.out.println(address.getStreet());
-
-        // Print entire address
-        System.out.println(address);
-        System.out.println(address1);
-
-        // Change the number of the Welsh address
-        Address address2 = new Address.AddressBuilder().welshAddress().withHouseNumber("79").build();
-        System.out.println(address2);
-
 
     }
 

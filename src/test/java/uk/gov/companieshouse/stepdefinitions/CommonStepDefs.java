@@ -8,6 +8,7 @@ import static uk.gov.companieshouse.data.dbutil.sql.CompanySql.DISSOLUTION_COMPA
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.gov.companieshouse.data.datamodel.Company;
@@ -37,6 +38,9 @@ public class CommonStepDefs {
     public DocumentDetails documentDetails;
     public CompanySearchPage companySearchPage;
 
+    /**
+     * Required constructor for class.
+     */
     public CommonStepDefs(TestContext context, ChipsHomePage chipsHomePage, CompanyDetailsScreen companyDetailsScreen,
                           OrgUnitPage orgUnitPage, ProcessStartOfDocumentPage processStartOfDocumentPage,
                           GlobalNavBar globalNavBar, DbUtil dbUtil, DocumentDetails documentDetails,
@@ -52,6 +56,10 @@ public class CommonStepDefs {
         this.companySearchPage = companySearchPage;
     }
 
+    /**
+     * Common step definition to login to chips and switch to the organisational unit required.
+     * @param orgUnit the org unit to switch to.
+     */
     @Given("I am logged in as a user in the {string} organisational unit")
     public void imLoggedInAsAUserInTheOrganisationalUnit(String orgUnit) {
         // Setup user
@@ -72,6 +80,10 @@ public class CommonStepDefs {
         processStartOfDocumentPage.waitUntilDisplayed();
     }
 
+    /**
+     * Common step definition to check the company transaction history for a particular form.
+     * @param formName the form name and details to look for.
+     */
     @Then("^company history information is updated with the accepted (.*) transaction$")
     public void companyHistoryInformationIsUpdated(String formName) {
         Form form = Form.getFormByType(formName);
@@ -84,6 +96,10 @@ public class CommonStepDefs {
                         form.getTransactionHistoryPartialDescription());
     }
 
+    /**
+     * Clone company using SQL based on the form and process this form with data selected.
+     * @param formType the form to be processed.
+     */
     @And("I process the start document for form {string}")
     public void processTheStartDocumentForForm(String formType) {
         globalNavBar.clickProcessFormLabel();

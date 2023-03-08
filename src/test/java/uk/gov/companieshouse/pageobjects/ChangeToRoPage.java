@@ -14,6 +14,9 @@ public class ChangeToRoPage extends ChipsCommonPage<ChangeToRoPage> {
     public TestContext testContext;
     public static final Logger log = LoggerFactory.getLogger(ChangeToRoPage.class);
 
+    /**
+     * Required constructor for class.
+     */
     public ChangeToRoPage(TestContext testContext) {
         super(testContext);
         this.testContext = testContext;
@@ -34,6 +37,9 @@ public class ChangeToRoPage extends ChipsCommonPage<ChangeToRoPage> {
     private WebElement elementRoStreet;
 
 
+    /**
+     * Wait until the address fields are populated after postcode lookup.
+     */
     public ChangeToRoPage waitUntilStreetPopulated() {
         waitElementTextNotEmpty(elementRoStreet);
         log.info("Postcode lookup completed successfully for address");

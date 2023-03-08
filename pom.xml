@@ -189,7 +189,6 @@
                     <targetJdk>1.8</targetJdk>
                     <includeTests>true</includeTests>
                     <linkXRef>false</linkXRef>
-                    <verbose>true</verbose>
                     <skipEmptyReport>false</skipEmptyReport>
                     <excludeFromFailureFile>exclude-cpd.properties</excludeFromFailureFile>
                     <excludeFromFailureFile>exclude-pmd.properties</excludeFromFailureFile>
@@ -214,7 +213,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>2.17</version>
+                <version>3.2.1</version>
                 <executions>
                     <execution>
                         <phase>process-sources</phase>
@@ -225,10 +224,10 @@
                 </executions>
                 <configuration>
                     <includeTestSourceDirectory>true</includeTestSourceDirectory>
-                    <violationSeverity>error</violationSeverity>
+                    <violationSeverity>warning</violationSeverity>
                     <logViolationsToConsole>true</logViolationsToConsole>
                     <failOnViolation>true</failOnViolation>
-                    <configLocation>companieshouse_checks.xml</configLocation>
+                    <configLocation>${project.basedir}/companieshouse_checks.xml</configLocation>
                     <excludes>**/*Forms.java,**/*IT.java</excludes>
                 </configuration>
                 <dependencies>
@@ -265,7 +264,7 @@
                         <dependency>
                             <groupId>com.puppycrawl.tools</groupId>
                             <artifactId>checkstyle</artifactId>
-                            <version>7.5.1</version>
+                            <version>8.10.1</version>
                         </dependency>
                     </dependencies>
                 </plugin>

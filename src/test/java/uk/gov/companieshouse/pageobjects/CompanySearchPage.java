@@ -19,6 +19,9 @@ public class CompanySearchPage extends ElementInteraction {
     public GlobalNavBar globalNavBar;
     public CompanyDetails companyDetails;
 
+    /**
+     * Required constructor for class.
+     */
     public CompanySearchPage(TestContext testContext, GlobalNavBar globalNavBar, CompanyDetails companyDetails) {
         super(testContext);
         this.testContext = testContext;
@@ -42,6 +45,9 @@ public class CompanySearchPage extends ElementInteraction {
     @FindBy(how = How.CSS, using = "a[title='Show next page']")
     private WebElement nextPage;
 
+    /**
+     * Open the company search screen and find the number used in the test.
+     */
     public CompanySearchPage findCompanyByNumberFromMenu() {
         String companyNumber = companyDetails.getCompanyNumber();
         openMenuCompanySearch();
@@ -52,6 +58,9 @@ public class CompanySearchPage extends ElementInteraction {
         return this;
     }
 
+    /**
+     * Open the company details screen by clicking the icon.
+     */
     public CompanySearchPage openCompanyDetails() {
         elementSearchViewCompany.click();
         log.info("Opening company details...");

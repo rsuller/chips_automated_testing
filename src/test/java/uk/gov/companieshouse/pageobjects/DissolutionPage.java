@@ -1,6 +1,7 @@
 package uk.gov.companieshouse.pageobjects;
 
-import java.text.SimpleDateFormat;
+import static uk.gov.companieshouse.utils.DateFormat.getDateAsString;
+
 import java.util.Date;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -16,6 +17,9 @@ public class DissolutionPage extends ChipsCommonPage<DissolutionPage> {
     public TestContext testContext;
     public static final Logger log = LoggerFactory.getLogger(DissolutionPage.class);
 
+    /**
+     * Required constructor for class.
+     */
     public DissolutionPage(TestContext testContext) {
         super(testContext);
         this.testContext = testContext;
@@ -38,10 +42,7 @@ public class DissolutionPage extends ChipsCommonPage<DissolutionPage> {
     private WebElement elementPendLink;
 
     public DissolutionPage enterSignatureDate() {
-        Date today = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        String signatureDate = sdf.format(today);
-        typeText(elementSignatureDate, signatureDate);
+        typeText(elementSignatureDate, getDateAsString(new Date()));
         return this;
     }
 

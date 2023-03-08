@@ -21,6 +21,9 @@ public class Logout extends ElementInteraction {
     @FindBy(how = How.ID, using = "form1:task_ignoreOpenBatches")
     private WebElement elementIgnoreOpenBatches;
 
+    /**
+     * Required constructor for class.
+     */
     public Logout(TestContext testContext) {
         super(testContext);
         this.testContext = testContext;
