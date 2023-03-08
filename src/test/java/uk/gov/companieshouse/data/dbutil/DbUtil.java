@@ -25,7 +25,9 @@ public class DbUtil {
     public SqlDetails sqlDetails;
     private static final Logger LOG = LoggerFactory.getLogger(DbUtil.class);
 
-
+    /**
+     * Required constructor for class.
+     */
     public DbUtil(TestContext testContext, SqlDetails sqlDetails) {
         this.testContext = testContext;
         this.sqlDetails = sqlDetails;
@@ -36,6 +38,11 @@ public class DbUtil {
         return cloneCompanyWithParameterInternal(sql, null);
     }
 
+    /**
+     * Clone a company with parameter specified added to the QL file specified.
+     * @param sql the SQL file to use.
+     * @param parameter the parameter to be added the SQL statement.
+     */
     public Company cloneCompanyWithParameterInternal(CompanySql sql, Object parameter) {
         boolean disableCloning;
         String env = testContext.getEnv().config.getString("chips-db-user");

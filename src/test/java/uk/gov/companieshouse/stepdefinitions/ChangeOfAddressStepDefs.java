@@ -1,11 +1,7 @@
 package uk.gov.companieshouse.stepdefinitions;
 
-import static uk.gov.companieshouse.data.dbutil.sql.CompanySql.BASE_SQL_PRIVATE_LIMITED_COMPANY_ID;
-
 import io.cucumber.java.en.Given;
-import io.cucumber.java.en.When;
 import uk.gov.companieshouse.data.datamodel.Address;
-import uk.gov.companieshouse.data.datamodel.Company;
 import uk.gov.companieshouse.data.dbutil.DbUtil;
 import uk.gov.companieshouse.enums.Forms.Form;
 import uk.gov.companieshouse.pageobjects.ChangeToRoPage;
@@ -22,6 +18,9 @@ public class ChangeOfAddressStepDefs {
     public DbUtil dbUtil;
     public ProcessStartOfDocumentPage processStartOfDocumentPage;
 
+    /**
+     * Required constructor for class.
+     */
     public ChangeOfAddressStepDefs(TestContext context, ChangeToRoPage changeToRoPage, GlobalNavBar globalNavBar, DbUtil dbUtil,
                                    ProcessStartOfDocumentPage processStartOfDocumentPage) {
         this.context = context;
@@ -31,15 +30,8 @@ public class ChangeOfAddressStepDefs {
         this.processStartOfDocumentPage = processStartOfDocumentPage;
     }
 
-    @When("I process the start document for form AD01")
-    public void processTheStartDocumentForFormAD01() {
-        globalNavBar.clickProcessFormLabel();
-        Company company = dbUtil.cloneCompanyWithParameterInternal(BASE_SQL_PRIVATE_LIMITED_COMPANY_ID, null);
-        processStartOfDocumentPage.processForm(company, Form.getFormByType("AD01"));
-    }
-
     /**
-     * Complete the mandatory details for the registered office or SAIL address.
+     * Complete the mandatory details to change the registered office of the company.
      */
     @Given("I complete mandatory details to change a registered office address")
     public void completeMandatoryDetailsToChangeARegisteredOfficeAddress() {

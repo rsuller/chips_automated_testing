@@ -22,6 +22,9 @@ public class OfficerAppointmentsStepDefs {
     public MyWorkPage myWorkPage;
 
 
+    /**
+     * Required constructor for class.
+     */
     public OfficerAppointmentsStepDefs(TestContext context, ChangeToRoPage changeToRoPage, GlobalNavBar globalNavBar, DbUtil dbUtil,
                                        ProcessStartOfDocumentPage processStartOfDocumentPage, AppointDirectorPage appointDirectorPage,
                                        MyWorkPage myWorkPage) {
@@ -34,6 +37,9 @@ public class OfficerAppointmentsStepDefs {
         this.myWorkPage = myWorkPage;
     }
 
+    /**
+     * Build a default director object and use this data to fill in mandatory fields.
+     */
     @When("I complete mandatory details to appoint a FES'd director")
     public void completeMandatoryDetailsToAppointFesDirector() {
         Director director = new Director.DirectorBuilder().createDefaultDirector().build();

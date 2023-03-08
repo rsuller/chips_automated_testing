@@ -12,6 +12,9 @@ public class Hooks {
     public GlobalNavBar globalNavBar;
     public Logout logout;
 
+    /**
+     * Required constructor for class.
+     */
     public Hooks(TestContext testContext, GlobalNavBar globalNavBar, Logout logout)
     {
         this.testContext = testContext;
@@ -25,6 +28,9 @@ public class Hooks {
                 testContext.getEnv().config.getString("chips_url"));
     }
 
+    /**
+     * Logout by trying to close open batches.
+     */
     @After
     public void tearDown() {
         globalNavBar.clickLogoutLabel();

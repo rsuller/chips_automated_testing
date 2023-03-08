@@ -30,6 +30,9 @@ public class FesProcessingStepDefs {
     public FesProcessor fesProcessor;
 
 
+    /**
+     * Required constructor for class.
+     */
     public FesProcessingStepDefs(TestContext context, ChipsHomePage chipsHomePage, CompanyDetailsScreen companyDetailsScreen,
                                  OrgUnitPage orgUnitPage, ProcessStartOfDocumentPage processStartOfDocumentPage,
                                  GlobalNavBar globalNavBar, DbUtil dbUtil, DocumentDetails documentDetails,

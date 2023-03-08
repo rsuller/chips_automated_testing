@@ -18,6 +18,9 @@ public class ChangeOfficerPage extends ChipsCommonPage<ChangeOfficerPage> {
     TestContext testContext;
     public static final Logger log = LoggerFactory.getLogger(ChangeOfficerPage.class);
 
+    /**
+     * Required constructor for class.
+     */
     public ChangeOfficerPage(TestContext testContext) {
         super(testContext);
         this.testContext = testContext;
@@ -68,6 +71,9 @@ public class ChangeOfficerPage extends ChipsCommonPage<ChangeOfficerPage> {
             + "_businessOccupation:field")
     private WebElement businessOccupationField;
 
+    /**
+     * Wait for the form to be loaded and click the first officer in the appointments table.
+     */
     public void selectFirstOfficer() {
         waitUntilFormDisplayed(Forms.Form.CH01);
         // Select the officer and wait until fields populated before continuing
@@ -76,6 +82,10 @@ public class ChangeOfficerPage extends ChipsCommonPage<ChangeOfficerPage> {
         log.info("Selected Officer Surname: {}", surnameTableElement.getText());
     }
 
+    /**
+     * Enter the details of the director that need changing.
+     * @param typeOfChange the particular detail to change.
+     */
     public void directorDetailToChange(String typeOfChange) {
         enterChangeDateAsToday();
 
@@ -101,6 +111,10 @@ public class ChangeOfficerPage extends ChipsCommonPage<ChangeOfficerPage> {
         dateField.sendKeys(DateFormat.getDateAsString(new Date()));
     }
 
+    /**
+     * Select an active corporate officer appointment from the table.
+     * @param officerType the ype of officer to select.
+     */
     public void selectActiveCorporateDirector(String officerType) {
         String expectedOfficerType;
         String expectedAppointmentType;
@@ -128,6 +142,9 @@ public class ChangeOfficerPage extends ChipsCommonPage<ChangeOfficerPage> {
 
     }
 
+    /**
+     * Get the appointment type from the table.
+     */
     private String returnAppointmentType(WebElement officer) {
         WebElement officerType = officer.findElement(
                 By.cssSelector("[id^='" + officer.getAttribute("id")
@@ -142,6 +159,9 @@ public class ChangeOfficerPage extends ChipsCommonPage<ChangeOfficerPage> {
         return officerType.getAttribute("title");
     }
 
+    /**
+     * Change the UL registration number of the corporate officer.
+     */
     public void changeDetailOfCorporateOfficer() {
         enterChangeDateAsToday();
         corporateInfoTab.click();

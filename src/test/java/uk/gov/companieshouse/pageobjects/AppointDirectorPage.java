@@ -21,6 +21,9 @@ public class AppointDirectorPage extends ChipsCommonPage<AppointDirectorPage> {
     public TestContext testContext;
     public static final Logger log = LoggerFactory.getLogger(AppointDirectorPage.class);
 
+    /**
+     * Required constructor for class.
+     */
     public AppointDirectorPage(TestContext testContext) {
         super(testContext);
         this.testContext = testContext;

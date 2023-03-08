@@ -22,6 +22,9 @@ public class TestContext {
         return new Env();
     }
 
+    /**
+     * Initialise webdriver for Edge in IE mode.
+     */
     public WebDriver getWebDriver() {
         if (driver == null) {
             /*
@@ -53,6 +56,9 @@ public class TestContext {
         this.user = user;
     }
 
+    /**
+     * Get user details to enable login.
+     */
     public User getUser() {
         if (null == user) {
             throw new NullPointerException("You must set up a user to interact with CHIPS.");

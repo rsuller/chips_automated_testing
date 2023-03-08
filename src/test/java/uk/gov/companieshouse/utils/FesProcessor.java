@@ -46,6 +46,9 @@ public class FesProcessor extends ElementInteraction {
     public static final Logger log = LoggerFactory.getLogger(FesProcessor.class);
 
 
+    /**
+     * Required constructor for class.
+     */
     public FesProcessor(TestContext testContext, ChipsHomePage chipsHomePage, CompanyDetailsScreen companyDetailsScreen,
                         OrgUnitPage orgUnitPage, ProcessStartOfDocumentPage processStartOfDocumentPage,
                         GlobalNavBar globalNavBar, DbUtil dbUtil, DocumentDetails documentDetails,

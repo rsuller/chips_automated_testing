@@ -25,6 +25,9 @@ public class ChipsHomePage {
     private WebElement loginLink;
 
 
+    /**
+     * Login using information provided.
+     */
     public void logInUser(String username, String password) {
         usernameInput.sendKeys(username);
         passwordInput.sendKeys(password);

@@ -17,6 +17,9 @@ public class ChipsCommonPage<T extends ChipsCommonPage<?>> extends ElementIntera
     TestContext testContext;
     public static final Logger log = LoggerFactory.getLogger(ChipsCommonPage.class);
 
+    /**
+     * Required constructor for class.
+     */
     public ChipsCommonPage(TestContext testContext) {
         super(testContext);
         this.testContext = testContext;
@@ -33,6 +36,9 @@ public class ChipsCommonPage<T extends ChipsCommonPage<?>> extends ElementIntera
     private WebElement globalSubmitFormElement;
 
 
+    /**
+     * Enter the URA barcode.
+     */
     public T enterUraBarcode() {
         residentialAddressLink.click();
         uraBarcodeInputField.sendKeys(URA_BARCODE);
@@ -42,12 +48,20 @@ public class ChipsCommonPage<T extends ChipsCommonPage<?>> extends ElementIntera
     @FindBy(how = How.CSS, using = "div[class='subheader'] > span[class='subtitle']")
     private WebElement elementPageSubTitle;
 
+    /**
+     * Common method to wait until the form tiutle is displayed before continuing with test.
+     * @param form the form title to expect.
+     */
     public T waitUntilFormDisplayed(Form form) {
         String pageSubTitle = form.getTitle();
         waitForSpecificTextInElement(elementPageSubTitle, pageSubTitle);
         return (T) this;
     }
 
+    /**
+     * Common method for saving a form using one of two selectors. Try using one global selector if that isn't
+     * present use the other one.
+     */
     public void saveForm() {
         try {
             globalSaveFormElement.click();

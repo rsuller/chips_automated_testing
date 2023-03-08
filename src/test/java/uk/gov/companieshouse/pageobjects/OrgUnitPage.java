@@ -22,12 +22,19 @@ public class OrgUnitPage extends ElementInteraction {
     @FindBy(how = How.CSS, using = "div[class='bannerrow'] > [class='breadleft']")
     private WebElement chipsBanner;
 
+    /**
+     * Required constructor for class.
+     */
     public OrgUnitPage(TestContext testContext) {
         super(testContext);
         this.testContext = testContext;
         PageFactory.initElements(testContext.getWebDriver(), this);
     }
 
+    /**
+     * Select org unit from dropdown if it is not already selected.
+     * @param orgUnit the org unit to select.
+     */
     public void selectOrgUnit(String orgUnit) {
         // Check if user already logged into required org unit
         if (chipsBanner.getText().contains(orgUnit)) {

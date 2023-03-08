@@ -1,10 +1,7 @@
 package uk.gov.companieshouse.stepdefinitions;
 
-import static uk.gov.companieshouse.data.dbutil.sql.CompanySql.DISSOLUTION_COMPANY_NO_PREV_DISS_REQUEST_FILED;
-
 import io.cucumber.java.en.When;
 import uk.gov.companieshouse.data.datamodel.Address;
-import uk.gov.companieshouse.data.datamodel.Company;
 import uk.gov.companieshouse.data.dbutil.DbUtil;
 import uk.gov.companieshouse.enums.Forms.Form;
 import uk.gov.companieshouse.pageobjects.DissolutionPage;
@@ -21,6 +18,9 @@ public class DissolutionStepDefs {
     public ProcessStartOfDocumentPage processStartOfDocumentPage;
     public DissolutionPage dissolutionPage;
 
+    /**
+     * Required constructor for class.
+     */
     public DissolutionStepDefs(TestContext context, GlobalNavBar globalNavBar, DbUtil dbUtil,
                                ProcessStartOfDocumentPage processStartOfDocumentPage, DissolutionPage dissolutionPage) {
         this.context = context;
@@ -30,13 +30,9 @@ public class DissolutionStepDefs {
         this.dissolutionPage = dissolutionPage;
     }
 
-    @When("I process the start document for form DS01")
-    public void processTheStartDocumentForFormDs01() {
-        globalNavBar.clickProcessFormLabel();
-        Company company = dbUtil.cloneCompanyWithParameterInternal(DISSOLUTION_COMPANY_NO_PREV_DISS_REQUEST_FILED, null);
-        processStartOfDocumentPage.processForm(company, Form.getFormByType("DS01"));
-    }
-
+    /**
+     * Complete all fields to complete the DS01 form striking off the company.
+     */
     @When("I complete mandatory details to strike off the company from the register")
     public void completeMandatoryDetailsToStrikeOffTheCompanyFromTheRegister() {
         Address address = new Address.AddressBuilder().welshAddress().build();
