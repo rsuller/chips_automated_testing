@@ -32,7 +32,7 @@ e.g.
     }
 ```
 ### Checkstyle in IntelliJ
-Checkstyle has been enabled in this project using Companies House java-checkstyle-config.
+Checkstyle has been enabled in this project using Companies House jave checkstyle config here https://github.com/companieshouse/java-checkstyle-config.
 
 To enable this in IntelliJ:
 - File -> settings -> plugins
@@ -40,4 +40,4 @@ To enable this in IntelliJ:
 - File -> settings -> checkstyle:
    - set Checkstyle version back to 8.10.1
    - Add path to configuration file `companieshouse_checks.xml` with a suitable description. E.g. CH checkstyle
-   - Violations will be flagged when running tests through teh command line or can be run in IntelliJ from the Checkstyle tab
+   - Violations will be flagged when running tests through the command line or can be run in IntelliJ from the Checkstyle tab
