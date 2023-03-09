@@ -32,7 +32,7 @@ e.g.
     }
 ```
 ### Checkstyle in IntelliJ
-Checkstyle has been enabled in this project using Companies House jave checkstyle config here https://github.com/companieshouse/java-checkstyle-config.
+Checkstyle has been enabled in this project using Companies House Java checkstyle config [here] (https://github.com/companieshouse/java-checkstyle-config)
 
 To enable this in IntelliJ:
 - File -> settings -> plugins
