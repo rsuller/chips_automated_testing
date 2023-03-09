@@ -31,3 +31,13 @@ e.g.
                 testContext.getEnv().config.getString("chips_url"));
     }
 ```
+### Checkstyle in IntelliJ
+Checkstyle has been enabled in this project using Companies House Java checkstyle config [here](https://github.com/companieshouse/java-checkstyle-config)
+
+To enable this in IntelliJ:
+- File -> settings -> plugins
+- install the Plugin - CheckStyle-IDEA. Restart IDE when complete.
+- File -> settings -> checkstyle:
+   - set Checkstyle version back to 8.10.1
+   - Add path to configuration file `companieshouse_checks.xml` with a suitable description. E.g. CH checkstyle
+   - Violations will be flagged when running tests through the command line or can be run in IntelliJ from the Checkstyle tab
