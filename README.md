@@ -38,7 +38,6 @@ To enable this in IntelliJ:
 - File -> settings -> plugins
 - install the Plugin - CheckStyle-IDEA. Restart IDE when complete.
 - File -> settings -> checkstyle:
-
-set Checkstyle version back to 8.10.1
-Add path to configuration file `companieshouse_checks.xml` with a suitable description. E.g. CH checkstyle
-Violations will be flagged when running tests through teh command line or can be run in IntelliJ from the Checkstyle tab
+   - set Checkstyle version back to 8.10.1
+   - Add path to configuration file `companieshouse_checks.xml` with a suitable description. E.g. CH checkstyle
+   - Violations will be flagged when running tests through teh command line or can be run in IntelliJ from the Checkstyle tab
