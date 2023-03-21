@@ -40,7 +40,8 @@ public class DbUtil {
 
     /**
      * Clone a company with parameter specified added to the QL file specified.
-     * @param sql the SQL file to use.
+     *
+     * @param sql       the SQL file to use.
      * @param parameter the parameter to be added the SQL statement.
      */
     public Company cloneCompanyWithParameterInternal(CompanySql sql, Object parameter) {
@@ -119,7 +120,8 @@ public class DbUtil {
                 docId = rs.getString("input_document_id");
                 LOG.info("Document ID found: {}.  Continuing with test", docId);
                 break;
-            } catch (SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException exception) {
+            } catch (SQLException | ClassNotFoundException | InstantiationException
+                     | IllegalAccessException exception) {
                 if (i == maxTries) {
                     LOG.error("Error attempting to find document ID: {}", exception.getMessage());
                     return null;
@@ -128,6 +130,28 @@ public class DbUtil {
             }
         }
         return docId;
+    }
+
+    /**
+     * Use the corporateBodyId stored in memory to get the latest confirmation statement date for that company.
+     * @param corporateBodyId the ID of the company used to search the DB for.
+     */
+    public Date getLastConfirmationStatementDate(String corporateBodyId) {
+        final String sql = "select * from confirmation_statement cs where corporate_body_id = ?"
+                + "order by CONFIRM_STMT_MADE_UP_DATE desc";
+
+        try (Connection conn = dbGetConnection();
+            PreparedStatement preparedStatement = createPreparedStatement(conn, sql, corporateBodyId);
+            ResultSet rs = preparedStatement.executeQuery()) {
+            rs.next();
+            Date confirmationStatementDate = rs.getDate("CONFIRM_STMT_MADE_UP_DATE");
+            conn.close();
+            LOG.info("Last confirmation statement filed on {}", confirmationStatementDate);
+            return confirmationStatementDate;
+        } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException exception) {
+            throw new RuntimeException("Unable to get confirmation statement date from DB", exception);
+        }
+
     }
 
     private PreparedStatement createPreparedStatement(Connection conn, String sql, Object... params) throws SQLException {
@@ -214,5 +238,6 @@ public class DbUtil {
         prop.setProperty("password", pass);
         return DriverManager.getConnection(url, prop);
     }
+
 
 }
