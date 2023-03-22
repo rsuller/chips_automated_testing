@@ -17,6 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.gov.companieshouse.data.datamodel.Company;
 import uk.gov.companieshouse.data.dbutil.DbUtil;
+import uk.gov.companieshouse.pageobjects.ChipsCommonPage;
 import uk.gov.companieshouse.pageobjects.ChipsHomePage;
 import uk.gov.companieshouse.pageobjects.CompanyDetailsScreen;
 import uk.gov.companieshouse.pageobjects.CompanySearchPage;
@@ -28,7 +29,7 @@ import uk.gov.companieshouse.pageobjects.TeamWorkPage;
 import uk.gov.companieshouse.testdata.DocumentDetails;
 
 
-public class FesProcessor extends ElementInteraction {
+public class FesProcessor extends ChipsCommonPage<FesProcessor> {
 
     public TestContext testContextContext;
     public ChipsHomePage chipsHomePage;
@@ -150,7 +151,7 @@ public class FesProcessor extends ElementInteraction {
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
 
         try {
-            HttpPost request = new HttpPost(testContextContext.getEnv().config.getString("chips-rest-api-uri"));
+            HttpPost request = new HttpPost(testContextContext.getEnv().config.getString("chips-rest-api"));
             StringEntity params = new StringEntity(json.toString());
             request.addHeader("content-type", "application/json");
             request.setEntity(params);

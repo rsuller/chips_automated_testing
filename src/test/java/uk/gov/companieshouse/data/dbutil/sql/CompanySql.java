@@ -18,7 +18,9 @@ public enum CompanySql {
     BASE_SQL_PRIVATE_LIMITED_COMPANY_RO_LOCATION_UNSPECIFIED(
             "base/private_limited_company_ro_location_unspecified.sql"),
     BASE_SQL_LTD_COMPANY_WITH_ACTIVE_DIRECTOR("base/ltd_company_with_active_director.sql"),
-    BASE_SQL_lTD_WITH_ACTIVE_CORPORATE_DIRECTOR("base/ltd_company_with_active_corporate_director.sql");
+    BASE_SQL_lTD_WITH_ACTIVE_CORPORATE_DIRECTOR("base/ltd_company_with_active_corporate_director.sql"),
+    CS_SQL_LTD_COMPANY_WITH_CS_DUE(
+            "confirmation_statement/private_limited_company_with_cs_due.sql");
 
     private String sql;
 
@@ -40,7 +42,7 @@ public enum CompanySql {
             String resource = resourceIn.replaceAll("^/+", "");
             BufferedReader reader = new BufferedReader(
                     new InputStreamReader(
-                            Objects.requireNonNull(getClass().getResourceAsStream("/sql/" + resource))));
+                            Objects.requireNonNull(getClass().getResourceAsStream("/uk/gov/companieshouse/sql/" + resource))));
             // split string by new lines
             String[] rawSql = IOUtils.toString(reader).split("(\r\n|\r|\n)");
 
