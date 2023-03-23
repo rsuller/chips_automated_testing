@@ -1,10 +1,18 @@
 package uk.gov.companieshouse.testdata;
 
+import uk.gov.companieshouse.data.datamodel.Company;
+
+/**
+ * This is the CHIPS user. A CHIPS user will have a username and password to access the service.
+ * The CHIPS user will have access to various organisational units with specific privileges, based on access level.
+ * The user will also have the company it is filing for.
+ */
 public class User {
 
     String username;
     String password;
     String orgUnit;
+    Company company;
 
     public void setOrgUnit(String orgUnit) {
         this.orgUnit = orgUnit;
@@ -33,5 +41,13 @@ public class User {
 
     public String getPassword() {
         return password;
+    }
+
+    public void setCompanyInContext(Company company) {
+        this.company = company;
+    }
+
+    public Company getCompanyInContext() {
+        return company;
     }
 }

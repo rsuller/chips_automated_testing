@@ -5,6 +5,7 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.ie.InternetExplorerOptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import uk.gov.companieshouse.data.datamodel.Company;
 import uk.gov.companieshouse.testdata.DocumentDetails;
 import uk.gov.companieshouse.testdata.User;
 
@@ -16,7 +17,6 @@ public class TestContext {
     public static final Logger log = LoggerFactory.getLogger(TestContext.class);
     WebDriver driver;
     User user;
-    DocumentDetails documentDetails;
 
     public Env getEnv() {
         return new Env();

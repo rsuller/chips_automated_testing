@@ -1,6 +1,5 @@
 package uk.gov.companieshouse.enums;
 
-public class Forms {
     public enum Form {
 
         AD01("AD01", "AD01: Change to registered office address", false, "REGISTERED OFFICE CHANGED"),
@@ -47,9 +46,8 @@ public class Forms {
                     return form;
                 }
             }
-            throw new RuntimeException("The form type " + title + " was not recognised. Add an entry to " + Forms.class.getCanonicalName());
+            throw new RuntimeException("The form type " + title + " was not recognised. Add an entry to " + Form.class.getCanonicalName());
         }
 
     }
 
-}

@@ -10,7 +10,7 @@ import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import uk.gov.companieshouse.enums.Forms;
+import uk.gov.companieshouse.enums.Form;
 import uk.gov.companieshouse.utils.DateFormat;
 import uk.gov.companieshouse.utils.TestContext;
 
@@ -75,7 +75,7 @@ public class ChangeOfficerPage extends ChipsCommonPage<ChangeOfficerPage> {
      * Wait for the form to be loaded and click the first officer in the appointments table.
      */
     public void selectFirstOfficer() {
-        waitUntilFormDisplayed(Forms.Form.CH01);
+        waitUntilFormDisplayed(Form.CH01);
         // Select the officer and wait until fields populated before continuing
         surnameTableElement.click();
         waitElementTextNotEmpty(businessOccupationField);
