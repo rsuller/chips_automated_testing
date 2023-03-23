@@ -43,7 +43,7 @@ public class ConfirmationStatementPage extends ChipsCommonPage<ConfirmationState
         elementCsDateInput.sendKeys(DateFormat.getDateAsString(new Date()));
         elementPaymentReceivedYes.click();
         elementNoUpdatesCheckbox.click();
-        testContext.getWebDriver().switchTo().alert().accept();
+        acceptAlert();
         saveForm();
         return this;
     }
