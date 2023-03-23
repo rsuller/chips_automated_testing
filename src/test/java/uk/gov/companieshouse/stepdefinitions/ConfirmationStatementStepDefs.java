@@ -1,0 +1,30 @@
+package uk.gov.companieshouse.stepdefinitions;
+
+import io.cucumber.java.en.When;
+import uk.gov.companieshouse.pageobjects.ConfirmationStatementPage;
+import uk.gov.companieshouse.utils.TestContext;
+
+
+public class ConfirmationStatementStepDefs {
+
+    public TestContext context;
+    public ConfirmationStatementPage confirmationStatementPage;
+
+
+    /**
+     * Required constructor for class.
+     */
+    public ConfirmationStatementStepDefs(TestContext context, ConfirmationStatementPage confirmationStatementPage) {
+        this.context = context;
+        this.confirmationStatementPage = confirmationStatementPage;
+    }
+
+    /**
+     * Complete mandatory fields to process a no update confirmation statement.
+     */
+    @When("I complete mandatory details process a no update confirmation statement")
+    public void completeMandatoryDetailsToAppointFesDirector() {
+        confirmationStatementPage.completeNoUpdateCs01();
+    }
+
+}

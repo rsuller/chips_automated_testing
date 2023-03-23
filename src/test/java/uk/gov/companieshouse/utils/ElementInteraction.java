@@ -49,4 +49,8 @@ public class ElementInteraction extends WebDriverWaitConditions {
         webElement.sendKeys(Keys.DELETE);
     }
 
+    public void acceptAlert() {
+        testContext.getWebDriver().switchTo().alert().accept();
+    }
+
 }

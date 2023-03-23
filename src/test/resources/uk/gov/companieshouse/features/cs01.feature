@@ -19,9 +19,27 @@ Feature: CS01 - Confirmation Statement.
 * Number of shares must be provided
 * Total number of shares must accurate
 * Aggregate Nominal value of shares must accurate
-* Electronically filed CS01 forms with no updates are usually auto accepted (there is no need to open query handling).
+* According to filing stats, the most popular method for receiving CS01s are as follows (in order):
+  Web Filing, Electronic Filing, Single Service, Front-End Scan, Post
+* Electronically filed CS01 forms with no updates are usually auto accepted (there is no need to open
+query handling). Therefore in order to verify interaction with the CS01 screens in Chips, a test with a
+different filing method is necesssary.
 
   Scenario: Electronically Filed auto accepted CS01 form
     Given I am logged in as a user in the "EF Registration Team" organisational unit
     When I process a no update e-filed CS01 form for a private limited company
     Then company history information is updated with the accepted CS01 transaction
+
+  @fes_scanned
+  Scenario Outline: FES scanned accepted CS01 forms
+    Given I am logged in as a user in the "<org_unit>" organisational unit
+    When I process a FES "CS01" for a company registered in "<country>"
+    And I complete mandatory details process a no update confirmation statement
+    Then company history information is updated with the accepted CS01 transaction
+    Examples:
+      | org_unit  | country   |
+      | CFS (FES) | Eng/Wales |
+    Examples:
+      | org_unit                      | country          |
+      | Scottish DEB (FES)            | Scotland         |
+      | NI Document Examination (FES) | Northern Ireland |

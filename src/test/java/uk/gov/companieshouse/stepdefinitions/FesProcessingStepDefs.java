@@ -65,8 +65,17 @@ public class FesProcessingStepDefs {
         } else if ("Northern Ireland".equals(registerLocation)) {
             registerLocationTypeId = 3;
         }
-        company = dbUtil.cloneCompanyWithParameterInternal(
-                CompanySql.BASE_SQL_PRIVATE_LIMITED_COMPANY_RO_LOCATION_UNSPECIFIED, registerLocationTypeId);
+        switch (formType) {
+            case "AP01":
+                company = dbUtil.cloneCompanyWithParameterInternal(
+                        CompanySql.BASE_SQL_PRIVATE_LIMITED_COMPANY_RO_LOCATION_UNSPECIFIED, registerLocationTypeId);
+                break;
+            case "CS01":
+                company = dbUtil.cloneCompany(CompanySql.CS_SQL_LTD_COMPANY_WITH_CS_DUE);
+                break;
+            default:
+                throw new RuntimeException("Unable to find SQL for specified form type");
+        }
         fesProcessor
                 .processFesDocumentForLocation(registerLocationTypeId, formType, company.getNumber(), company.getName())
                 .allocateWorkAndPsodFes(formType, company);
