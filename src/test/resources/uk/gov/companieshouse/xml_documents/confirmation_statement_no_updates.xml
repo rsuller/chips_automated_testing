@@ -82,7 +82,7 @@
         </extraParams>
     </rules>
     <filingDetails>
-        <method>web</method>
+        <method>chs</method>
         <barcode>${BARCODE}</barcode>
         <receiptDate>${RECEIPT_DATE}</receiptDate>
         <submissionReference>${SUBMISSION_REFERENCE}-1</submissionReference>
