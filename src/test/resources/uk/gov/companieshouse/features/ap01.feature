@@ -43,7 +43,7 @@ Feature: AP01 - Appoint a director
   @fes_scanned
   Scenario Outline: FES scanned accepted AP01 forms
     Given I am logged in as a user in the "<org_unit>" organisational unit
-    When I process a FES "AP01" for a company registered in "<country>"
+    When I process a FES "AP01" for a "private limited company" registered in "<country>"
     And I complete mandatory details to appoint a FES'd director
     Then company history information is updated with the accepted AP01 transaction
     Examples:

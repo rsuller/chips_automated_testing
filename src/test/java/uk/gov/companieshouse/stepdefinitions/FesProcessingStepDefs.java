@@ -51,21 +51,33 @@ public class FesProcessingStepDefs {
 
 
     /**
-     * Process a FES'd AP01 form switching the SQL chosen to run based on the jurisdiction under test.
+     * Process a FES form, switching the SQL chosen to run based on the jurisdiction and form type under test.
      */
-    @When("I process a FES {string} for a company registered in {string}")
-    public void processFesForm(String formType, String registerLocation) throws Throwable {
+    @When("I process a FES {string} for a {string} registered in {string}")
+    public void processFesForm(String formType, String companyType, String registerLocation) throws Throwable {
         Company company;
         Form.getFormByType(formType);
-        int registerLocationTypeId = 0;
+        int registerLocationTypeId;
         if ("Eng/Wales".equals(registerLocation)) {
             registerLocationTypeId = 1;
         } else if ("Scotland".equals(registerLocation)) {
             registerLocationTypeId = 2;
         } else if ("Northern Ireland".equals(registerLocation)) {
             registerLocationTypeId = 3;
+        } else {
+            throw new RuntimeException("Register location type " + registerLocation
+                    + "specified in the feature file is unrecognised");
         }
         switch (formType) {
+            case "AA":
+                if (companyType.equals("PLC")) {
+                    company = dbUtil.cloneCompany(
+                            CompanySql.ACCOUNTS_DUE_SQL_PUBLIC_LTD_COMPANY_ENG_WALES);
+            } else {
+                company = dbUtil.cloneCompany(
+                        CompanySql.ACCOUNTS_DUE_SQL_PRIVATE_LTD_COMPANY_ENG_WALES);
+            }
+                break;
             case "AP01":
                 company = dbUtil.cloneCompanyWithParameterInternal(
                         CompanySql.BASE_SQL_PRIVATE_LIMITED_COMPANY_RO_LOCATION_UNSPECIFIED, registerLocationTypeId);

@@ -29,7 +29,7 @@ public class ElementInteraction extends WebDriverWaitConditions {
 
     /**
      * Use JavascriptExecutor to get around an issue with Chips, where using the sendKeys
-     * method results in errors tryin to type into the hidden text boxes in PSOD.
+     * method results in errors trying to type into the hidden text boxes in PSOD.
      * @param element the text box element.
      * @param value the value to select.
      */

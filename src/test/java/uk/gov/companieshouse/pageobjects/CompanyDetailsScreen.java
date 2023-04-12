@@ -69,7 +69,7 @@ public class CompanyDetailsScreen extends ElementInteraction {
                 log.info("{} transaction not found, checking next page.",
                         formToFind);
             } catch (NoSuchElementException ignored) {
-                log.error("{} transaction  not found, no more pages to check",
+                log.error("{} transaction not found, no more pages to check",
                         formToFind);
                 throw new RuntimeException("The expected " + formToFind
                         + " transaction was not found");
