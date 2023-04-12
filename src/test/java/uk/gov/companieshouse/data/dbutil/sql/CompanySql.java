@@ -11,6 +11,11 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 
 public enum CompanySql {
+
+    ACCOUNTS_DUE_SQL_PRIVATE_LTD_COMPANY_ENG_WALES(
+            "accounts/private_limited_company_with_accounts_due.sql"),
+    ACCOUNTS_DUE_SQL_PUBLIC_LTD_COMPANY_ENG_WALES(
+            "accounts/public_limited_company_with_accounts_due.sql"),
     BASE_SQL_PRIVATE_LIMITED_COMPANY_ID(
             "base/private_limited_company_id.sql"),
     DISSOLUTION_COMPANY_NO_PREV_DISS_REQUEST_FILED(
@@ -20,7 +25,7 @@ public enum CompanySql {
     BASE_SQL_LTD_COMPANY_WITH_ACTIVE_DIRECTOR("base/ltd_company_with_active_director.sql"),
     BASE_SQL_lTD_WITH_ACTIVE_CORPORATE_DIRECTOR("base/ltd_company_with_active_corporate_director.sql"),
     CS_SQL_LTD_COMPANY_WITH_CS_DUE(
-            "confirmation_statement/private_limited_company_with_cs_due.sql");
+            "confirmation_statement/private_limited_company_eng_wales_with_cs_due.sql");
 
     private String sql;
 

@@ -3,6 +3,9 @@ package uk.gov.companieshouse.enums;
 public class Forms {
     public enum Form {
 
+        // The transaction history description for ACCOUNTS is blank as it is custom depending on the accounts type and
+        // date used within each specific test
+        ACCOUNTS("AA","Accounts Filing", false, ""),
         AD01("AD01", "AD01: Change to registered office address", false, "REGISTERED OFFICE CHANGED"),
         AP01("AP01", "Officers", false, "DIRECTOR APPOINTED"),
         CH01("CH01", "Change Officers", false, "DIRECTOR'S CHANGE OF PARTICULA..."),

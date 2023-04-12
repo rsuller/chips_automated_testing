@@ -8,7 +8,9 @@ import static uk.gov.companieshouse.data.dbutil.sql.CompanySql.DISSOLUTION_COMPA
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
-
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.gov.companieshouse.data.datamodel.Company;
@@ -58,6 +60,7 @@ public class CommonStepDefs {
 
     /**
      * Common step definition to login to chips and switch to the organisational unit required.
+     *
      * @param orgUnit the org unit to switch to.
      */
     @Given("I am logged in as a user in the {string} organisational unit")
@@ -82,22 +85,40 @@ public class CommonStepDefs {
 
     /**
      * Common step definition to check the company transaction history for a particular form.
+     *
      * @param formName the form name and details to look for.
      */
     @Then("^company history information is updated with the accepted (.*) transaction$")
     public void companyHistoryInformationIsUpdated(String formName) {
         Form form = Form.getFormByType(formName);
+        String descriptionToCheck;
         companySearchPage
                 .findCompanyByNumberFromMenu()
                 .openCompanyDetails();
+        if (formName.equals("AA")) {
+            SimpleDateFormat enquiryScreenFormatter = new SimpleDateFormat("dd/MM/yy");
+            String storedAccountsDate = documentDetails.getAccountsMud();
+            Date date;
+            String formattedDate;
+            try {
+                date = enquiryScreenFormatter.parse(storedAccountsDate);
+                formattedDate = enquiryScreenFormatter.format(date);
+            } catch (ParseException exception) {
+                throw new RuntimeException(exception);
+            }
+            descriptionToCheck = formattedDate + " " + documentDetails.getAccountsType().toUpperCase();
+        } else {
+            descriptionToCheck = form.getTransactionHistoryPartialDescription();
+        }
         companyDetailsScreen
                 .waitUntilDisplayed()
                 .getExpectedTransactionFromHistory(form.getType(), documentDetails.getReceivedDate(), "ACCEPTED",
-                        form.getTransactionHistoryPartialDescription());
+                        descriptionToCheck);
     }
 
     /**
      * Clone company using SQL based on the form and process this form with data selected.
+     *
      * @param formType the form to be processed.
      */
     @And("I process the start document for form {string}")
