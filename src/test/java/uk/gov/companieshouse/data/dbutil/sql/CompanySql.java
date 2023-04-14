@@ -19,7 +19,7 @@ public enum CompanySql {
             "base/private_limited_company_ro_location_unspecified.sql"),
     BASE_SQL_LTD_COMPANY_WITH_ACTIVE_DIRECTOR("base/ltd_company_with_active_director.sql"),
     BASE_SQL_lTD_WITH_ACTIVE_CORPORATE_DIRECTOR("base/ltd_company_with_active_corporate_director.sql"),
-    PSC_SQL_COMPANY_PSC_NOT_PREV_FILED("psc/company_psc_not_prev_filed");
+    PSC_SQL_COMPANY_PSC_NOT_PREV_FILED("psc/company_psc_not_prev_filed.sql");
 
     private String sql;
 

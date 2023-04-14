@@ -1,4 +1,4 @@
-package uk.gov.companieshouse.data.datamodel;
+package uk.gov.companieshouse.testdata.datamodel;
 
 import static uk.gov.companieshouse.utils.RandomStringCreator.randomAlphaString;
 

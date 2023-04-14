@@ -6,7 +6,8 @@ package uk.gov.companieshouse.enums;
         AP01("AP01", "Officers", false, "DIRECTOR APPOINTED"),
         CH01("CH01", "Change Officers", false, "DIRECTOR'S CHANGE OF PARTICULA..."),
         CH02("CH02", "Change Officers", false, "CORPORATE DIRECTOR'S CHANGE OF..."),
-        DS01("DS01", "Process Voluntary Dissolution Form DS01/LLDS01", true, "APPLICATION FOR STRIKING-OFF");
+        DS01("DS01", "Process Voluntary Dissolution Form DS01/LLDS01", true, "APPLICATION FOR STRIKING-OFF"),
+        PSC01("PSC01", "Person with Significant Control", false, "PSC");
         private final String type;
         private final String title;
         private final boolean highRiskForm;

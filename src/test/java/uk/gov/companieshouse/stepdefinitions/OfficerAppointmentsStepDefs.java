@@ -1,7 +1,7 @@
 package uk.gov.companieshouse.stepdefinitions;
 
 import io.cucumber.java.en.When;
-import uk.gov.companieshouse.data.datamodel.Director;
+import uk.gov.companieshouse.testdata.datamodel.Director;
 import uk.gov.companieshouse.data.dbutil.DbUtil;
 import uk.gov.companieshouse.pageobjects.AppointDirectorPage;
 import uk.gov.companieshouse.pageobjects.ChangeToRoPage;

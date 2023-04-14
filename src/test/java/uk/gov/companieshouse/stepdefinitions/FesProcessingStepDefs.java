@@ -1,7 +1,7 @@
 package uk.gov.companieshouse.stepdefinitions;
 
 import io.cucumber.java.en.When;
-import uk.gov.companieshouse.data.datamodel.Company;
+import uk.gov.companieshouse.testdata.datamodel.Company;
 import uk.gov.companieshouse.data.dbutil.DbUtil;
 import uk.gov.companieshouse.data.dbutil.sql.CompanySql;
 import uk.gov.companieshouse.enums.Form;

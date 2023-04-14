@@ -4,13 +4,13 @@ import uk.gov.companieshouse.data.dbutil.sql.CompanySql;
 
 public enum CompanyType {
 
-    PRIVATE_LIMITED("private_limited_company", CompanySql.BASE_SQL_PRIVATE_LIMITED_COMPANY_ID, null),
+    PRIVATE_LIMITED("private_limited_company", CompanySql.BASE_SQL_PRIVATE_LIMITED_COMPANY_ID, 0),
     PRIVATE_LIMITED_PSC("private limited company", CompanySql.PSC_SQL_COMPANY_PSC_NOT_PREV_FILED, 2);
     private final String type;
     private final CompanySql companySql;
-    private final Integer corporateBodyId;
+    private final int corporateBodyId;
 
-    CompanyType(String type, CompanySql companySql, Integer corporateBodyId) {
+    CompanyType(String type, CompanySql companySql, int corporateBodyId) {
         this.type = type;
         this.companySql = companySql;
         this.corporateBodyId = corporateBodyId;
@@ -37,7 +37,7 @@ public enum CompanyType {
         return companySql;
     }
 
-    public Integer getCorporateBodyId() {
+    public int getCorporateBodyId() {
         return corporateBodyId;
     }
 }

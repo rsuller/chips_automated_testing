@@ -1,6 +1,6 @@
 package uk.gov.companieshouse.testdata;
 
-import uk.gov.companieshouse.data.datamodel.Company;
+import uk.gov.companieshouse.testdata.datamodel.Company;
 
 /**
  * This is the CHIPS user. A CHIPS user will have a username and password to access the service.

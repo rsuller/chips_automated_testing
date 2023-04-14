@@ -1,4 +1,4 @@
-package uk.gov.companieshouse.data.datamodel;
+package uk.gov.companieshouse.testdata.datamodel;
 
 public class Address {
 
