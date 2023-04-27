@@ -6,11 +6,15 @@ import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 import uk.gov.companieshouse.utils.TestContext;
 
-public class ChipsHomePage {
+public class ChipsHomePage extends ChipsCommonPage<ChipsHomePage> {
 
     public TestContext testContext;
 
+    /**
+     * Required constructor for class.
+     */
     public ChipsHomePage(TestContext testContext) {
+        super(testContext);
         this.testContext = testContext;
         PageFactory.initElements(testContext.getWebDriver(),this);
     }

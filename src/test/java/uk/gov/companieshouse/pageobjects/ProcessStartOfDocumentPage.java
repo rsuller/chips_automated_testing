@@ -301,6 +301,7 @@ public class ProcessStartOfDocumentPage extends ElementInteraction {
 
     private void selectFormType(Form form) {
         String formName = form.getType();
+        waitUntilDisplayed();
         selectByText(elementFormTypeSelectKey, formName);
         // There is a known issue with Selenium 4 where after using the necessary select method above, the screen
         // does not refresh and hidden company name/number fields are not displayed. The following methods moving
