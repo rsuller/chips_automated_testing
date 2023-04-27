@@ -15,6 +15,8 @@ import uk.gov.companieshouse.testdata.DocumentDetails;
 import uk.gov.companieshouse.utils.FesProcessor;
 import uk.gov.companieshouse.utils.TestContext;
 
+import static uk.gov.companieshouse.data.dbutil.sql.CompanySql.BASE_SQL_PRIVATE_LIMITED_COMPANY_ENG_WALES_ID;
+
 
 public class FesProcessingStepDefs {
 
@@ -87,6 +89,9 @@ public class FesProcessingStepDefs {
                 break;
             case "TM01":
                 company = dbUtil.cloneCompany(CompanySql.BASE_SQL_LTD_COMPANY_WITH_ACTIVE_DIRECTOR);
+                break;
+            case "AD01":
+                company = dbUtil.cloneCompany(BASE_SQL_PRIVATE_LIMITED_COMPANY_ENG_WALES_ID);
                 break;
             default:
                 throw new RuntimeException("Unable to find SQL for specified form type");
