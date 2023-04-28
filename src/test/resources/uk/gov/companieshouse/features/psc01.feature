@@ -1,3 +1,4 @@
+@psc01
 Feature: Process a PSC01 giving notice of appointment of an individual with significant control
 
   Notes:

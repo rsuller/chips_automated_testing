@@ -10,7 +10,9 @@ import uk.gov.companieshouse.utils.TestContext;
 
 public class PscAddressDetails extends ChipsCommonPage<PscAddressDetails> {
 
-    @FindBy(how = How.ID, using = "form1:personOfControlDetailsTabSubView:serviceAddress:address:houseNumber:field")
+    @FindBy(how = How.CSS, using = "input[id$='address:houseNumber:field']")
+    // TODO Fix this as not sure the CSS selector works
+    // form1:residentialAddressTabSubView:residentialAddress:address:houseNumber:field
     private WebElement houseNameOrNumber;
 
     @FindBy(how = How.ID, using =
@@ -44,6 +46,7 @@ public class PscAddressDetails extends ChipsCommonPage<PscAddressDetails> {
         this.testContext = testContext;
         PageFactory.initElements(testContext.getWebDriver(), this);
     }
+
     public void enterHouseNameOrNumber(String houseNameOrNumberText) {
         houseNameOrNumber.sendKeys(houseNameOrNumberText);
     }
@@ -55,12 +58,13 @@ public class PscAddressDetails extends ChipsCommonPage<PscAddressDetails> {
     public void enterPostCode(String postcodeText) {
         postcode.sendKeys(postcodeText);
     }
+
     private void enterRegion(String regionText) {
         county.sendKeys(regionText);
     }
 
     private void selectCountry(String countryText) {
-        selectByText(country, countryText);
+        selectByText(country, countryText, true);
     }
 
     protected void enterAddress(Address address) {
@@ -72,7 +76,7 @@ public class PscAddressDetails extends ChipsCommonPage<PscAddressDetails> {
             enterHouseNameOrNumber(address.getHouseNumber());
             enterStreet(address.getStreet());
             enterRegion(address.getRegion());
-            selectCountry(address.getCountry());
         }
+        selectCountry(address.getCountry());
     }
 }

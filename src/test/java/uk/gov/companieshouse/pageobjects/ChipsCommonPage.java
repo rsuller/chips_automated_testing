@@ -28,7 +28,7 @@ public class ChipsCommonPage<T extends ChipsCommonPage<?>> extends ElementIntera
 
     @FindBy(how = How.ID, using = "form1:task_tabBookTabHeader:2")
     private WebElement residentialAddressLink;
-    @FindBy(how = How.ID, using = "form1:residentialAddressTabSubView:officer_residentialAddress_uraBarcode:field")
+    @FindBy(how = How.CSS, using = "input[id$='residentialAddress_uraBarcode:field']")
     private WebElement uraBarcodeInputField;
     @FindBy(how = How.ID, using = "form1:task_save")
     private WebElement globalSaveFormElement;
@@ -40,7 +40,8 @@ public class ChipsCommonPage<T extends ChipsCommonPage<?>> extends ElementIntera
      * Enter the URA barcode.
      */
     public T enterUraBarcode() {
-        residentialAddressLink.click();
+        //TODO Fix this - remove or amend method
+        //residentialAddressLink.click();
         uraBarcodeInputField.sendKeys(URA_BARCODE);
         return (T) this;
     }

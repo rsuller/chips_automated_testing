@@ -12,6 +12,11 @@ public class PscUraTab extends PscAddressDetails {
     TestContext testContext;
     @FindBy(how = How.ID, using = "form1:residentialAddressTabSubView:psc_birthDate:field")
     private WebElement dateOfBirthField;
+    @FindBy(how = How.LINK_TEXT, using = "Residential Address")
+    private WebElement residentialAddressLink;
+    @FindBy(how = How.ID, using =
+            "form1:residentialAddressTabSubView:psc_residentialAddress_isResidentialAddressSA:field")
+    private WebElement uraSameAsServiceAddress;
 
     public PscUraTab(TestContext testContext) {
         super(testContext);
@@ -20,11 +25,19 @@ public class PscUraTab extends PscAddressDetails {
     }
 
     public void enterUraDetails(PersonOfSignificantControl psc) {
+        residentialAddressLink.click();
         enterDateOfBirth(psc.getDateOfBirth());
-        enterAddress(psc.getAddress());
+        selectUraAsServiceAddress();
+        //enterAddress(psc.getAddress());
+        enterUraBarcode();
+    }
+
+    private void selectUraAsServiceAddress() {
+        uraSameAsServiceAddress.click();
     }
 
     private void enterDateOfBirth(String dateOfBirth) {
+        waitUntilElementDisplayed(dateOfBirthField);
         dateOfBirthField.sendKeys(dateOfBirth);
     }
 }

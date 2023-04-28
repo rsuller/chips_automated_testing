@@ -14,6 +14,8 @@ public class PscRegisterDateTab {
     private WebElement registerDateElement;
     @FindBy(how = How.LINK_TEXT, using = "Register Date")
     private WebElement registerDateTabLink;
+    @FindBy(how = How.LINK_TEXT, using = "save")
+    private WebElement saveLink;
 
     /**
      * Required constructor for class.
@@ -28,5 +30,6 @@ public class PscRegisterDateTab {
     public void enterPscRegisterDate(PersonOfSignificantControl psc) {
         registerDateTabLink.click();
         registerDateElement.sendKeys(DateFormat.getDateAsString(psc.getDateOfNotification()));
+        saveLink.click();
     }
 }

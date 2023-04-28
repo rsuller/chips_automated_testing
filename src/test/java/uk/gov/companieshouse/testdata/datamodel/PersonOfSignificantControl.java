@@ -177,7 +177,7 @@ public class PersonOfSignificantControl {
             withSurname("Doe");
             withDateOfBirth("01/07/1979");
             withAddress(new Address.AddressBuilder().welshAddress().build());
-            withServiceAddressSameAsRo(true);
+            withServiceAddressSameAsRo(false);
             withForeignAddress(false);
             withNationality("British");
             withCountryOfUsualResidence("United Kingdom");

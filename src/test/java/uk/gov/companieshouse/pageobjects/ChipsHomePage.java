@@ -4,13 +4,15 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
+import uk.gov.companieshouse.utils.ElementInteraction;
 import uk.gov.companieshouse.utils.TestContext;
 
-public class ChipsHomePage {
+public class ChipsHomePage  extends ElementInteraction {
 
     public TestContext testContext;
 
     public ChipsHomePage(TestContext testContext) {
+        super(testContext);
         this.testContext = testContext;
         PageFactory.initElements(testContext.getWebDriver(),this);
     }
@@ -31,6 +33,15 @@ public class ChipsHomePage {
     public void logInUser(String username, String password) {
         usernameInput.sendKeys(username);
         passwordInput.sendKeys(password);
+
+        // There is a strange occurrence of the password being entered twice for weblogic
+        if ("weblogic".equals(testContext.getUser().getUsername())) {
+            if (passwordInput.getAttribute("value").length() > 8) {
+                clearField(passwordInput);
+                passwordInput.sendKeys(password);
+            }
+        }
+
         loginLink.click();
     }
 }

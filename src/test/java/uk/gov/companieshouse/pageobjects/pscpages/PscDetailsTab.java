@@ -87,11 +87,11 @@ public class PscDetailsTab extends PscAddressDetails {
     }
 
     public void selectNationality(String nationalityText) {
-        selectByText(nationality, nationalityText);
+        selectByText(nationality, nationalityText, true);
     }
 
     public void enterPartialDob(String partialDobText) {
-        partialDob.sendKeys(partialDobText);
+        partialDob.sendKeys(partialDobText.substring(3));
     }
 
     public void selectSection790Exception(boolean section790ExceptionOption) {

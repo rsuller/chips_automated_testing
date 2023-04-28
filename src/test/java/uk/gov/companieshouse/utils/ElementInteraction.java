@@ -28,8 +28,26 @@ public class ElementInteraction extends WebDriverWaitConditions {
     }
 
     /**
+     * There is a known issue with Selenium 4 where after using the necessary select method above, the screen
+     * does not refresh and hidden company name/number fields are not displayed. The following methods moving
+     * the cursor up and down results in the correct form being selected and required fields are displayed.
+     *
+     * @param element - the select web element
+     * @param value the value to be selected
+     * @param javascriptIssue true if affected by known javascript issue
+     */
+    public void selectByText(WebElement element, String value, boolean javascriptIssue) {
+        if (javascriptIssue) {
+            selectByText(element, value);
+            element.sendKeys(Keys.UP);
+            element.sendKeys(Keys.DOWN);
+        }
+    }
+
+
+    /**
      * Use JavascriptExecutor to get around an issue with Chips, where using the sendKeys
-     * method results in errors tryin to type into the hidden text boxes in PSOD.
+     * method results in errors trying to type into the hidden text boxes in PSOD.
      * @param element the text box element.
      * @param value the value to select.
      */
