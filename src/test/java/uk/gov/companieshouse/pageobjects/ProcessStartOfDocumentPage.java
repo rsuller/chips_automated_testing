@@ -3,6 +3,7 @@ package uk.gov.companieshouse.pageobjects;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
@@ -148,7 +149,7 @@ public class ProcessStartOfDocumentPage extends ElementInteraction {
 
     /**
      * Generate a barcode for specific date.
-     * @param date the date to genrate a barcode for.
+     * @param date the date to generate a barcode for.
      */
     public String generateBarcode(Date date) {
         Date today = new Date();
@@ -207,8 +208,13 @@ public class ProcessStartOfDocumentPage extends ElementInteraction {
      * returns the company name, or a blank string if not populated.
      */
     public String getPopulatedCompanyName() {
+        String expectedCompanyName = companyDetails.getCompanyName();
         //Wait for company name to be populated
-        getWebDriverWait(1000);
+        try {
+            waitForSpecificTextInElement(elementCompanyNameOutput, expectedCompanyName);
+        } catch (TimeoutException exception) {
+            log.info("Expected value: {} not found", expectedCompanyName);
+        }
         return elementCompanyNameOutput.getText();
     }
 
@@ -222,15 +228,15 @@ public class ProcessStartOfDocumentPage extends ElementInteraction {
      * Log an error if the barcode field on PSOD cannot be found.
      */
     public ProcessStartOfDocumentPage waitUntilDisplayed() {
-            waitUntilElementDisplayed(elementBarcodeInputKey);
-            log.info("Process start of document page displayed successfully.");
+        waitUntilElementDisplayed(elementBarcodeInputKey);
+        log.info("Process start of document page displayed successfully.");
         return this;
     }
 
     /**
      * Complete the company identification fields on the process start of document screen.
      *
-     * @param company      the company object containing the company details to fill in
+     * @param company the company object containing the company details to fill in
      */
     public ProcessStartOfDocumentPage processForm(Company company, Form form) {
         Date today = new Date();
@@ -293,9 +299,8 @@ public class ProcessStartOfDocumentPage extends ElementInteraction {
                             .setCompanyNumber2NameField(company.getName())
                             .setCompanySelect(company.getName(), company.getNameEnding());
                 }
+                setCompanyContext(company);
             }
-            assert company != null;
-            setCompanyContext(company);
         } while (!retryCloneIfCompanyNameNotPopulated());
     }
 
