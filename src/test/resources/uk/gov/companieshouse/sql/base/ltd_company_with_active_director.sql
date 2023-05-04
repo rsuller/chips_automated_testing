@@ -13,6 +13,7 @@ SELECT *
                                  AND CB.PROOF_TYPE_ID = 0
                                  AND action_code_type_id = 0
                                  AND cb.language_type_id = 1
+                                 AND cb.register_location_type_id = 1
                                  AND CBA.APPOINTMENT_TYPE_ID = 2
                                  AND URA_SAME_AS_SERVICE_IND = 'N'
                                  AND SERVICE_SAME_AS_ROA_IND = 'N'
