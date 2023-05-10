@@ -126,9 +126,6 @@ public class CommonStepDefs {
         globalNavBar.clickProcessFormLabel();
         Company company = null;
         switch (formType) {
-            case "CH01":
-                company = dbUtil.cloneCompany(BASE_SQL_LTD_COMPANY_WITH_ACTIVE_DIRECTOR);
-                break;
             case "CH02":
                 company = dbUtil.cloneCompany(BASE_SQL_lTD_WITH_ACTIVE_CORPORATE_DIRECTOR);
                 break;

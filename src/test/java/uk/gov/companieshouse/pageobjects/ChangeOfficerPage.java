@@ -74,8 +74,6 @@ public class ChangeOfficerPage extends ChipsCommonPage<ChangeOfficerPage> {
             default:
                 throw new RuntimeException("There is no option for " + typeOfChange + " please amend.");
         }
-        // Enter URA barcode as mandatory field
-        enterUraBarcode();
         saveForm();
     }
 

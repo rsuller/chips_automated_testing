@@ -15,6 +15,8 @@ import uk.gov.companieshouse.testdata.DocumentDetails;
 import uk.gov.companieshouse.utils.FesProcessor;
 import uk.gov.companieshouse.utils.TestContext;
 
+import static uk.gov.companieshouse.data.dbutil.sql.CompanySql.BASE_SQL_LTD_COMPANY_WITH_ACTIVE_DIRECTOR;
+
 import static uk.gov.companieshouse.data.dbutil.sql.CompanySql.BASE_SQL_PRIVATE_LIMITED_COMPANY_ENG_WALES_ID;
 
 
@@ -86,6 +88,9 @@ public class FesProcessingStepDefs {
                 break;
             case "CS01":
                 company = dbUtil.cloneCompany(CompanySql.CS_SQL_LTD_COMPANY_WITH_CS_DUE);
+                break;
+            case "CH01":
+                company = dbUtil.cloneCompany(BASE_SQL_LTD_COMPANY_WITH_ACTIVE_DIRECTOR);
                 break;
             case "TM01":
                 company = dbUtil.cloneCompany(CompanySql.BASE_SQL_LTD_COMPANY_WITH_ACTIVE_DIRECTOR);
