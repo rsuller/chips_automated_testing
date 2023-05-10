@@ -17,6 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.gov.companieshouse.data.datamodel.Company;
 import uk.gov.companieshouse.data.dbutil.DbUtil;
+import uk.gov.companieshouse.enums.Forms.Form;
 import uk.gov.companieshouse.pageobjects.ChipsCommonPage;
 import uk.gov.companieshouse.pageobjects.ChipsHomePage;
 import uk.gov.companieshouse.pageobjects.CompanyDetailsScreen;
@@ -128,7 +129,7 @@ public class FesProcessor extends ChipsCommonPage<FesProcessor> {
             //No need to fill in PSOD company details for an incorporation
             processStartOfDocumentPage.clickProceedLink();
         } else {
-            processStartOfDocumentPage.processFesForm(formType, company, false);
+            processStartOfDocumentPage.processFesForm(formType, company, Form.getFormByType(formType).isHighRiskForm());
         }
         return this;
     }

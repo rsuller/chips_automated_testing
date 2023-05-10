@@ -88,6 +88,7 @@ public class FesProcessingStepDefs {
                 company = dbUtil.cloneCompany(CompanySql.CS_SQL_LTD_COMPANY_WITH_CS_DUE);
                 break;
             case "CH01":
+            case "LIQ01":
                 company = dbUtil.cloneCompany(BASE_SQL_LTD_COMPANY_WITH_ACTIVE_DIRECTOR);
                 break;
             default:
