@@ -85,7 +85,7 @@ public class ChipsCommonPage<T extends ChipsCommonPage<?>> extends ElementIntera
 
     /**
      * Select an active corporate officer appointment from the table.
-     * @param officerType the ype of officer to select.
+     * @param officerType the type of officer to select.
      */
     public void selectActiveCorporateDirector(String officerType) {
         String expectedOfficerType;
