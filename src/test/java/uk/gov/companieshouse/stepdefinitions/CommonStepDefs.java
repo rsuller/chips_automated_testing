@@ -144,6 +144,15 @@ public class CommonStepDefs {
 
         }
         processStartOfDocumentPage.processForm(company, Form.getFormByType(formType));
+        documentDetails.setFormType(formType);
 
     }
+
+    @And("^I select a current active appointment$")
+    public void selectCurrentActiveAppointment() {
+        // Select the first appointment from the list available
+        chipsHomePage.selectFirstOfficer(documentDetails.getFormType());
+    }
+
+
 }
