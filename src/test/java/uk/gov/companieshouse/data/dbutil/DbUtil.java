@@ -84,7 +84,7 @@ public class DbUtil {
                 Company company = dbGetCompanyFromDb(companyNumberCloned);
                 final String message = "Environment: " + env + " - Successfully cloned company " + companyNumberToClone
                         + " to new company " + companyNumberCloned + " [" + company.getName() + "]";
-
+                sqlDetails.setCompanySql(sql);
                 //writeToScenario(message);
                 LOG.info(message);
                 return company;
@@ -196,7 +196,6 @@ public class DbUtil {
             cstmt.registerOutParameter(1, Types.VARCHAR);
             cstmt.setString(2, companyNumber);
             cstmt.executeUpdate();
-            conn.close();
             return cstmt.getNString(1);
         }
     }
