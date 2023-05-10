@@ -16,8 +16,8 @@ public enum CompanySql {
             "accounts/private_limited_company_with_accounts_due.sql"),
     ACCOUNTS_DUE_SQL_PUBLIC_LTD_COMPANY_ENG_WALES(
             "accounts/public_limited_company_with_accounts_due.sql"),
-    BASE_SQL_PRIVATE_LIMITED_COMPANY_ID(
-            "base/private_limited_company_id.sql"),
+    BASE_SQL_PRIVATE_LIMITED_COMPANY_ENG_WALES_ID(
+            "base/private_limited_company_eng_wales_id.sql"),
     DISSOLUTION_COMPANY_NO_PREV_DISS_REQUEST_FILED(
             "dissolution/company_no_prev_diss_request_filed.sql"),
     BASE_SQL_PRIVATE_LIMITED_COMPANY_RO_LOCATION_UNSPECIFIED(

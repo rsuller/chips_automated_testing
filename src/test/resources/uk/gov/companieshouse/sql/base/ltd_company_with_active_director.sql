@@ -19,6 +19,6 @@ SELECT *
                                  AND SERVICE_SAME_AS_ROA_IND = 'N'
                                  AND cba.resignation_ind = 'N'
                                  AND cb.corporate_body_short_name NOT LIKE '%(cloned)%')
-                   WHERE ROWNUM <= 20)
+                   WHERE ROWNUM <= 50)
         ORDER BY DBMS_RANDOM.VALUE)
  WHERE ROWNUM = 1
