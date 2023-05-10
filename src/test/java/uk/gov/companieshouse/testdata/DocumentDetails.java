@@ -6,6 +6,7 @@ public class DocumentDetails {
     String receivedDate;
     String accountsMud;
     String accountsType;
+    String formType;
 
     public void setReceivedDate(String receivedDate) {
         this.receivedDate = receivedDate;
@@ -40,5 +41,11 @@ public class DocumentDetails {
         return accountsType;
     }
 
+    public void setFormType(String formType) {
+        this.formType = formType;
+    }
 
+    public String getFormType() {
+        return formType;
+    }
 }

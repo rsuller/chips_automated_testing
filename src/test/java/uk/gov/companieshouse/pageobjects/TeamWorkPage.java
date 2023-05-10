@@ -95,6 +95,7 @@ public class TeamWorkPage extends ElementInteraction {
     }
 
     private TeamWorkPage clickTeamWorkSummaryLink() {
+        waitUntilElementDisplayed(teamWorkSummaryLink);
         teamWorkSummaryLink.click();
         waitUntilElementDisplayed(teamWorkTabLink);
         return this;

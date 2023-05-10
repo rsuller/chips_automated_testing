@@ -13,11 +13,12 @@ SELECT *
                                  AND CB.PROOF_TYPE_ID = 0
                                  AND action_code_type_id = 0
                                  AND cb.language_type_id = 1
+                                 AND cb.register_location_type_id = 1
                                  AND CBA.APPOINTMENT_TYPE_ID = 2
                                  AND URA_SAME_AS_SERVICE_IND = 'N'
                                  AND SERVICE_SAME_AS_ROA_IND = 'N'
                                  AND cba.resignation_ind = 'N'
                                  AND cb.corporate_body_short_name NOT LIKE '%(cloned)%')
-                   WHERE ROWNUM <= 20)
+                   WHERE ROWNUM <= 50)
         ORDER BY DBMS_RANDOM.VALUE)
  WHERE ROWNUM = 1

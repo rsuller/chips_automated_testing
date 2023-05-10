@@ -1,5 +1,5 @@
 ---
---- Private Limited Company with No sight required or Super secure PSC indicator
+--- Private Limited Company in Eng/Wales with No sight required or Super secure PSC indicator
 ---
 SELECT *
 FROM corporate_body cb

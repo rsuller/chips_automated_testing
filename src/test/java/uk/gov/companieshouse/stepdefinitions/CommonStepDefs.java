@@ -1,7 +1,7 @@
 package uk.gov.companieshouse.stepdefinitions;
 
 import static uk.gov.companieshouse.data.dbutil.sql.CompanySql.BASE_SQL_LTD_COMPANY_WITH_ACTIVE_DIRECTOR;
-import static uk.gov.companieshouse.data.dbutil.sql.CompanySql.BASE_SQL_PRIVATE_LIMITED_COMPANY_ID;
+import static uk.gov.companieshouse.data.dbutil.sql.CompanySql.BASE_SQL_PRIVATE_LIMITED_COMPANY_ENG_WALES_ID;
 import static uk.gov.companieshouse.data.dbutil.sql.CompanySql.BASE_SQL_lTD_WITH_ACTIVE_CORPORATE_DIRECTOR;
 import static uk.gov.companieshouse.data.dbutil.sql.CompanySql.DISSOLUTION_COMPANY_NO_PREV_DISS_REQUEST_FILED;
 
@@ -133,7 +133,7 @@ public class CommonStepDefs {
                 company = dbUtil.cloneCompany(BASE_SQL_lTD_WITH_ACTIVE_CORPORATE_DIRECTOR);
                 break;
             case "AD01":
-                company = dbUtil.cloneCompany(BASE_SQL_PRIVATE_LIMITED_COMPANY_ID);
+                company = dbUtil.cloneCompany(BASE_SQL_PRIVATE_LIMITED_COMPANY_ENG_WALES_ID);
                 break;
             case "DS01":
                 company = dbUtil.cloneCompany(DISSOLUTION_COMPANY_NO_PREV_DISS_REQUEST_FILED);
@@ -144,6 +144,15 @@ public class CommonStepDefs {
 
         }
         processStartOfDocumentPage.processForm(company, Form.getFormByType(formType));
+        documentDetails.setFormType(formType);
 
     }
+
+    @And("^I select a current active appointment$")
+    public void selectCurrentActiveAppointment() {
+        // Select the first appointment from the list available
+        chipsHomePage.selectFirstOfficer(documentDetails.getFormType());
+    }
+
+
 }
