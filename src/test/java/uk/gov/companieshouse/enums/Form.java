@@ -1,7 +1,6 @@
 package uk.gov.companieshouse.enums;
 
-public class Forms {
-    public enum Form {
+public enum Form {
 
         // The transaction history description for ACCOUNTS is blank as it is custom depending on the accounts type and
         // date used within each specific test
@@ -53,9 +52,7 @@ public class Forms {
                     return form;
                 }
             }
-            throw new RuntimeException("The form type " + title + " was not recognised. Add an entry to " + Forms.class.getCanonicalName());
+            throw new RuntimeException("The form type " + title + " was not recognised. Add an entry to " + Form.class.getCanonicalName());
         }
-
-    }
 
 }
