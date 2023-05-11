@@ -1,9 +1,10 @@
-@ch01
-Feature: CH01 - Change the details of a director
+@insolvency @liq01
+
+Feature: Liquidation LIQ01 Form Processing
 
   As a Liquidation 2016 or Insolvency (FES) user
   I want to update company records with a LIQ01
-  So that the companies records can reflect when a Members Voluntary liquidation (MVL)case is created
+  So that the companies records can reflect when a declaration of solvency is added to a Member's Voluntary liquidation (MVL)case
 
   LIQ01: A LIQ01 is a 'Notice of statutory declaration of solvency' form
 
@@ -26,8 +27,10 @@ Feature: CH01 - Change the details of a director
   * There is no need to change the batchName, batchNumber, envelopeId or paymentInd between tests.
   * Submissions appear in the relevant work queues, just as they would for FES'd forms in the real world.
 
+  @fes_scanned
   Scenario: FES Scanned LIQ01
     Given I am logged in as a user in the "Insolvency (FES)" organisational unit
-    When I process a FES "LIQ01" for a "private limited company" registered in "Eng/Wales"
-    And I create a case with form LIQ01
-    Then the company action code remains Member's Voluntary Liquidation
+    And I process a FES "LIQ01" for a "private limited company" registered in "Eng/Wales"
+    When I create an insolvency case
+    Then company history information is updated with the accepted LIQ01 transaction
+    And the company action code remains "Member's Voluntary Liquidation"

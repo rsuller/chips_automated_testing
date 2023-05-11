@@ -38,7 +38,9 @@ public class CompanyDetailsScreen extends ElementInteraction {
     private WebElement elementViewCompanyTitle;
     @FindBy(how = How.CSS, using = "a[title='Show next page']")
     private WebElement nextPage;
-
+    @FindBy(how = How.ID, using = "form1:companySearchTabs:companySearchHeaderAndTabs:corporateBody:corporateBody:"
+            + "corporateBody_actionCode__1:output")
+    private WebElement elementActionCode;
 
     /**
      * Locates specific transaction from the filing history table.
@@ -80,6 +82,14 @@ public class CompanyDetailsScreen extends ElementInteraction {
 
     public CompanyDetailsScreen waitUntilDisplayed() {
         waitForSpecificTextInElement(elementViewCompanyTitle, "View Company Details");
+        return this;
+    }
+
+    /**
+     * verify action code.
+     */
+    public CompanyDetailsScreen verifyActionCode(String actionCodeDesc) {
+        waitForSpecificTextInElement(elementActionCode, actionCodeDesc);
         return this;
     }
 
