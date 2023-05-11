@@ -1,5 +1,10 @@
 package uk.gov.companieshouse.stepdefinitions;
 
+import static uk.gov.companieshouse.data.dbutil.sql.CompanySql.BASE_SQL_LTD_COMPANY_WITH_ACTIVE_DIRECTOR;
+import static uk.gov.companieshouse.data.dbutil.sql.CompanySql.BASE_SQL_PRIVATE_LIMITED_COMPANY_ENG_WALES_ID;
+import static uk.gov.companieshouse.data.dbutil.sql.CompanySql.CS_SQL_LTD_COMPANY_WITH_CS_DUE;
+import static uk.gov.companieshouse.data.dbutil.sql.CompanySql.INS_PRIVATE_LTD_COMPANY_ENG_WALES_WITH_MVL_CASE_ACTION_CODE;
+
 import io.cucumber.java.en.When;
 import uk.gov.companieshouse.data.datamodel.Company;
 import uk.gov.companieshouse.data.dbutil.DbUtil;
@@ -14,10 +19,6 @@ import uk.gov.companieshouse.pageobjects.ProcessStartOfDocumentPage;
 import uk.gov.companieshouse.testdata.DocumentDetails;
 import uk.gov.companieshouse.utils.FesProcessor;
 import uk.gov.companieshouse.utils.TestContext;
-
-import static uk.gov.companieshouse.data.dbutil.sql.CompanySql.BASE_SQL_LTD_COMPANY_WITH_ACTIVE_DIRECTOR;
-
-import static uk.gov.companieshouse.data.dbutil.sql.CompanySql.BASE_SQL_PRIVATE_LIMITED_COMPANY_ENG_WALES_ID;
 
 
 public class FesProcessingStepDefs {
@@ -87,16 +88,19 @@ public class FesProcessingStepDefs {
                         CompanySql.BASE_SQL_PRIVATE_LIMITED_COMPANY_RO_LOCATION_UNSPECIFIED, registerLocationTypeId);
                 break;
             case "CS01":
-                company = dbUtil.cloneCompany(CompanySql.CS_SQL_LTD_COMPANY_WITH_CS_DUE);
+                company = dbUtil.cloneCompany(CS_SQL_LTD_COMPANY_WITH_CS_DUE);
                 break;
             case "CH01":
                 company = dbUtil.cloneCompany(BASE_SQL_LTD_COMPANY_WITH_ACTIVE_DIRECTOR);
                 break;
             case "TM01":
-                company = dbUtil.cloneCompany(CompanySql.BASE_SQL_LTD_COMPANY_WITH_ACTIVE_DIRECTOR);
+                company = dbUtil.cloneCompany(BASE_SQL_LTD_COMPANY_WITH_ACTIVE_DIRECTOR);
                 break;
             case "AD01":
                 company = dbUtil.cloneCompany(BASE_SQL_PRIVATE_LIMITED_COMPANY_ENG_WALES_ID);
+                break;
+            case "LIQ01":
+                company = dbUtil.cloneCompany(INS_PRIVATE_LTD_COMPANY_ENG_WALES_WITH_MVL_CASE_ACTION_CODE);
                 break;
             default:
                 throw new RuntimeException("Unable to find SQL for specified form type");

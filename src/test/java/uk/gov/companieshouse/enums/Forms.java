@@ -12,6 +12,7 @@ public class Forms {
         CH02("CH02", "Change Officers", false, "CORPORATE DIRECTOR'S CHANGE OF..."),
         CS01("CS01", "Confirmation Statement", false, "CONFIRMATION STATEMENT"),
         DS01("DS01", "Process Voluntary Dissolution Form DS01/LLDS01", true, "APPLICATION FOR STRIKING-OFF"),
+        LIQ01("LIQ01", "Process Options - LIQ01", true, "NOTICE OF STATUTORY DECL"),
         TM01("TM01", "Terminate Officers", false, "APPOINTMENT TERMINATED");
         private final String type;
         private final String title;
