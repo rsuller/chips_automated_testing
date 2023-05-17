@@ -9,7 +9,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
-import java.text.ParseException;
 import java.util.Properties;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
