@@ -27,8 +27,8 @@ public class BarcodeGenerator {
         int firstRandomNumber = rand.nextInt(validCharsForFirstChar.length());
 
         int secondRandomNumber = rand.nextInt(VALID_CHARS.length());
-        return String.valueOf(validCharsForFirstChar.charAt(firstRandomNumber)) +
-                VALID_CHARS.charAt(secondRandomNumber);
+        return String.valueOf(validCharsForFirstChar.charAt(firstRandomNumber))
+                + VALID_CHARS.charAt(secondRandomNumber);
     }
 
     @Deprecated
