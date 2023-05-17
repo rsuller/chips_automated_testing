@@ -26,8 +26,8 @@ public class MyWorkPage extends ElementInteraction {
     private WebElement elementDocumentType;
 
     private static final Logger LOG = LoggerFactory.getLogger(MyWorkPage.class);
-    public TestContext testContext;
-    private GlobalNavBar globalNavBar;
+    public final TestContext testContext;
+    private final GlobalNavBar globalNavBar;
 
     /**
      * Required constructor for class.

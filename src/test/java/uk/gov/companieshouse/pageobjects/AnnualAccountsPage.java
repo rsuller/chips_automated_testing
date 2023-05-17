@@ -12,8 +12,8 @@ import uk.gov.companieshouse.utils.TestContext;
 
 public class AnnualAccountsPage extends ChipsCommonPage<AnnualAccountsPage> {
 
-    public TestContext testContext;
-    public DocumentDetails documentDetails;
+    public final TestContext testContext;
+    public final DocumentDetails documentDetails;
     public static final Logger log = LoggerFactory.getLogger(AnnualAccountsPage.class);
 
     /**

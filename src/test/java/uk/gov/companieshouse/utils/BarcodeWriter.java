@@ -7,8 +7,8 @@ public class BarcodeWriter {
     private static final String VALID_CHARACTERS = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private static final int NUM_VALID_CHARACTERS = VALID_CHARACTERS.length();
 
-    private StringBuffer buf = new StringBuffer();
-    private Random random = new Random();
+    private final StringBuffer buf = new StringBuffer();
+    private final Random random = new Random();
     private int checksum;
 
     void appendRandomCharacter() {

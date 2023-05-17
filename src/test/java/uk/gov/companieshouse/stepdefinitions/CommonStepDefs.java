@@ -28,17 +28,17 @@ import uk.gov.companieshouse.utils.TestContext;
 
 public class CommonStepDefs {
 
-    public static Logger log = LoggerFactory.getLogger(CommonStepDefs.class);
+    public static final Logger log = LoggerFactory.getLogger(CommonStepDefs.class);
 
-    public TestContext context;
-    public ChipsHomePage chipsHomePage;
-    public CompanyDetailsScreen companyDetailsScreen;
-    public OrgUnitPage orgUnitPage;
-    public ProcessStartOfDocumentPage processStartOfDocumentPage;
-    public GlobalNavBar globalNavBar;
-    public DbUtil dbUtil;
-    public DocumentDetails documentDetails;
-    public CompanySearchPage companySearchPage;
+    public final TestContext context;
+    public final ChipsHomePage chipsHomePage;
+    public final CompanyDetailsScreen companyDetailsScreen;
+    public final OrgUnitPage orgUnitPage;
+    public final ProcessStartOfDocumentPage processStartOfDocumentPage;
+    public final GlobalNavBar globalNavBar;
+    public final DbUtil dbUtil;
+    public final DocumentDetails documentDetails;
+    public final CompanySearchPage companySearchPage;
 
     /**
      * Required constructor for class.

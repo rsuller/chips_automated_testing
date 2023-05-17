@@ -21,8 +21,8 @@ import uk.gov.companieshouse.utils.TestContext;
 
 public class DbUtil {
 
-    public TestContext testContext;
-    public SqlDetails sqlDetails;
+    public final TestContext testContext;
+    public final SqlDetails sqlDetails;
     private static final Logger LOG = LoggerFactory.getLogger(DbUtil.class);
 
     /**
@@ -68,7 +68,7 @@ public class DbUtil {
                 String message = "No company data found for the given query in environment: " + env;
                 //writeToScenario(message);
                 LOG.error(message, ex);
-            } catch (ParseException | ClassNotFoundException ex) {
+            } catch (ClassNotFoundException ex) {
                 throw new RuntimeException(ex);
             }
             throw new RuntimeException("Could not select a company using sql: " + sql.getSql());
@@ -200,7 +200,7 @@ public class DbUtil {
         }
     }
 
-    private Company dbGetCompanyFromDb(String companyNumber) throws SQLException, ParseException,
+    private Company dbGetCompanyFromDb(String companyNumber) throws SQLException,
             ClassNotFoundException, InstantiationException, IllegalAccessException {
         final String sql = "select * from corporate_body cb where cb.incorporation_number = ?";
         Connection conn = dbGetConnection();

@@ -16,7 +16,7 @@ import uk.gov.companieshouse.utils.TestContext;
 public class GlobalNavBar extends ElementInteraction {
 
     public static final Logger log = LoggerFactory.getLogger(ProcessStartOfDocumentPage.class);
-    public TestContext testContext;
+    public final TestContext testContext;
 
     @FindBy(how = How.CSS, using = "div[class='bannerrow'] > [class='breadleft']")
     private WebElement elementBanner;

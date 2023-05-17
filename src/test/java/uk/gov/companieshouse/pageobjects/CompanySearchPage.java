@@ -15,9 +15,9 @@ public class CompanySearchPage extends ElementInteraction {
 
     public static final Logger log = LoggerFactory.getLogger(CompanySearchPage.class);
 
-    public TestContext testContext;
-    public GlobalNavBar globalNavBar;
-    public CompanyDetails companyDetails;
+    public final TestContext testContext;
+    public final GlobalNavBar globalNavBar;
+    public final CompanyDetails companyDetails;
 
     /**
      * Required constructor for class.

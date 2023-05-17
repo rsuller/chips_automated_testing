@@ -7,8 +7,8 @@ import uk.gov.companieshouse.utils.TestContext;
 
 public class ConfirmationStatementStepDefs {
 
-    public TestContext context;
-    public ConfirmationStatementPage confirmationStatementPage;
+    public final TestContext context;
+    public final ConfirmationStatementPage confirmationStatementPage;
 
 
     /**
