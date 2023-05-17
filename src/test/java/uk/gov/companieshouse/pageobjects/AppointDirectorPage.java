@@ -11,7 +11,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.gov.companieshouse.data.datamodel.Director;
-import uk.gov.companieshouse.enums.Forms;
+import uk.gov.companieshouse.enums.Form;
 import uk.gov.companieshouse.utils.DateFormat;
 import uk.gov.companieshouse.utils.TestContext;
 
@@ -92,7 +92,7 @@ public class AppointDirectorPage extends ChipsCommonPage<AppointDirectorPage> {
      * Enter form details with default information and multiple nationalities.
      */
     public AppointDirectorPage enterMandatoryFormDetails(Director director) {
-        waitUntilFormDisplayed(Forms.Form.AP01);
+        waitUntilFormDisplayed(Form.AP01);
         completeAppointmentDetailsTab(director);
         completeResidentialAddressTab(director);
         saveForm();

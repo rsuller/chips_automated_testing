@@ -37,9 +37,12 @@ public class ChipsHomePage extends ChipsCommonPage<ChipsHomePage> {
         passwordInput.sendKeys(password);
 
         // There is a strange occurrence of the password being entered twice for weblogic
-        if ("weblogic".equals(testContext.getUser().getUsername()) && passwordInput.getAttribute("value").length() > 8) {
+        if ("weblogic".equals(testContext.getUser().getUsername())
+                && passwordInput.getAttribute("value").length() > 8) {
+
             clearField(passwordInput);
             passwordInput.sendKeys(password);
+
         }
 
         loginLink.click();

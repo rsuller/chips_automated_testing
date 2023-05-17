@@ -3,7 +3,7 @@ package uk.gov.companieshouse.stepdefinitions;
 import io.cucumber.java.en.When;
 import uk.gov.companieshouse.data.datamodel.Address;
 import uk.gov.companieshouse.data.dbutil.DbUtil;
-import uk.gov.companieshouse.enums.Forms.Form;
+import uk.gov.companieshouse.enums.Form;
 import uk.gov.companieshouse.pageobjects.DissolutionPage;
 import uk.gov.companieshouse.pageobjects.GlobalNavBar;
 import uk.gov.companieshouse.pageobjects.ProcessStartOfDocumentPage;

@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 import uk.gov.companieshouse.data.datamodel.Company;
 import uk.gov.companieshouse.data.dbutil.DbUtil;
 import uk.gov.companieshouse.data.dbutil.sql.CompanySql;
-import uk.gov.companieshouse.enums.Forms.Form;
+import uk.gov.companieshouse.enums.Form;
 import uk.gov.companieshouse.pageobjects.ChipsHomePage;
 import uk.gov.companieshouse.pageobjects.CompanyDetailsScreen;
 import uk.gov.companieshouse.pageobjects.CompanySearchPage;

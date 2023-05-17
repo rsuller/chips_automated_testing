@@ -12,7 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.gov.companieshouse.data.datamodel.Company;
 import uk.gov.companieshouse.data.dbutil.DbUtil;
-import uk.gov.companieshouse.enums.Forms.Form;
+import uk.gov.companieshouse.enums.Form;
 import uk.gov.companieshouse.testdata.CompanyDetails;
 import uk.gov.companieshouse.testdata.DocumentDetails;
 import uk.gov.companieshouse.testdata.SqlDetails;
