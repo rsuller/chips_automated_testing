@@ -3,9 +3,15 @@ package uk.gov.companieshouse.stepdefinitions;
 import static uk.gov.companieshouse.data.dbutil.sql.CompanySql.BASE_SQL_LTD_COMPANY_WITH_ACTIVE_DIRECTOR;
 import static uk.gov.companieshouse.data.dbutil.sql.CompanySql.BASE_SQL_PRIVATE_LIMITED_COMPANY_ENG_WALES_ID;
 import static uk.gov.companieshouse.data.dbutil.sql.CompanySql.CS_SQL_LTD_COMPANY_WITH_CS_DUE;
+import static uk.gov.companieshouse.data.dbutil.sql.CompanySql.INS_PRIVATE_LTD_COMPANY_ENG_WALES_WITH_CVL_CASE_ACTION_CODE;
 import static uk.gov.companieshouse.data.dbutil.sql.CompanySql.INS_PRIVATE_LTD_COMPANY_ENG_WALES_WITH_MVL_CASE_ACTION_CODE;
 
 import io.cucumber.java.en.When;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import uk.gov.companieshouse.data.datamodel.Company;
 import uk.gov.companieshouse.data.dbutil.DbUtil;
 import uk.gov.companieshouse.data.dbutil.sql.CompanySql;
@@ -33,6 +39,8 @@ public class FesProcessingStepDefs {
     public DocumentDetails documentDetails;
     public CompanySearchPage companySearchPage;
     public FesProcessor fesProcessor;
+
+    public static final Logger log = LoggerFactory.getLogger(FesProcessingStepDefs.class);
 
 
     /**
@@ -78,10 +86,10 @@ public class FesProcessingStepDefs {
                 if (companyType.equals("PLC")) {
                     company = dbUtil.cloneCompany(
                             CompanySql.ACCOUNTS_DUE_SQL_PUBLIC_LTD_COMPANY_ENG_WALES);
-            } else {
-                company = dbUtil.cloneCompany(
-                        CompanySql.ACCOUNTS_DUE_SQL_PRIVATE_LTD_COMPANY_ENG_WALES);
-            }
+                } else {
+                    company = dbUtil.cloneCompany(
+                            CompanySql.ACCOUNTS_DUE_SQL_PRIVATE_LTD_COMPANY_ENG_WALES);
+                }
                 break;
             case "AP01":
                 company = dbUtil.cloneCompanyWithParameterInternal(
@@ -101,6 +109,23 @@ public class FesProcessingStepDefs {
                 break;
             case "LIQ01":
                 company = dbUtil.cloneCompany(INS_PRIVATE_LTD_COMPANY_ENG_WALES_WITH_MVL_CASE_ACTION_CODE);
+                break;
+            case "600":
+                // Select an MVL or CVL case type at random and continue processing the 600 form for this case type
+                List<String> liquidationTypes = new ArrayList<>();
+                liquidationTypes.add("MVL");
+                liquidationTypes.add("CVL");
+                int index = new Random().nextInt(liquidationTypes.size());
+                String caseTypeToCreate = liquidationTypes.get(index);
+                if (caseTypeToCreate.equals("MVL")) {
+                    company = dbUtil.cloneCompany(INS_PRIVATE_LTD_COMPANY_ENG_WALES_WITH_MVL_CASE_ACTION_CODE);
+                    log.info("Processing a form 600 with MVL case");
+                } else {
+                    company = dbUtil.cloneCompany(
+                            INS_PRIVATE_LTD_COMPANY_ENG_WALES_WITH_CVL_CASE_ACTION_CODE);
+                    log.info("Processing a form 600 with CVL case");
+                }
+                documentDetails.setLiquidationType(caseTypeToCreate);
                 break;
             default:
                 throw new RuntimeException("Unable to find SQL for specified form type");

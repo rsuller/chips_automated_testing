@@ -315,7 +315,11 @@ public class ProcessStartOfDocumentPage extends ElementInteraction {
         elementFormTypeSelectKey.sendKeys(Keys.DOWN);
     }
 
+    /**
+     * Click the yes option in the popup in PSOD screen.
+     */
     public ProcessStartOfDocumentPage clickPsodPopUpYesLink() {
+        waitUntilElementDisplayed(elementPopupYesLink);
         elementPopupYesLink.click();
         return this;
     }

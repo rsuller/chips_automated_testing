@@ -16,7 +16,7 @@ public class ChipsHomePage extends ChipsCommonPage<ChipsHomePage> {
     public ChipsHomePage(TestContext testContext) {
         super(testContext);
         this.testContext = testContext;
-        PageFactory.initElements(testContext.getWebDriver(),this);
+        PageFactory.initElements(testContext.getWebDriver(), this);
     }
 
     @FindBy(how = How.ID, using = "form1:username")
@@ -37,11 +37,9 @@ public class ChipsHomePage extends ChipsCommonPage<ChipsHomePage> {
         passwordInput.sendKeys(password);
 
         // There is a strange occurrence of the password being entered twice for weblogic
-        if ("weblogic".equals(testContext.getUser().getUsername())) {
-            if (passwordInput.getAttribute("value").length() > 8) {
-                clearField(passwordInput);
-                passwordInput.sendKeys(password);
-            }
+        if ("weblogic".equals(testContext.getUser().getUsername()) && passwordInput.getAttribute("value").length() > 8) {
+            clearField(passwordInput);
+            passwordInput.sendKeys(password);
         }
 
         loginLink.click();
