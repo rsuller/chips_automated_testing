@@ -7,6 +7,24 @@ public class DocumentDetails {
     String accountsMud;
     String accountsType;
     String formType;
+    String liquidationType;
+    String allocatedIpNumber;
+
+    public void setAllocatedIpNumber(String allocatedIpNumber) {
+        this.allocatedIpNumber = allocatedIpNumber;
+    }
+
+    public String getAllocatedIpNumber() {
+        return allocatedIpNumber;
+    }
+
+    public void setLiquidationType(String liquidationType) {
+        this.liquidationType = liquidationType;
+    }
+
+    public String getLiquidationType() {
+        return liquidationType;
+    }
 
     public void setReceivedDate(String receivedDate) {
         this.receivedDate = receivedDate;
