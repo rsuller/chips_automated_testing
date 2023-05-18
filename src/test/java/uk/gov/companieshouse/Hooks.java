@@ -8,9 +8,9 @@ import uk.gov.companieshouse.utils.TestContext;
 
 public class Hooks {
 
-    public TestContext testContext;
-    public GlobalNavBar globalNavBar;
-    public Logout logout;
+    public final TestContext testContext;
+    public final GlobalNavBar globalNavBar;
+    public final Logout logout;
 
     /**
      * Required constructor for class.

@@ -13,7 +13,7 @@ public class BarcodeGenerator {
 
     private static final int NUM_RANDOM_CHARACTERS = 5;
 
-    private BarcodeDayCalculator barcodeDayCalculator;
+    private final BarcodeDayCalculator barcodeDayCalculator;
 
     public BarcodeGenerator() {
         this.barcodeDayCalculator = new BarcodeDayCalculator();
@@ -27,9 +27,8 @@ public class BarcodeGenerator {
         int firstRandomNumber = rand.nextInt(validCharsForFirstChar.length());
 
         int secondRandomNumber = rand.nextInt(VALID_CHARS.length());
-        StringBuffer buffer = new StringBuffer();
-        return buffer.append(validCharsForFirstChar.charAt(firstRandomNumber))
-                .append(VALID_CHARS.charAt(secondRandomNumber)).toString();
+        return String.valueOf(validCharsForFirstChar.charAt(firstRandomNumber))
+                + VALID_CHARS.charAt(secondRandomNumber);
     }
 
     @Deprecated
@@ -116,14 +115,14 @@ public class BarcodeGenerator {
 
             do {
                 String barStr = yearBin + dayOfYearBin + randomNumberBin
-                        + String.valueOf(count) + "00";
+                        + count + "00";
                 String barHi = barStr.substring(0, 4);
                 String barLo = barStr.substring(4);
                 long barHiBin = Long.parseLong(barHi, 2);
                 long barLoBin = Long.parseLong(barLo, 2);
                 String parity = "00" + Long.toBinaryString(getParity(barLoBin, barHiBin));
 
-                barStr = barStr.substring(0, 33) + String.valueOf(count)
+                barStr = barStr.substring(0, 33) + count
                         + parity.substring(parity.length() - 2);
                 long bar = Long.parseLong(barStr, 2);
                 int pos = Math.toIntExact(bar % 36);

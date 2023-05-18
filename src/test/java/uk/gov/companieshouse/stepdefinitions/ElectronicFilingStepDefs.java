@@ -19,12 +19,12 @@ import uk.gov.companieshouse.utils.XmlHelper;
 
 public class ElectronicFilingStepDefs {
 
-    public TestContext context;
-    public FesProcessor fesProcessor;
-    private DbUtil dbUtil;
-    private DocumentDetails documentDetails;
-    private BarcodeGenerator barcodeGenerator;
-    private XmlHelper xmlHelper;
+    public final TestContext context;
+    public final FesProcessor fesProcessor;
+    private final DbUtil dbUtil;
+    private final DocumentDetails documentDetails;
+    private final BarcodeGenerator barcodeGenerator;
+    private final XmlHelper xmlHelper;
 
 
     /**

@@ -3,8 +3,8 @@ package uk.gov.companieshouse.utils;
 import com.google.common.base.Charsets;
 import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Random;
 import java.util.UUID;
 import org.apache.commons.io.IOUtils;
@@ -84,7 +84,7 @@ public class XmlHelper extends ElementInteraction {
         // Load original XML file
         LOG.info("Loading XML file " + xmlFile);
         File file = new File("src/test/resources/uk/gov/companieshouse/xml_documents/" + xmlFile);
-        BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file));
+        BufferedInputStream bis = new BufferedInputStream(Files.newInputStream(file.toPath()));
         xml = new String(IOUtils.toByteArray(bis), Charsets.UTF_8);
 
     }

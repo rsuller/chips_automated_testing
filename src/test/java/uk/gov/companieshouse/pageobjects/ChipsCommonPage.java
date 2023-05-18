@@ -14,6 +14,7 @@ import uk.gov.companieshouse.utils.ElementInteraction;
 import uk.gov.companieshouse.utils.TestContext;
 
 
+@SuppressWarnings("unchecked")
 public class ChipsCommonPage<T extends ChipsCommonPage<?>> extends ElementInteraction {
 
     private static final String URA_BARCODE = "7777788888";

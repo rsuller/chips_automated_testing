@@ -12,7 +12,7 @@ import uk.gov.companieshouse.utils.TestContext;
 
 
 public class ChangeOfficerPage extends ChipsCommonPage<ChangeOfficerPage> {
-    TestContext testContext;
+    final TestContext testContext;
     public static final Logger log = LoggerFactory.getLogger(ChangeOfficerPage.class);
 
     /**
