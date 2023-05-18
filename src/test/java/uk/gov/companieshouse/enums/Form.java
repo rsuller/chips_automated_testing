@@ -14,7 +14,7 @@ public enum Form {
         LIQ01("LIQ01", "Process Options - LIQ01", true, "NOTICE OF STATUTORY DECL"),
         TM01("TM01", "Terminate Officers", false, "APPOINTMENT TERMINATED"),
         INS_600("600", "Process Options - 600", true, "NOTICE OF APPOINTMENT OF LIQ"),
-        LREXEX("LRESEX", "Extraordinary resolution to wind up", true, "STATEMENT OF AFFAIRS");
+        LREXEX("LRESEX", "Process Options - LRESEX", true, "EXTRAORDINARY RESOLUTION");
 
         private final String type;
         private final String title;

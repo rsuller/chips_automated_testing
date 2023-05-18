@@ -49,23 +49,22 @@ public class InsolvencyLandingScreen extends ChipsCommonPage<InsolvencyLandingSc
     /**
      * Click the create insolvency case link.
      */
-    public InsolvencyLandingScreen clickCreateInsolvencyCase() {
-        createCaseLink.click();
-        return this;
-    }
-
-    public InsolvencyLandingScreen clickCreateMvL() {
-        createMvlCaseLink.click();
-        return this;
-    }
-
-    public InsolvencyLandingScreen clickCreateCvL() {
-        createCvlCaseLink.click();
+    public InsolvencyLandingScreen createInsolvencyCase(String caseType) {
+        try {
+            if (caseType.equals("MVL")) {
+                createMvlCaseLink.click();
+            } else if (caseType.equals("CVL")) {
+                createCvlCaseLink.click();
+            }
+        } catch (NullPointerException exception) {
+            createCaseLink.click();
+        }
         return this;
     }
 
     /**
      * Wait for the IP appointment date field to be displayed then enter the date.
+     *
      * @param date the specified data to enter.
      */
     public InsolvencyLandingScreen enterIpApptDate(String date) {

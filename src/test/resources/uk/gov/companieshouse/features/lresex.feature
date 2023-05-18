@@ -29,6 +29,7 @@ Feature: Liquidation LRESEX Form Processing
   Scenario: Creating a Liquidation case with FES Scanned LRESEX form
     Given I am logged in as a user in the "Insolvency (FES)" organisational unit
     When I process a FES "LRESEX" for a "private limited company" registered in "Eng/Wales"
+    And I create an insolvency case
     Then company history information is updated with the accepted LRESEX transaction
     Then the company action code remains "Creditors Voluntary Liquidation"
 

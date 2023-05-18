@@ -54,12 +54,16 @@ public class InsolvencyStepDefs {
      */
     @When("I create an insolvency case")
     public void createInsolvencyCase() {
+        String insolvencyType = documentDetails.getLiquidationType();
         insolvencyLandingScreen
                 .waitUntilFormDisplayed()
-                .clickCreateInsolvencyCase();
-        liquidationScreen
-                .enterDateSolvencySworn()
-                .saveForm();
+                .createInsolvencyCase(insolvencyType);
+        if (insolvencyType == null) {
+            liquidationScreen.enterDateSolvencySworn();
+        } else {
+            liquidationScreen.enterCaseStartDate();
+        }
+        liquidationScreen.saveForm();
         viewInsolvencyCaseDetailsPage.waitUntilCaseDetailsPageDisplayed();
     }
 
@@ -71,11 +75,7 @@ public class InsolvencyStepDefs {
         insolvencyLandingScreen.waitUntilFormDisplayed();
         String liquidationType = documentDetails.getLiquidationType();
         log.info("Liquidation type is {}", liquidationType);
-        if (liquidationType.equals("MVL")) {
-            insolvencyLandingScreen.clickCreateMvL();
-        } else {
-            insolvencyLandingScreen.clickCreateCvL();
-        }
+        insolvencyLandingScreen.createInsolvencyCase(liquidationType);
         insolvencyPractitionerSearchScreen.searchAndSelectIp();
         insolvencyPractitionerDetailsScreen.clickFirstCompleteAddressRow();
         insolvencyPractitionerAddressPage.clickSelectIpLink();
@@ -90,6 +90,5 @@ public class InsolvencyStepDefs {
         companyDetailsScreen.verifyActionCode(actionCodeDesc);
 
     }
-
-
+    
 }
