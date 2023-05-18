@@ -13,13 +13,13 @@ import uk.gov.companieshouse.utils.TestContext;
 
 public class OfficerAppointmentsStepDefs {
 
-    public TestContext context;
-    public ChangeToRoPage changeToRoPage;
-    public GlobalNavBar globalNavBar;
-    public DbUtil dbUtil;
-    public ProcessStartOfDocumentPage processStartOfDocumentPage;
-    public AppointDirectorPage appointDirectorPage;
-    public MyWorkPage myWorkPage;
+    public final TestContext context;
+    public final ChangeToRoPage changeToRoPage;
+    public final GlobalNavBar globalNavBar;
+    public final DbUtil dbUtil;
+    public final ProcessStartOfDocumentPage processStartOfDocumentPage;
+    public final AppointDirectorPage appointDirectorPage;
+    public final MyWorkPage myWorkPage;
 
 
     /**

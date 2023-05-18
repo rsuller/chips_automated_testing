@@ -41,7 +41,7 @@ public class BarcodeDayCalculator {
         Date baseDate = baseCalendar.getTime();
         int days = (int) ((receiptDate.getTime() - baseDate.getTime()) / MILLISECONDS_IN_DAY);
         if (days < 0) {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("DD_MM_YYYY");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd_MM_yyyy");
             String formattedDate = dateFormat.format(baseDate);
             throw new IllegalArgumentException("Date cannot be before " + formattedDate);
         }

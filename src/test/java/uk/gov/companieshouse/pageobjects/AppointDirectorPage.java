@@ -18,7 +18,7 @@ import uk.gov.companieshouse.utils.TestContext;
 
 public class AppointDirectorPage extends ChipsCommonPage<AppointDirectorPage> {
 
-    public TestContext testContext;
+    public final TestContext testContext;
     public static final Logger log = LoggerFactory.getLogger(AppointDirectorPage.class);
 
     /**

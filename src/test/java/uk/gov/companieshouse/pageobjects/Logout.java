@@ -16,7 +16,7 @@ public class Logout extends ElementInteraction {
 
     public static final Logger log = LoggerFactory.getLogger(Logout.class);
 
-    public TestContext testContext;
+    public final TestContext testContext;
 
     @FindBy(how = How.ID, using = "form1:task_ignoreOpenBatches")
     private WebElement elementIgnoreOpenBatches;

@@ -14,7 +14,7 @@ public class OrgUnitPage extends ElementInteraction {
 
     public static final Logger log = LoggerFactory.getLogger(OrgUnitPage.class);
 
-    TestContext testContext;
+    final TestContext testContext;
     @FindBy(how = How.ID, using = "form1:orgUnits")
     private WebElement orgUnitSelect;
     @FindBy(how = How.ID, using = "form1:save")

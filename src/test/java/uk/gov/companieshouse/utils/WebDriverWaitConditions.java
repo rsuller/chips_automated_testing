@@ -12,7 +12,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class WebDriverWaitConditions {
 
-    public TestContext testContext;
+    public final TestContext testContext;
 
     public WebDriverWaitConditions(TestContext testContext) {
         this.testContext = testContext;

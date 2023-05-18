@@ -22,12 +22,12 @@ import uk.gov.companieshouse.utils.TestContext;
 
 public class ProcessStartOfDocumentPage extends ElementInteraction {
 
-    public TestContext testContext;
-    private BarcodeGenerator barcodeGenerator;
-    private DbUtil dbUtil;
-    public SqlDetails sqlDetails;
-    public CompanyDetails companyDetails;
-    public DocumentDetails documentDetails;
+    public final TestContext testContext;
+    private final BarcodeGenerator barcodeGenerator;
+    private final DbUtil dbUtil;
+    public final SqlDetails sqlDetails;
+    public final CompanyDetails companyDetails;
+    public final DocumentDetails documentDetails;
 
     public static final Logger log = LoggerFactory.getLogger(ProcessStartOfDocumentPage.class);
 

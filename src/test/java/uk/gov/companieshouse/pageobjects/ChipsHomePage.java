@@ -8,7 +8,7 @@ import uk.gov.companieshouse.utils.TestContext;
 
 public class ChipsHomePage extends ChipsCommonPage<ChipsHomePage> {
 
-    public TestContext testContext;
+    public final TestContext testContext;
 
     /**
      * Required constructor for class.

@@ -21,10 +21,7 @@ public enum TestDataForenames {
     JASON("Jason"),
     PAUL("Paul");
 
-    private String forename;
-
     TestDataForenames(String forename) {
-        this.forename = forename;
     }
 
     public static String getRandomTestForename() {

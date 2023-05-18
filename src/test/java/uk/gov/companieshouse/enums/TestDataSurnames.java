@@ -19,10 +19,7 @@ public enum TestDataSurnames {
     COOK("Cook"),
     POTTER("Potter");
 
-    private String surname;
-
     TestDataSurnames(String surname) {
-        this.surname = surname;
     }
 
     public static String getRandomTestSurname() {

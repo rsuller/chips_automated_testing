@@ -38,7 +38,7 @@ public class TeamWorkPage extends ElementInteraction {
     @FindBy(how = How.ID, using = "teamQueueForm:task_custom:field")
     private WebElement customValueEntryField;
     private static final Logger LOG = LoggerFactory.getLogger(TeamWorkPage.class);
-    public TestContext testContext;
+    public final TestContext testContext;
 
     /**
      * Required constructor for class.

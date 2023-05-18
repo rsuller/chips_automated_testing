@@ -32,18 +32,18 @@ import uk.gov.companieshouse.testdata.DocumentDetails;
 
 public class FesProcessor extends ChipsCommonPage<FesProcessor> {
 
-    public TestContext testContextContext;
-    public ChipsHomePage chipsHomePage;
-    public CompanyDetailsScreen companyDetailsScreen;
-    public OrgUnitPage orgUnitPage;
-    public ProcessStartOfDocumentPage processStartOfDocumentPage;
-    public GlobalNavBar globalNavBar;
-    public DbUtil dbUtil;
-    public DocumentDetails documentDetails;
-    public CompanySearchPage companySearchPage;
-    public BarcodeGenerator barcodeGenerator;
-    public TeamWorkPage teamWorkPage;
-    public MyWorkPage myWorkPage;
+    public final TestContext testContextContext;
+    public final ChipsHomePage chipsHomePage;
+    public final CompanyDetailsScreen companyDetailsScreen;
+    public final OrgUnitPage orgUnitPage;
+    public final ProcessStartOfDocumentPage processStartOfDocumentPage;
+    public final GlobalNavBar globalNavBar;
+    public final DbUtil dbUtil;
+    public final DocumentDetails documentDetails;
+    public final CompanySearchPage companySearchPage;
+    public final BarcodeGenerator barcodeGenerator;
+    public final TeamWorkPage teamWorkPage;
+    public final MyWorkPage myWorkPage;
 
     public static final Logger log = LoggerFactory.getLogger(FesProcessor.class);
 

@@ -12,11 +12,11 @@ import uk.gov.companieshouse.utils.TestContext;
 
 public class DissolutionStepDefs {
 
-    public TestContext context;
-    public GlobalNavBar globalNavBar;
-    public DbUtil dbUtil;
-    public ProcessStartOfDocumentPage processStartOfDocumentPage;
-    public DissolutionPage dissolutionPage;
+    public final TestContext context;
+    public final GlobalNavBar globalNavBar;
+    public final DbUtil dbUtil;
+    public final ProcessStartOfDocumentPage processStartOfDocumentPage;
+    public final DissolutionPage dissolutionPage;
 
     /**
      * Required constructor for class.

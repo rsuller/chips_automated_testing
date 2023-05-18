@@ -17,15 +17,15 @@ import uk.gov.companieshouse.utils.TestContext;
 
 public class InsolvencyStepDefs {
 
-    public TestContext context;
-    public InsolvencyLandingScreen insolvencyLandingScreen;
-    public ViewInsolvencyCaseDetailsPage viewInsolvencyCaseDetailsPage;
-    public CompanyDetailsScreen companyDetailsScreen;
-    public DocumentDetails documentDetails;
-    public LiquidationScreen liquidationScreen;
-    public InsolvencyPractitionerSearchScreen insolvencyPractitionerSearchScreen;
-    public InsolvencyPractitionerDetailsScreen insolvencyPractitionerDetailsScreen;
-    public ViewInsolvencyPractitionerAddressPage insolvencyPractitionerAddressPage;
+    public final TestContext context;
+    public final InsolvencyLandingScreen insolvencyLandingScreen;
+    public final ViewInsolvencyCaseDetailsPage viewInsolvencyCaseDetailsPage;
+    public final CompanyDetailsScreen companyDetailsScreen;
+    public final DocumentDetails documentDetails;
+    public final LiquidationScreen liquidationScreen;
+    public final InsolvencyPractitionerSearchScreen insolvencyPractitionerSearchScreen;
+    public final InsolvencyPractitionerDetailsScreen insolvencyPractitionerDetailsScreen;
+    public final ViewInsolvencyPractitionerAddressPage insolvencyPractitionerAddressPage;
 
     public static final Logger log = LoggerFactory.getLogger(InsolvencyStepDefs.class);
 

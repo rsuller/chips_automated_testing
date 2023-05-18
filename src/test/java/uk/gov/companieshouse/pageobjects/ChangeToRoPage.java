@@ -11,7 +11,7 @@ import uk.gov.companieshouse.utils.TestContext;
 
 public class ChangeToRoPage extends ChipsCommonPage<ChangeToRoPage> {
 
-    public TestContext testContext;
+    public final TestContext testContext;
     public static final Logger log = LoggerFactory.getLogger(ChangeToRoPage.class);
 
     /**

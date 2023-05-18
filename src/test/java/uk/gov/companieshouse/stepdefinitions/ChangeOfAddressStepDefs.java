@@ -12,11 +12,11 @@ import uk.gov.companieshouse.utils.TestContext;
 
 public class ChangeOfAddressStepDefs {
 
-    public TestContext context;
-    public ChangeToRoPage changeToRoPage;
-    public GlobalNavBar globalNavBar;
-    public DbUtil dbUtil;
-    public ProcessStartOfDocumentPage processStartOfDocumentPage;
+    public final TestContext context;
+    public final ChangeToRoPage changeToRoPage;
+    public final GlobalNavBar globalNavBar;
+    public final DbUtil dbUtil;
+    public final ProcessStartOfDocumentPage processStartOfDocumentPage;
 
     /**
      * Required constructor for class.

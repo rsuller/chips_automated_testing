@@ -21,8 +21,8 @@ public class CompanyDetailsScreen extends ElementInteraction {
 
     public static final Logger log = LoggerFactory.getLogger(CompanyDetailsScreen.class);
 
-    public TestContext testContext;
-    public CompanyDetails companyDetails;
+    public final TestContext testContext;
+    public final CompanyDetails companyDetails;
 
     /**
      * Required constructor for class.

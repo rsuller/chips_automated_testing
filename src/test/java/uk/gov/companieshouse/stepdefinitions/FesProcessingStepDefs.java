@@ -29,16 +29,16 @@ import uk.gov.companieshouse.utils.TestContext;
 
 public class FesProcessingStepDefs {
 
-    public TestContext context;
-    public ChipsHomePage chipsHomePage;
-    public CompanyDetailsScreen companyDetailsScreen;
-    public OrgUnitPage orgUnitPage;
-    public ProcessStartOfDocumentPage processStartOfDocumentPage;
-    public GlobalNavBar globalNavBar;
-    public DbUtil dbUtil;
-    public DocumentDetails documentDetails;
-    public CompanySearchPage companySearchPage;
-    public FesProcessor fesProcessor;
+    public final TestContext context;
+    public final ChipsHomePage chipsHomePage;
+    public final CompanyDetailsScreen companyDetailsScreen;
+    public final OrgUnitPage orgUnitPage;
+    public final ProcessStartOfDocumentPage processStartOfDocumentPage;
+    public final GlobalNavBar globalNavBar;
+    public final DbUtil dbUtil;
+    public final DocumentDetails documentDetails;
+    public final CompanySearchPage companySearchPage;
+    public final FesProcessor fesProcessor;
 
     public static final Logger log = LoggerFactory.getLogger(FesProcessingStepDefs.class);
 
@@ -99,8 +99,6 @@ public class FesProcessingStepDefs {
                 company = dbUtil.cloneCompany(CS_SQL_LTD_COMPANY_WITH_CS_DUE);
                 break;
             case "CH01":
-                company = dbUtil.cloneCompany(BASE_SQL_LTD_COMPANY_WITH_ACTIVE_DIRECTOR);
-                break;
             case "TM01":
                 company = dbUtil.cloneCompany(BASE_SQL_LTD_COMPANY_WITH_ACTIVE_DIRECTOR);
                 break;

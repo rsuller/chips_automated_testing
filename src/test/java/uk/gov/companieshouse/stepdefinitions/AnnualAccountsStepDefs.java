@@ -11,8 +11,8 @@ import uk.gov.companieshouse.utils.TestContext;
 
 public class AnnualAccountsStepDefs {
 
-    public TestContext context;
-    public AnnualAccountsPage annualAccountsPage;
+    public final TestContext context;
+    public final AnnualAccountsPage annualAccountsPage;
     public static final Logger log = LoggerFactory.getLogger(AnnualAccountsStepDefs.class);
 
 
