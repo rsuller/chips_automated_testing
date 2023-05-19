@@ -1,4 +1,4 @@
-@insolvency @600
+@insolvency @liquidation @600
 
 Feature: Liquidation for 600 Form Processing
 

@@ -1,4 +1,4 @@
-@insolvency @liq01
+@insolvency @liquidation @liq01
 
 Feature: Liquidation LIQ01 Form Processing
 

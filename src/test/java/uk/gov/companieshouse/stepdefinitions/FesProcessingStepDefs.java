@@ -113,6 +113,10 @@ public class FesProcessingStepDefs {
                 company = dbUtil.cloneCompany(BASE_SQL_PRIVATE_LIMITED_COMPANY_ENG_WALES_ID);
                 documentDetails.setLiquidationType("CVL");
                 break;
+            case "LRESSP":
+                company = dbUtil.cloneCompany(BASE_SQL_PRIVATE_LIMITED_COMPANY_ENG_WALES_ID);
+                documentDetails.setLiquidationType("MVL");
+                break;
             case "600":
                 // Select an MVL or CVL case type at random and continue processing the 600 form for this case type
                 List<String> liquidationTypes = new ArrayList<>();
