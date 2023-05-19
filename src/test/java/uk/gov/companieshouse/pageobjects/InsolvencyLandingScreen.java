@@ -27,8 +27,6 @@ public class InsolvencyLandingScreen extends ChipsCommonPage<InsolvencyLandingSc
         PageFactory.initElements(testContext.getWebDriver(), this);
     }
 
-    @FindBy(how = How.ID, using = "form1:task_mvlCreateCase")
-    private WebElement createCaseLink;
     @FindBy(how = How.ID, using = "form1:task_cvlCreateCase")
     private WebElement createCvlCaseLink;
     @FindBy(how = How.ID, using = "form1:task_mvlCreateCase")
@@ -49,23 +47,18 @@ public class InsolvencyLandingScreen extends ChipsCommonPage<InsolvencyLandingSc
     /**
      * Click the create insolvency case link.
      */
-    public InsolvencyLandingScreen clickCreateInsolvencyCase() {
-        createCaseLink.click();
-        return this;
-    }
-
-    public InsolvencyLandingScreen clickCreateMvL() {
-        createMvlCaseLink.click();
-        return this;
-    }
-
-    public InsolvencyLandingScreen clickCreateCvL() {
-        createCvlCaseLink.click();
+    public InsolvencyLandingScreen createInsolvencyCase(String caseType) {
+            if (caseType.equals("MVL")) {
+                createMvlCaseLink.click();
+            } else {
+                createCvlCaseLink.click();
+            }
         return this;
     }
 
     /**
      * Wait for the IP appointment date field to be displayed then enter the date.
+     *
      * @param date the specified data to enter.
      */
     public InsolvencyLandingScreen enterIpApptDate(String date) {

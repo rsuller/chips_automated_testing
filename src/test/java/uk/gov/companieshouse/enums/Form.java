@@ -13,7 +13,9 @@ public enum Form {
         DS01("DS01", "Process Voluntary Dissolution Form DS01/LLDS01", true, "APPLICATION FOR STRIKING-OFF"),
         LIQ01("LIQ01", "Process Options - LIQ01", true, "NOTICE OF STATUTORY DECL"),
         TM01("TM01", "Terminate Officers", false, "APPOINTMENT TERMINATED"),
-        INS_600("600", "Process Options - 600", true, "NOTICE OF APPOINTMENT OF LIQ");
+        INS_600("600", "Process Options - 600", true, "NOTICE OF APPOINTMENT OF LIQ"),
+        LREXEX("LRESEX", "Process Options - LRESEX", true, "EXTRAORDINARY RESOLUTION");
+
         private final String type;
         private final String title;
         private final boolean highRiskForm;

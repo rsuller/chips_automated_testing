@@ -32,6 +32,8 @@ public class LiquidationScreen extends ChipsCommonPage<LiquidationScreen> {
     private WebElement solvencyDeclarationDateEntry;
     @FindBy(how = How.ID, using = "form1:allocateIP:task_allocateIP")
     private WebElement elementAllocateIpLink;
+    @FindBy(how = How.ID, using = "form1:doc_liquidation_caseDate:field")
+    private WebElement caseStartDate;
 
     /**
      * Wait for the field to be displayed then enter the date solvency is sworn on.
@@ -39,6 +41,15 @@ public class LiquidationScreen extends ChipsCommonPage<LiquidationScreen> {
     public LiquidationScreen enterDateSolvencySworn() {
         waitUntilElementDisplayed(solvencyDeclarationDateEntry);
         solvencyDeclarationDateEntry.sendKeys(DateFormat.getDateAsString(new Date()));
+        return this;
+    }
+
+    /**
+     * Wait for the field to be displayed then enter the liquidation case start date.
+     */
+    public LiquidationScreen enterCaseStartDate() {
+        waitUntilElementDisplayed(caseStartDate);
+        caseStartDate.sendKeys(DateFormat.getDateAsString(new Date()));
         return this;
     }
 

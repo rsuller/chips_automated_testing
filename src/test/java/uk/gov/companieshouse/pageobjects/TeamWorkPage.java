@@ -151,14 +151,16 @@ public class TeamWorkPage extends ElementInteraction {
      */
     private TeamWorkPage clickLastWorkObjectRowForDocumentType(String type) {
         waitUntilElementDisplayed(allocateWorkObjectLink);
+        final List<WebElement> rows = getWorkObjectRowsByDocumentType(type);
         try {
-            final List<WebElement> rows = getWorkObjectRowsByDocumentType(type);
-            rows.get(rows.size() - 1).click();
-            return this;
+            for (WebElement row : rows) {
+                row.click();
+            }
         } catch (ArrayIndexOutOfBoundsException ex) {
             LOG.error("Work item not selected in Team Work Summary", ex);
             throw new RuntimeException("Work item not selected in Team Work Summary");
         }
+        return this;
     }
 
     private TeamWorkPage clickAllocateLink() {
