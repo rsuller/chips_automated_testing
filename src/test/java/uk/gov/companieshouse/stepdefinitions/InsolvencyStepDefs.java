@@ -55,10 +55,11 @@ public class InsolvencyStepDefs {
     @When("I create an insolvency case")
     public void createInsolvencyCase() {
         String insolvencyType = documentDetails.getLiquidationType();
+        String formType = documentDetails.getFormType();
         insolvencyLandingScreen
                 .waitUntilFormDisplayed()
                 .createInsolvencyCase(insolvencyType);
-        if (insolvencyType == null) {
+        if (formType.equalsIgnoreCase("LIQ01")) {
             liquidationScreen.enterDateSolvencySworn();
         } else {
             liquidationScreen.enterCaseStartDate();
@@ -90,5 +91,5 @@ public class InsolvencyStepDefs {
         companyDetailsScreen.verifyActionCode(actionCodeDesc);
 
     }
-    
+
 }

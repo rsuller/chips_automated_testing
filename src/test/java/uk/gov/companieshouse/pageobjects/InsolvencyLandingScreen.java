@@ -27,8 +27,6 @@ public class InsolvencyLandingScreen extends ChipsCommonPage<InsolvencyLandingSc
         PageFactory.initElements(testContext.getWebDriver(), this);
     }
 
-    @FindBy(how = How.ID, using = "form1:task_mvlCreateCase")
-    private WebElement createCaseLink;
     @FindBy(how = How.ID, using = "form1:task_cvlCreateCase")
     private WebElement createCvlCaseLink;
     @FindBy(how = How.ID, using = "form1:task_mvlCreateCase")
@@ -50,15 +48,11 @@ public class InsolvencyLandingScreen extends ChipsCommonPage<InsolvencyLandingSc
      * Click the create insolvency case link.
      */
     public InsolvencyLandingScreen createInsolvencyCase(String caseType) {
-        try {
             if (caseType.equals("MVL")) {
                 createMvlCaseLink.click();
-            } else if (caseType.equals("CVL")) {
+            } else {
                 createCvlCaseLink.click();
             }
-        } catch (NullPointerException exception) {
-            createCaseLink.click();
-        }
         return this;
     }
 
