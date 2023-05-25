@@ -92,4 +92,18 @@ public class InsolvencyStepDefs {
 
     }
 
+    /**
+     * Select a case and enter yesterday for period end date.
+     */
+    @When("^I select a case and enter a period end date$")
+    public void selectACaseAndEnterAPeriodEndDate() {
+        insolvencyLandingScreen
+                .waitUntilFormDisplayed()
+                .selectCaseAndClickProcessStatementLink();
+        liquidationScreen
+                .enterPeriodEndDate()
+                .saveProcessStatement();
+        viewInsolvencyCaseDetailsPage.waitUntilCaseDetailsPageDisplayed();
+    }
+
 }

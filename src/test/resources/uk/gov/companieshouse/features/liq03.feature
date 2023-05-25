@@ -1,20 +1,16 @@
-@insolvency @liquidation @600
+@insolvency @liquidation @liq03
+Feature: Liquidation LIQ03 and 4.68 Form Processing
 
-Feature: Liquidation for 600 Form Processing
+  As an insolvency case user
+  I want to update company records with an LIQ03
+  So that the companies records can reflect when a progress report is added in a voluntary winding up
 
-  As an insolvency user
-  I want to update company records with a form 600
-  So that the companies records can reflect when a Members Voluntary liquidation (MVL)
-  or Creditors Voluntary Liquidation (CVL) case is created
-  LIQ01: A LIQ01 is a 'Notice of statutory declaration of solvency' form
-
-  600: A 600 is a 'Notice of appointment of liquidator (voluntary)' form
+  LIQ03: A LIQ03 is a 'Notice of progress report in voluntary winding up' form
 
   Requirements:
-  * Insolvency Practitioner (IP) must be appointed when creating a case
-  * The IP appointment date must a valid date
-  * IP does not have to be appointed when adding to a case
-  * The company can have an MVL/CVL case on file
+  * The date must a valid date
+  * The company can have a Members Voluntary Liquidation (MVL)
+  or Creditors Voluntary Liquidation (CVL) case on file
 
   Front End Scanning (FES) notes:
   * Forms in FES with a status of 5(ready for chips) generate a JSON message as below and post it to CHIPS over HTTP
@@ -32,8 +28,9 @@ Feature: Liquidation for 600 Form Processing
   * Submissions appear in the relevant work queues, just as they would for FES'd forms in the real world.
 
   @fes_scanned
-  Scenario: FES Scanned 600 form creating a CVL or MVL case
+  Scenario: FES Scanned LIQ03: Notice of progress report in voluntary winding up by MVL
     Given I am logged in as a user in the "Insolvency (FES)" organisational unit
-    And I process a FES "600" for a "private limited company" registered in "Eng/Wales"
-    When I create a voluntary liquidation case using a selected IP
-    Then company history information is updated with the accepted 600 transaction
+    And I process a FES "LIQ03" for a "private limited company" registered in "Eng/Wales"
+    When I select a case and enter a period end date
+    Then company history information is updated with the accepted LIQ03 transaction
+    And the company action code remains "Member's Voluntary Liquidation"

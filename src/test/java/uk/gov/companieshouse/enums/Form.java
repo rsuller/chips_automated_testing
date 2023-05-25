@@ -12,9 +12,11 @@ public enum Form {
         CS01("CS01", "Confirmation Statement", false, "CONFIRMATION STATEMENT"),
         DS01("DS01", "Process Voluntary Dissolution Form DS01/LLDS01", true, "APPLICATION FOR STRIKING-OFF"),
         LIQ01("LIQ01", "Process Options - LIQ01", true, "NOTICE OF STATUTORY DECL"),
+        LIQ03("LIQ03", "Process Options - LIQ03", false, "NOTICE OF PROGRESS REPORT"),
         TM01("TM01", "Terminate Officers", false, "APPOINTMENT TERMINATED"),
         INS_600("600", "Process Options - 600", true, "NOTICE OF APPOINTMENT OF LIQ"),
-        LREXEX("LRESEX", "Process Options - LRESEX", true, "EXTRAORDINARY RESOLUTION");
+        LREXEX("LRESEX", "Process Options - LRESEX", true, "EXTRAORDINARY RESOLUTION"),
+        LRESSP("LRESSP", "Process Options - LRESSP", true, "SPECIAL RESOLUTION");
 
         private final String type;
         private final String title;

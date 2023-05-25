@@ -1,6 +1,7 @@
 package uk.gov.companieshouse.pageobjects;
 
 import java.util.Date;
+import org.apache.commons.lang3.time.DateUtils;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
@@ -34,6 +35,10 @@ public class LiquidationScreen extends ChipsCommonPage<LiquidationScreen> {
     private WebElement elementAllocateIpLink;
     @FindBy(how = How.ID, using = "form1:doc_liquidation_caseDate:field")
     private WebElement caseStartDate;
+    @FindBy(how = How.ID, using = "form1:doc_liquidation_broughtDownDate:field")
+    private WebElement statementPeriodEndDate;
+    @FindBy(how = How.ID, using = "form1:task_processStatement")
+    private WebElement saveProcessStatement;
 
     /**
      * Wait for the field to be displayed then enter the date solvency is sworn on.
@@ -51,6 +56,20 @@ public class LiquidationScreen extends ChipsCommonPage<LiquidationScreen> {
         waitUntilElementDisplayed(caseStartDate);
         caseStartDate.sendKeys(DateFormat.getDateAsString(new Date()));
         return this;
+    }
+
+    /**
+     * Wait for the field to be displayed then enter the period end date of the statement.
+     * Date must be at least 1 day before current date.
+     */
+    public LiquidationScreen enterPeriodEndDate() {
+        waitUntilElementDisplayed(statementPeriodEndDate);
+        statementPeriodEndDate.sendKeys(DateFormat.getDateAsString(DateUtils.addDays(new Date(),-1)));
+        return this;
+    }
+
+    public void saveProcessStatement() {
+        saveProcessStatement.click();
     }
 
 }

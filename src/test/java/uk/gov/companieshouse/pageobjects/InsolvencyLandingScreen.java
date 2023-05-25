@@ -1,5 +1,6 @@
 package uk.gov.companieshouse.pageobjects;
 
+import java.util.List;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
@@ -39,6 +40,12 @@ public class InsolvencyLandingScreen extends ChipsCommonPage<InsolvencyLandingSc
     @FindBy(how = How.CSS, using = "input[type='radio'][value='pass']")
     private WebElement elementLiveCaseRadioButton;
 
+    @FindBy(how = How.CSS, using = "table[id='form1:viewExistingCases:viewExistingCasesId:"
+            + "task_casesDataModel'] tbody tr")
+    private List<WebElement> elementCases;
+    @FindBy(how = How.ID, using = "form1:task_processStatement")
+    private WebElement elementProcessStatementLink;
+
     public InsolvencyLandingScreen waitUntilFormDisplayed() {
         waitUntilFormDisplayed(Form.getFormByType(documentDetails.getFormType()));
         return this;
@@ -75,6 +82,10 @@ public class InsolvencyLandingScreen extends ChipsCommonPage<InsolvencyLandingSc
         return this;
     }
 
+    public void selectCaseAndClickProcessStatementLink() {
+        elementCases.get(0).click();
+        elementProcessStatementLink.click();
+    }
 
 }
 
