@@ -95,15 +95,31 @@ public class InsolvencyStepDefs {
     /**
      * Select a case and enter yesterday for period end date.
      */
-    @When("^I select a case and enter a period end date$")
+    @When("I select a case and enter a period end date")
     public void selectACaseAndEnterAPeriodEndDate() {
         insolvencyLandingScreen
                 .waitUntilFormDisplayed()
-                .selectCaseAndClickProcessStatementLink();
+                .selectFirstCase()
+                .clickProcessStatementLink();
         liquidationScreen
                 .enterPeriodEndDate()
                 .saveProcessStatement();
         viewInsolvencyCaseDetailsPage.waitUntilCaseDetailsPageDisplayed();
+    }
+
+    /**
+     * Select a case and cease an IP appointment.
+     */
+    @When("I cease an Insolvency Practitioner")
+    public void ceaseIpAppointment() {
+        insolvencyLandingScreen
+                .waitUntilFormDisplayed()
+                .selectFirstCase()
+                .clickCeaseIpLink();
+        insolvencyPractitionerDetailsScreen
+                .clickFirstIp()
+                .enterIpCeaseDate()
+                .saveForm();
     }
 
 }

@@ -55,13 +55,13 @@ public class TeamWorkPage extends ElementInteraction {
      * @param companyNumber
      *            the company name
      */
-    public TeamWorkPage filterTeamWorkSummaryByCompanyNumber(String companyNumber) {
+    public TeamWorkPage filterTeamWorkSummaryByCompanyNumberAndFormType(String companyNumber, String formType) {
         int tries = 1;
         int maxTries = 15;
         clickTeamWorkSummaryLink();
         while (true) {
-            LOG.info("Attempting to find work item for company number {}, attempt {} of {}",
-                    companyNumber, tries, maxTries);
+            LOG.info("Attempting to find work item for {} company number {}, attempt {} of {}",
+                    formType, companyNumber, tries, maxTries);
             if (tries == maxTries) {
                 LOG.error("Failed to find work item after {} retry attempts", tries);
                 throw new RuntimeException(
@@ -70,26 +70,30 @@ public class TeamWorkPage extends ElementInteraction {
             clickTeamWorkTab().selectFilterByOption("company number");
             enterFilterValue(companyNumber).clickFilterButton();
             try {
+                // Check the wlist of work objects is not empty
                 workObjectRows.isEnabled();
+                // Get the work objects as a list of web elements and attempt to click the latest.
+                List<WebElement> workItemRows = getWorkObjectRowsByDocumentType(formType);
+                workItemRows.get(0).click();
                 break;
-            } catch (NoSuchElementException exception) {
+            } catch (NoSuchElementException | IndexOutOfBoundsException exception) {
                 // wait 3 seconds before continuing
                 getWebDriverWait(3);
                 tries++;
             }
         }
-        LOG.info("Work item for company number {} found. Continuing with test", companyNumber);
+        LOG.info("Work items for company number {} found. Continuing with test", companyNumber);
+
         return this;
     }
 
     /**
      * allocate most recent work history.
      */
-    public TeamWorkPage allocateMostRecentWorkObjectOfType(String type, String userName) {
-        clickLastWorkObjectRowForDocumentType(type)
-                .clickAllocateLink()
-                .selectUserFromOptions(userName)
-                .clickAllocateWorkSaveButton();
+    public TeamWorkPage allocateMostRecentWorkObjectSelected(String type, String userName) {
+                clickAllocateLink();
+                selectUserFromOptions(userName);
+                clickAllocateWorkSaveButton();
         LOG.info("Work item {} allocated to {}. Continuing with test", type, userName);
         return this;
     }
@@ -144,23 +148,6 @@ public class TeamWorkPage extends ElementInteraction {
             }
         }
         return rows;
-    }
-
-    /**
-     * Clicks latest work item for document type and logs error if not found.
-     */
-    private TeamWorkPage clickLastWorkObjectRowForDocumentType(String type) {
-        waitUntilElementDisplayed(allocateWorkObjectLink);
-        final List<WebElement> rows = getWorkObjectRowsByDocumentType(type);
-        try {
-            for (WebElement row : rows) {
-                row.click();
-            }
-        } catch (ArrayIndexOutOfBoundsException ex) {
-            LOG.error("Work item not selected in Team Work Summary", ex);
-            throw new RuntimeException("Work item not selected in Team Work Summary");
-        }
-        return this;
     }
 
     private TeamWorkPage clickAllocateLink() {

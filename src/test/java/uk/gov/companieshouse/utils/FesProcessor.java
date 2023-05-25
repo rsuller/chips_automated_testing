@@ -120,8 +120,9 @@ public class FesProcessor extends ChipsCommonPage<FesProcessor> {
      */
     public FesProcessor allocateWorkAndPsodFes(String formType, Company company) {
         globalNavBar.waitUntilDisplayed();
-        teamWorkPage.filterTeamWorkSummaryByCompanyNumber(company.getNumber())
-                .allocateMostRecentWorkObjectOfType(formType, "weblogic");
+        teamWorkPage
+                .filterTeamWorkSummaryByCompanyNumberAndFormType(company.getNumber(), formType)
+                .allocateMostRecentWorkObjectSelected(formType, "weblogic");
         myWorkPage
                 .goToMyWorkPage()
                 .openWorkItem("companyNumberColumn", company.getNumber(), formType);

@@ -119,6 +119,7 @@ public class FesProcessingStepDefs {
                 documentDetails.setLiquidationType("MVL");
                 break;
             case "600":
+            case "LIQ10":
                 // Select an MVL or CVL case type at random and continue processing the 600 form for this case type
                 List<String> liquidationTypes = new ArrayList<>();
                 liquidationTypes.add("MVL");
@@ -127,11 +128,11 @@ public class FesProcessingStepDefs {
                 String caseTypeToCreate = liquidationTypes.get(index);
                 if (caseTypeToCreate.equals("MVL")) {
                     company = dbUtil.cloneCompany(INS_PRIVATE_LTD_COMPANY_ENG_WALES_WITH_MVL_CASE_ACTION_CODE);
-                    log.info("Processing a form 600 with MVL case");
+                    log.info("Processing a form {} with MVL case", formType);
                 } else {
                     company = dbUtil.cloneCompany(
                             INS_PRIVATE_LTD_COMPANY_ENG_WALES_WITH_CVL_CASE_ACTION_CODE);
-                    log.info("Processing a form 600 with CVL case");
+                    log.info("Processing a form {} with CVL case", formType);
                 }
                 documentDetails.setLiquidationType(caseTypeToCreate);
                 break;

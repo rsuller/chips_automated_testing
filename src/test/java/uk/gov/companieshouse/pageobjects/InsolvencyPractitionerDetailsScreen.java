@@ -1,5 +1,8 @@
 package uk.gov.companieshouse.pageobjects;
 
+import static uk.gov.companieshouse.utils.DateFormat.getDateAsString;
+
+import java.util.Date;
 import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -32,6 +35,10 @@ public class InsolvencyPractitionerDetailsScreen extends ChipsCommonPage<Insolve
 
     @FindBy(how = How.CSS, using = "table[id='form1:task_insolvencyPractitioner_addresses'] tbody tr")
     private List<WebElement> elementListOfIpAddressRows;
+    @FindBy(how = How.ID, using = "form1:allocateIP:task_dataModel:0")
+    private WebElement elementFirstIp;
+    @FindBy(how = How.ID, using = "form1:task_ipEndDate:field")
+    private WebElement elementIpEndDate;
 
     /**
      * click first complete address row.
@@ -46,6 +53,16 @@ public class InsolvencyPractitionerDetailsScreen extends ChipsCommonPage<Insolve
                 break;
             }
         }
+        return this;
+    }
+
+    public InsolvencyPractitionerDetailsScreen clickFirstIp() {
+        elementFirstIp.click();
+        return this;
+    }
+
+    public InsolvencyPractitionerDetailsScreen enterIpCeaseDate() {
+        typeText(elementIpEndDate, getDateAsString(new Date()));
         return this;
     }
 
