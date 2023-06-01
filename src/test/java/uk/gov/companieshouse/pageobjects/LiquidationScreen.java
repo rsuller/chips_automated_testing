@@ -62,7 +62,7 @@ public class LiquidationScreen extends ChipsCommonPage<LiquidationScreen> {
      * Wait for the field to be displayed then enter the period end date of the statement.
      * Date must be at least 1 day before current date.
      */
-    public LiquidationScreen enterPeriodEndDate() {
+    public LiquidationScreen enterYesterdayAsPeriodEndDate() {
         waitUntilElementDisplayed(statementPeriodEndDate);
         statementPeriodEndDate.sendKeys(DateFormat.getDateAsString(DateUtils.addDays(new Date(),-1)));
         return this;
