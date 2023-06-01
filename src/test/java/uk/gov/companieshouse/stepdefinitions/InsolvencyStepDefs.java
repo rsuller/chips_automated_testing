@@ -86,8 +86,8 @@ public class InsolvencyStepDefs {
         insolvencyLandingScreen.clickLiveCaseRadioButton().saveForm();
     }
 
-    @Then("the company action code remains {string}")
-    public void theCompanyActionCodeIsChangedToOrRemains(String actionCodeDesc) {
+    @Then("the company action code should be {string}")
+    public void theCompanyActionCodeShouldBe(String actionCodeDesc) {
         companyDetailsScreen.verifyActionCode(actionCodeDesc);
 
     }
@@ -120,6 +120,19 @@ public class InsolvencyStepDefs {
                 .clickFirstIp()
                 .enterIpCeaseDate()
                 .saveForm();
+    }
+
+    /**
+     * Select a current MVL case and convert it to a CVL.
+     */
+    @When("I convert a current case from MVL to CVL")
+    public void convertFromMvlToCvlWithForm() {
+        insolvencyLandingScreen
+                .waitUntilFormDisplayed()
+                .selectFirstCase()
+                .clickConvertMvlToCvlLink()
+                .saveForm();
+        insolvencyLandingScreen.clickLiveCaseRadioButton().saveForm();
     }
 
 }

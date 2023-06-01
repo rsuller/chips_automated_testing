@@ -1,7 +1,13 @@
 package uk.gov.companieshouse.pageobjects;
 
+import static org.apache.commons.lang3.StringUtils.strip;
+
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
@@ -19,6 +25,7 @@ import uk.gov.companieshouse.testdata.SqlDetails;
 import uk.gov.companieshouse.utils.BarcodeGenerator;
 import uk.gov.companieshouse.utils.ElementInteraction;
 import uk.gov.companieshouse.utils.TestContext;
+
 
 public class ProcessStartOfDocumentPage extends ElementInteraction {
 
@@ -110,8 +117,8 @@ public class ProcessStartOfDocumentPage extends ElementInteraction {
     // elements for the attachments pop up
     @FindBy(how = How.ID, using = "form1:task_startOfDocument_attachments:field:add")
     private WebElement elementAddAttachmentsLink;
-    @FindBy(how = How.ID, using = "table[id='form1:task_startOfDocument_attachments:field:dataTable'] tbody tr")
-    private WebElement elementListOfAttachments;
+    @FindBy(how = How.CSS, using = "table[id='form1:task_startOfDocument_attachments:field:dataTable'] tbody tr")
+    private List<WebElement> elementListOfAttachments;
     @FindBy(how = How.ID, using = "form1:task_startOfDocument_attachments:field:save")
     private WebElement elementSaveAttachmentsLink;
 
@@ -265,6 +272,11 @@ public class ProcessStartOfDocumentPage extends ElementInteraction {
         }
         fillInPsodFields(company, twoCompanyForm, form);
         documentDetails.setReceivedDate(getGeneratedReceiptDate());
+        if (form.equalsIgnoreCase("LIQ02")) {
+            clickAddAttachmentsLink();
+            selectLiq02Attachments();
+            clickSaveAttachmentsLink();
+        }
         clickProceedLink();
         clickPsodPopUpYesLink();
         return this;
@@ -318,11 +330,47 @@ public class ProcessStartOfDocumentPage extends ElementInteraction {
     /**
      * Click the yes option in the popup in PSOD screen.
      */
-    public ProcessStartOfDocumentPage clickPsodPopUpYesLink() {
+    private void clickPsodPopUpYesLink() {
         waitUntilElementDisplayed(elementPopupYesLink);
         elementPopupYesLink.click();
+    }
+
+    private void clickAddAttachmentsLink() {
+        elementAddAttachmentsLink.click();
+    }
+
+    /**
+     * Select LIQ02 attachments from the popup.
+     */
+    private void selectLiq02Attachments() {
+        List<String> attachments = new ArrayList<>();
+        attachments.add("LIQ02SOAL");
+        attachments.add("LIQ02SOC");
+        int nrAttachmentsSelected = 0;
+
+        for (WebElement webElement : elementListOfAttachments) {
+            List<WebElement> columns = webElement.findElements(By.tagName("td"));
+            String attachmentName = strip(columns.get(1)
+                    .getAttribute("innerText")).trim();
+            if (attachments.contains(attachmentName)) {
+                columns.get(0).click();
+
+                // Attachments listed in the pop-up window are unique
+                // so it's sufficient to just count the number selected
+                // for the check below
+                nrAttachmentsSelected++;
+            }
+        }
+        if (nrAttachmentsSelected != attachments.size()) {
+            throw new RuntimeException("Not all of the expected attachments were found");
+        }
+    }
+
+    public ProcessStartOfDocumentPage clickSaveAttachmentsLink() {
+        elementSaveAttachmentsLink.click();
         return this;
     }
+
 
     /**
      * Check if the company name is populated correctly on PSOD.

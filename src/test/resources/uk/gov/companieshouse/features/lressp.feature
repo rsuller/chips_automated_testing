@@ -32,5 +32,5 @@ Feature: Liquidation LRESSP Form Processing
     When I process a FES "LRESSP" for a "private limited company" registered in "Eng/Wales"
     And I create an insolvency case
     Then company history information is updated with the accepted LRESSP transaction
-    And the company action code remains "Member's Voluntary Liquidation"
+    And the company action code should be "Member's Voluntary Liquidation"
 

@@ -31,5 +31,5 @@ Feature: Liquidation LRESEX Form Processing
     When I process a FES "LRESEX" for a "private limited company" registered in "Eng/Wales"
     And I create an insolvency case
     Then company history information is updated with the accepted LRESEX transaction
-    And the company action code remains "Creditors Voluntary Liquidation"
+    And the company action code should be "Creditors Voluntary Liquidation"
 
