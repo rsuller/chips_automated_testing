@@ -113,7 +113,6 @@ public class FesProcessor extends ChipsCommonPage<FesProcessor> {
     /**
      * Allocate work item to "My Work" and complete PSOD for the item.
      * Choose different method if the item is an Incorporation document.
-     * Bypass PSOD all together for a 600 form, which goes straight to processing.
      *
      * @param formType The form type to allocate.
      * @param company  The company to allocate.

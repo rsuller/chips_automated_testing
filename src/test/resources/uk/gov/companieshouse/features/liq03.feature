@@ -33,4 +33,4 @@ Feature: Liquidation LIQ03 and 4.68 Form Processing
     And I process a FES "LIQ03" for a "private limited company" registered in "Eng/Wales"
     When I select a case and enter a period end date
     Then company history information is updated with the accepted LIQ03 transaction
-    And the company action code remains "Member's Voluntary Liquidation"
+    And the company action code should be "Member's Voluntary Liquidation"
