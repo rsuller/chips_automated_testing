@@ -102,7 +102,7 @@ public class InsolvencyStepDefs {
                 .selectFirstCase()
                 .clickProcessStatementLink();
         liquidationScreen
-                .enterPeriodEndDate()
+                .enterYesterdayAsPeriodEndDate()
                 .saveProcessStatement();
         viewInsolvencyCaseDetailsPage.waitUntilCaseDetailsPageDisplayed();
     }
