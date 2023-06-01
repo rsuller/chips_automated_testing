@@ -45,6 +45,8 @@ public class InsolvencyLandingScreen extends ChipsCommonPage<InsolvencyLandingSc
     private List<WebElement> elementCases;
     @FindBy(how = How.ID, using = "form1:task_processStatement")
     private WebElement elementProcessStatementLink;
+    @FindBy(how = How.ID, using = "form1:task_cessationIp")
+    private WebElement elementCeaseIpLink;
 
     public InsolvencyLandingScreen waitUntilFormDisplayed() {
         waitUntilFormDisplayed(Form.getFormByType(documentDetails.getFormType()));
@@ -82,9 +84,19 @@ public class InsolvencyLandingScreen extends ChipsCommonPage<InsolvencyLandingSc
         return this;
     }
 
-    public void selectCaseAndClickProcessStatementLink() {
+    public InsolvencyLandingScreen selectFirstCase() {
         elementCases.get(0).click();
+        return this;
+    }
+
+    public InsolvencyLandingScreen clickProcessStatementLink() {
         elementProcessStatementLink.click();
+        return this;
+    }
+
+    public InsolvencyLandingScreen clickCeaseIpLink() {
+        elementCeaseIpLink.click();
+        return this;
     }
 
 }
