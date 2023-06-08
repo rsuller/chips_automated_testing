@@ -107,12 +107,14 @@ public class FesProcessingStepDefs {
                 company = dbUtil.cloneCompany(BASE_SQL_PRIVATE_LIMITED_COMPANY_ENG_WALES_ID);
                 break;
             case "LIQ01":
+            case "LIQ02":
             case "LIQ03":
+            case "LIQ13":
                 company = dbUtil.cloneCompany(INS_PRIVATE_LTD_COMPANY_ENG_WALES_WITH_MVL_CASE_ACTION_CODE);
                 documentDetails.setLiquidationType("MVL");
                 break;
-            case "LIQ02":
-                company = dbUtil.cloneCompany(INS_PRIVATE_LTD_COMPANY_ENG_WALES_WITH_MVL_CASE_ACTION_CODE);
+            case "LIQ14":
+                company = dbUtil.cloneCompany(INS_PRIVATE_LTD_COMPANY_ENG_WALES_WITH_CVL_CASE_ACTION_CODE);
                 break;
             case "LRESEX":
                 company = dbUtil.cloneCompany(BASE_SQL_PRIVATE_LIMITED_COMPANY_ENG_WALES_ID);

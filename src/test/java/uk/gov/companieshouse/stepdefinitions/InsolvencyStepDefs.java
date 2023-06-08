@@ -135,6 +135,9 @@ public class InsolvencyStepDefs {
         insolvencyLandingScreen.clickLiveCaseRadioButton().saveForm();
     }
 
+    /**
+     * Add NDISC to existing receivership case.
+     */
     @When("I add the NDISC to the receivership case")
     public void addTheNdiscToTheReceivershipCase() {
         insolvencyLandingScreen
@@ -143,5 +146,21 @@ public class InsolvencyStepDefs {
                 .clickAddToCase()
                 .saveForm();
     }
+
+    /**
+     * Select a live case and cease it.
+     */
+    @When("I cease the live case")
+    public void ceaseLiveCase() {
+        insolvencyLandingScreen
+                .waitUntilFormDisplayed()
+                .selectLastCase()
+                .clickCeaseLiveCase()
+                .saveForm();
+        viewInsolvencyCaseDetailsPage
+                .waitUntilCaseDetailsPageDisplayed();
+    }
+
+
 
 }
