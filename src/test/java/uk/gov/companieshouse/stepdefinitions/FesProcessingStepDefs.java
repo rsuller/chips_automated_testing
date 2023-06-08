@@ -5,6 +5,7 @@ import static uk.gov.companieshouse.data.dbutil.sql.CompanySql.BASE_SQL_PRIVATE_
 import static uk.gov.companieshouse.data.dbutil.sql.CompanySql.CS_SQL_LTD_COMPANY_WITH_CS_DUE;
 import static uk.gov.companieshouse.data.dbutil.sql.CompanySql.INS_PRIVATE_LTD_COMPANY_ENG_WALES_WITH_CVL_CASE_ACTION_CODE;
 import static uk.gov.companieshouse.data.dbutil.sql.CompanySql.INS_PRIVATE_LTD_COMPANY_ENG_WALES_WITH_MVL_CASE_ACTION_CODE;
+import static uk.gov.companieshouse.data.dbutil.sql.CompanySql.INS_PRIVATE_LTD_COMPANY_WITH_RECEIVER_MANAGER_ACTION_CODE;
 
 import io.cucumber.java.en.When;
 import java.util.ArrayList;
@@ -120,6 +121,9 @@ public class FesProcessingStepDefs {
             case "LRESSP":
                 company = dbUtil.cloneCompany(BASE_SQL_PRIVATE_LIMITED_COMPANY_ENG_WALES_ID);
                 documentDetails.setLiquidationType("MVL");
+                break;
+            case "NDISC":
+                company = dbUtil.cloneCompany(INS_PRIVATE_LTD_COMPANY_WITH_RECEIVER_MANAGER_ACTION_CODE);
                 break;
             case "600":
             case "LIQ10":

@@ -272,9 +272,9 @@ public class ProcessStartOfDocumentPage extends ElementInteraction {
         }
         fillInPsodFields(company, twoCompanyForm, form);
         documentDetails.setReceivedDate(getGeneratedReceiptDate());
-        if (form.equalsIgnoreCase("LIQ02")) {
+        if (form.equalsIgnoreCase("LIQ02") || form.equalsIgnoreCase("NDISC")) {
             clickAddAttachmentsLink();
-            selectLiq02Attachments();
+            selectAttachments(form);
             clickSaveAttachmentsLink();
         }
         clickProceedLink();
@@ -340,12 +340,16 @@ public class ProcessStartOfDocumentPage extends ElementInteraction {
     }
 
     /**
-     * Select LIQ02 attachments from the popup.
+     * Select attachments from the popup.
      */
-    private void selectLiq02Attachments() {
+    private void selectAttachments(String form) {
         List<String> attachments = new ArrayList<>();
-        attachments.add("LIQ02SOAL");
-        attachments.add("LIQ02SOC");
+        if (form.equalsIgnoreCase("LIQ02")) {
+            attachments.add("LIQ02SOAL");
+            attachments.add("LIQ02SOC");
+        } else {
+            attachments.add("NDISCA");
+        }
         int nrAttachmentsSelected = 0;
 
         for (WebElement webElement : elementListOfAttachments) {

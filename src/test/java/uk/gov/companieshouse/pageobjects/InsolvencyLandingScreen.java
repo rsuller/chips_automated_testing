@@ -32,7 +32,7 @@ public class InsolvencyLandingScreen extends ChipsCommonPage<InsolvencyLandingSc
     private WebElement createCvlCaseLink;
     @FindBy(how = How.ID, using = "form1:task_mvlCreateCase")
     private WebElement createMvlCaseLink;
-    @FindBy(how = How.ID, using = "form1:task_addToCase")
+    @FindBy(how = How.LINK_TEXT, using = "Add to Case")
     private WebElement addToCaseLink;
     @FindBy(how = How.ID, using = "form1:allocateIP:task_unceasedDataModel:"
             + "0:appointment_insolvencyAppointmentEffDate__1:field")
@@ -103,6 +103,11 @@ public class InsolvencyLandingScreen extends ChipsCommonPage<InsolvencyLandingSc
 
     public InsolvencyLandingScreen clickConvertMvlToCvlLink() {
         elementConvertMvlToCvlLink.click();
+        return this;
+    }
+
+    public InsolvencyLandingScreen clickAddToCase() {
+        addToCaseLink.click();
         return this;
     }
 
