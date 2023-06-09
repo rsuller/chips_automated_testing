@@ -9,6 +9,11 @@ public class DocumentDetails {
     String formType;
     String liquidationType;
     String allocatedIpNumber;
+    Boolean fesScanned;
+
+    public void setFesScanned(Boolean fesScanned) {
+        this.fesScanned = fesScanned;
+    }
 
     public void setAllocatedIpNumber(String allocatedIpNumber) {
         this.allocatedIpNumber = allocatedIpNumber;
@@ -28,6 +33,10 @@ public class DocumentDetails {
 
     public void setReceivedDate(String receivedDate) {
         this.receivedDate = receivedDate;
+    }
+
+    public Boolean getFesScanned() {
+        return fesScanned;
     }
 
     public String getReceivedDate() {

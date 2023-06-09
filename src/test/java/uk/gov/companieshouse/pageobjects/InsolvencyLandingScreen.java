@@ -49,6 +49,8 @@ public class InsolvencyLandingScreen extends ChipsCommonPage<InsolvencyLandingSc
     private WebElement elementCeaseIpLink;
     @FindBy(how = How.ID, using = "form1:task_convertMvlToCvlCase")
     private WebElement elementConvertMvlToCvlLink;
+    @FindBy(how = How.LINK_TEXT, using = "Cease Case")
+    private WebElement elementCessationLiveCaseLink;
 
     public InsolvencyLandingScreen waitUntilFormDisplayed() {
         waitUntilFormDisplayed(Form.getFormByType(documentDetails.getFormType()));
@@ -91,6 +93,11 @@ public class InsolvencyLandingScreen extends ChipsCommonPage<InsolvencyLandingSc
         return this;
     }
 
+    public InsolvencyLandingScreen selectLastCase() {
+        elementCases.get(elementCases.size() - 1).click();
+        return this;
+    }
+
     public InsolvencyLandingScreen clickProcessStatementLink() {
         elementProcessStatementLink.click();
         return this;
@@ -108,6 +115,11 @@ public class InsolvencyLandingScreen extends ChipsCommonPage<InsolvencyLandingSc
 
     public InsolvencyLandingScreen clickAddToCase() {
         addToCaseLink.click();
+        return this;
+    }
+
+    public InsolvencyLandingScreen clickCeaseLiveCase() {
+        elementCessationLiveCaseLink.click();
         return this;
     }
 

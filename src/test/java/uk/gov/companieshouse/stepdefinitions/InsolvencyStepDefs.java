@@ -147,4 +147,20 @@ public class InsolvencyStepDefs {
                 .saveForm();
     }
 
+    /**
+     * Select a live case and cease it.
+     */
+    @When("I cease the live case")
+    public void ceaseLiveCase() {
+        insolvencyLandingScreen
+                .waitUntilFormDisplayed()
+                .selectLastCase()
+                .clickCeaseLiveCase()
+                .saveForm();
+        viewInsolvencyCaseDetailsPage
+                .waitUntilCaseDetailsPageDisplayed();
+    }
+
+
+
 }
