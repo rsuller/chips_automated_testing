@@ -21,7 +21,8 @@ public enum Form {
     INS_600("600", "Process Options - 600", true, "NOTICE OF APPOINTMENT OF LIQ"),
     LREXEX("LRESEX", "Process Options - LRESEX", true, "EXTRAORDINARY RESOLUTION"),
     LRESSP("LRESSP", "Process Options - LRESSP", true, "SPECIAL RESOLUTION"),
-    NDISC("NDISC", "Process Options - NDISC", false, "NOTICE OF DISCLAIMER");
+    NDISC("NDISC", "Process Options - NDISC", false, "NOTICE OF DISCLAIMER"),
+    RT01("RT01", "Admin Restoration", false, "COMPANY RESTORED ON");
 
     private final String type;
     private final String title;
