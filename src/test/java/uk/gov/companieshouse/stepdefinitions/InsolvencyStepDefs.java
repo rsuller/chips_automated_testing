@@ -135,4 +135,16 @@ public class InsolvencyStepDefs {
         insolvencyLandingScreen.clickLiveCaseRadioButton().saveForm();
     }
 
+    /**
+     * Add NDISC to existing receivership case.
+     */
+    @When("I add the NDISC to the receivership case")
+    public void addTheNdiscToTheReceivershipCase() {
+        insolvencyLandingScreen
+                .waitUntilFormDisplayed()
+                .selectFirstCase()
+                .clickAddToCase()
+                .saveForm();
+    }
+
 }
