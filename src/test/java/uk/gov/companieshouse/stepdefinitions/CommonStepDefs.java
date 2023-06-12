@@ -3,6 +3,7 @@ package uk.gov.companieshouse.stepdefinitions;
 import static uk.gov.companieshouse.data.dbutil.sql.CompanySql.BASE_SQL_PRIVATE_LIMITED_COMPANY_ENG_WALES_ID;
 import static uk.gov.companieshouse.data.dbutil.sql.CompanySql.BASE_SQL_lTD_WITH_ACTIVE_CORPORATE_DIRECTOR;
 import static uk.gov.companieshouse.data.dbutil.sql.CompanySql.DISSOLUTION_COMPANY_NO_PREV_DISS_REQUEST_FILED;
+import static uk.gov.companieshouse.data.dbutil.sql.CompanySql.RESTORATION_SQL_PRIVATE_LIMITED_COMPANY_VOLUNTARY_DISSOLVED_IN_LAST_6_YEARS;
 
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -107,7 +108,11 @@ public class CommonStepDefs {
                 throw new RuntimeException(exception);
             }
             descriptionToCheck = formattedDate + " " + documentDetails.getAccountsType().toUpperCase();
-        } else {
+        } else if (formName.equalsIgnoreCase("RT01")) {
+            String restorationDate = documentDetails.getReceivedDate();
+            descriptionToCheck = form.getTransactionHistoryPartialDescription() + " " + restorationDate;
+        }
+        else {
             descriptionToCheck = form.getTransactionHistoryPartialDescription();
         }
         companyDetailsScreen
@@ -134,6 +139,9 @@ public class CommonStepDefs {
                 break;
             case "DS01":
                 company = dbUtil.cloneCompany(DISSOLUTION_COMPANY_NO_PREV_DISS_REQUEST_FILED);
+                break;
+            case "RT01":
+                company = dbUtil.cloneCompany(RESTORATION_SQL_PRIVATE_LIMITED_COMPANY_VOLUNTARY_DISSOLVED_IN_LAST_6_YEARS);
                 break;
             default:
                 log.error("There is no current option for form {}", formType);
