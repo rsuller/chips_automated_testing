@@ -27,8 +27,8 @@ public class Rt01Page extends ChipsCommonPage<Rt01Page> {
     @FindBy(how = How.ID, using = "form1:doc_corporateBody_restoration_presenterLetterReference:field")
     private WebElement elementYourReference;
 
-    public Rt01Page enterYourReference(String yourReference) {
-        elementYourReference.sendKeys(yourReference);
+    public Rt01Page enterYourReference() {
+        elementYourReference.sendKeys("12345");
         return this;
     }
 
