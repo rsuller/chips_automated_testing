@@ -32,6 +32,16 @@ public class ConfirmationStatementPage extends ChipsCommonPage<ConfirmationState
     private WebElement elementPaymentReceivedYes;
     @FindBy(how = How.ID, using = "form1:confirmationstatement_date:_id61")
     private WebElement elementNoUpdatesCheckbox;
+    @FindBy(how = How.ID, using = "form1:capitalTab:indicator")
+    private WebElement elementCapitalTab;
+    @FindBy(how = How.ID, using = "form1:task_tabBookUITabHeader:0")
+    private WebElement elementDatesTab;
+    @FindBy(how = How.ID, using = "form1:confirmationstatement_capital:_id66")
+    private WebElement elementSocSelector;
+    @FindBy(how = How.ID, using = "form1:statementOfCapital_shareValuesElement:0:shareValue_totalAmountUnpaid:field")
+    private WebElement elementTotalUnpaid;
+    @FindBy(how = How.ID, using = "form1:corporateBody:corporateBody_formattedNextCSDueDate:output")
+    private WebElement elementNextCsDue;
 
 
     /**
@@ -45,6 +55,31 @@ public class ConfirmationStatementPage extends ChipsCommonPage<ConfirmationState
         elementNoUpdatesCheckbox.click();
         acceptAlert();
         saveForm();
+        return this;
+    }
+
+    /**
+     * Complete mandatory fields to file a no update ConfirmationStatement. Alert is fired when checkbox is clicked
+     * so accept that and continue with test.
+     */
+    public ConfirmationStatementPage completePaperCs01() {
+        waitUntilFormDisplayed(Form.CS01);
+        String nextCsDue = elementNextCsDue.getText();
+        elementCsDateInput.sendKeys(nextCsDue);
+        elementPaymentReceivedYes.click();
+        completeCapitalTab();
+        saveForm();
+        return this;
+    }
+
+    /**
+     * Do capital tab.
+     */
+    private ConfirmationStatementPage completeCapitalTab() {
+        elementCapitalTab.click();
+        waitUntilElementDisplayed(elementSocSelector);
+        typeText(elementTotalUnpaid, "0");
+        selectByText(elementSocSelector, "YES");
         return this;
     }
 

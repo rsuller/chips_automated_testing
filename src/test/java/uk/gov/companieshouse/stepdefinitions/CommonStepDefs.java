@@ -2,6 +2,7 @@ package uk.gov.companieshouse.stepdefinitions;
 
 import static uk.gov.companieshouse.data.dbutil.sql.CompanySql.BASE_SQL_PRIVATE_LIMITED_COMPANY_ENG_WALES_ID;
 import static uk.gov.companieshouse.data.dbutil.sql.CompanySql.BASE_SQL_lTD_WITH_ACTIVE_CORPORATE_DIRECTOR;
+import static uk.gov.companieshouse.data.dbutil.sql.CompanySql.CS_SQL_LTD_COMPANY_WITH_CS_DUE;
 import static uk.gov.companieshouse.data.dbutil.sql.CompanySql.DISSOLUTION_COMPANY_NO_PREV_DISS_REQUEST_FILED;
 import static uk.gov.companieshouse.data.dbutil.sql.CompanySql.RESTORATION_SQL_PRIVATE_LIMITED_COMPANY_VOLUNTARY_DISSOLVED_IN_LAST_6_YEARS;
 
@@ -142,6 +143,9 @@ public class CommonStepDefs {
                 break;
             case "RT01":
                 company = dbUtil.cloneCompany(RESTORATION_SQL_PRIVATE_LIMITED_COMPANY_VOLUNTARY_DISSOLVED_IN_LAST_6_YEARS);
+                break;
+            case "CS01":
+                company = dbUtil.cloneCompany(CS_SQL_LTD_COMPANY_WITH_CS_DUE);
                 break;
             default:
                 log.error("There is no current option for form {}", formType);

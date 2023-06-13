@@ -23,8 +23,16 @@ public class ConfirmationStatementStepDefs {
      * Complete mandatory fields to process a no update confirmation statement.
      */
     @When("I complete mandatory details process a no update confirmation statement")
-    public void completeMandatoryDetailsToAppointFesDirector() {
+    public void completeMandatoryDetailsNoUpdateConfirmationStatement() {
         confirmationStatementPage.completeNoUpdateCs01();
+    }
+
+    /**
+     * Complete mandatory fields to process a no update confirmation statement.
+     */
+    @When("I complete mandatory details to file a paper confirmation statement")
+    public void completeMandatoryDetailsPaperConfirmationStatement() {
+        confirmationStatementPage.completePaperCs01();
     }
 
 }
