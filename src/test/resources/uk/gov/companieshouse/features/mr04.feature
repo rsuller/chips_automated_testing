@@ -26,7 +26,7 @@ Feature: MR04 mortgage form processing
   * There is no need to change the batchName, batchNumber, envelopeId or paymentInd between tests.
   * Submissions appear in the relevant work queues, just as they would for FES'd forms in the real world.
 
-  @fes_scanned @mortgage
+  @fes_scanned
   Scenario: Successfully submit an MR04 form processing a statement of satisfaction
     Given I am logged in as a user in the "Mortgage (FES)" organisational unit
     And I process a FES "MR04" for a "private limited company" registered in "Eng/Wales"
