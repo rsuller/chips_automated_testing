@@ -17,7 +17,7 @@ public class RestorationStepDefs {
     @When("^I complete the mandatory details for an administrative restoration$")
     public void processAdministrativeRestoration() {
         rt01Page
-                .enterYourReference("12345")
+                .enterYourReference()
                 .saveForm();
     }
 
