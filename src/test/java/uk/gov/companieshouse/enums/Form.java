@@ -22,7 +22,8 @@ public enum Form {
     LREXEX("LRESEX", "Process Options - LRESEX", true, "EXTRAORDINARY RESOLUTION"),
     LRESSP("LRESSP", "Process Options - LRESSP", true, "SPECIAL RESOLUTION"),
     NDISC("NDISC", "Process Options - NDISC", false, "NOTICE OF DISCLAIMER"),
-    RT01("RT01", "Admin Restoration", false, "COMPANY RESTORED ON");
+    RT01("RT01", "Admin Restoration", false, "COMPANY RESTORED ON"),
+    MR04("MR04", "Search and Select Charge", true, "STATEMENT OF SATISFACTION");
 
     private final String type;
     private final String title;

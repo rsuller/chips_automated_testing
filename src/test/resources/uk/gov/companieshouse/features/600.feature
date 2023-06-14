@@ -6,7 +6,6 @@ Feature: Liquidation for 600 Form Processing
   I want to update company records with a form 600
   So that the companies records can reflect when a Members Voluntary liquidation (MVL)
   or Creditors Voluntary Liquidation (CVL) case is created
-  LIQ01: A LIQ01 is a 'Notice of statutory declaration of solvency' form
 
   600: A 600 is a 'Notice of appointment of liquidator (voluntary)' form
 
