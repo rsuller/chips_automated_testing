@@ -73,7 +73,7 @@ public class ConfirmationStatementPage extends ChipsCommonPage<ConfirmationState
     }
 
     /**
-     * Do capital tab.
+     * Open up the capital tab and complete the madatory fields required to file the form.
      */
     private ConfirmationStatementPage completeCapitalTab() {
         elementCapitalTab.click();
