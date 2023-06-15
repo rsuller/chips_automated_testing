@@ -33,8 +33,8 @@ different filing method is necesssary.
   @fes_scanned
   Scenario Outline: FES scanned accepted CS01 forms
     Given I am logged in as a user in the "<org_unit>" organisational unit
-    When I process a FES "CS01" for a "private limited company" registered in "<country>"
-    And I complete mandatory details process a no update confirmation statement
+    And I process a FES "CS01" for a "private limited company" registered in "<country>"
+    When I complete mandatory details process a no update confirmation statement
     Then company history information is updated with the accepted CS01 transaction
     Examples:
       | org_unit  | country   |
@@ -43,3 +43,9 @@ different filing method is necesssary.
       | org_unit                      | country          |
       | Scottish DEB (FES)            | Scotland         |
       | NI Document Examination (FES) | Northern Ireland |
+
+  Scenario: Accepted paper CS01 form
+    Given I am logged in as a user in the "RM1" organisational unit
+    When I process the start document for form "CS01"
+    And I complete mandatory details to file a paper confirmation statement
+    Then company history information is updated with the accepted CS01 transaction

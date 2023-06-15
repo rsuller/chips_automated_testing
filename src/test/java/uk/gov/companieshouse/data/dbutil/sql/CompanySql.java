@@ -33,7 +33,9 @@ public enum CompanySql {
     INS_PRIVATE_LTD_COMPANY_WITH_RECEIVER_MANAGER_ACTION_CODE(
             "insolvency/private_limited_company_engwales_with_receiver_manager.sql"),
     RESTORATION_SQL_PRIVATE_LIMITED_COMPANY_VOLUNTARY_DISSOLVED_IN_LAST_6_YEARS(
-            "restoration/private_ltd_engwales_voluntary_dissolved_in_last_6_years.sql");
+            "restoration/private_ltd_engwales_voluntary_dissolved_in_last_6_years.sql"),
+    MORTGAGE_SQL_PRIVATE_LIMITED_COMPANY_ID_WITH_MORTGAGES(
+            "mortgage/private_limited_company_id_with_mortgages.sql");
 
     private String sql;
 

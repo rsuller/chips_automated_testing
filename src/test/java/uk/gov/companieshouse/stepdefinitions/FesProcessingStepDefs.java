@@ -6,6 +6,7 @@ import static uk.gov.companieshouse.data.dbutil.sql.CompanySql.CS_SQL_LTD_COMPAN
 import static uk.gov.companieshouse.data.dbutil.sql.CompanySql.INS_PRIVATE_LTD_COMPANY_ENG_WALES_WITH_CVL_CASE_ACTION_CODE;
 import static uk.gov.companieshouse.data.dbutil.sql.CompanySql.INS_PRIVATE_LTD_COMPANY_ENG_WALES_WITH_MVL_CASE_ACTION_CODE;
 import static uk.gov.companieshouse.data.dbutil.sql.CompanySql.INS_PRIVATE_LTD_COMPANY_WITH_RECEIVER_MANAGER_ACTION_CODE;
+import static uk.gov.companieshouse.data.dbutil.sql.CompanySql.MORTGAGE_SQL_PRIVATE_LIMITED_COMPANY_ID_WITH_MORTGAGES;
 
 import io.cucumber.java.en.When;
 import java.util.ArrayList;
@@ -126,6 +127,9 @@ public class FesProcessingStepDefs {
                 break;
             case "NDISC":
                 company = dbUtil.cloneCompany(INS_PRIVATE_LTD_COMPANY_WITH_RECEIVER_MANAGER_ACTION_CODE);
+                break;
+            case "MR04":
+                company = dbUtil.cloneCompany(MORTGAGE_SQL_PRIVATE_LIMITED_COMPANY_ID_WITH_MORTGAGES);
                 break;
             case "600":
             case "LIQ10":
