@@ -10,6 +10,7 @@ import org.apache.commons.lang3.time.DateUtils;
 import uk.gov.companieshouse.data.datamodel.Company;
 import uk.gov.companieshouse.data.dbutil.DbUtil;
 import uk.gov.companieshouse.data.dbutil.sql.CompanySql;
+import uk.gov.companieshouse.testdata.CompanyDetails;
 import uk.gov.companieshouse.testdata.DocumentDetails;
 import uk.gov.companieshouse.utils.BarcodeGenerator;
 import uk.gov.companieshouse.utils.FesProcessor;
@@ -25,19 +26,22 @@ public class ElectronicFilingStepDefs {
     private final DocumentDetails documentDetails;
     private final BarcodeGenerator barcodeGenerator;
     private final XmlHelper xmlHelper;
+    private final CompanyDetails companyDetails;
 
 
     /**
      * Required constructor for class.
      */
     public ElectronicFilingStepDefs(TestContext context, DbUtil dbUtil, DocumentDetails documentDetails,
-                                    BarcodeGenerator barcodeGenerator, FesProcessor fesProcessor, XmlHelper xmlHelper) {
+                                    BarcodeGenerator barcodeGenerator, FesProcessor fesProcessor, XmlHelper xmlHelper,
+                                    CompanyDetails companyDetails) {
         this.context = context;
         this.dbUtil = dbUtil;
         this.documentDetails = documentDetails;
         this.barcodeGenerator = barcodeGenerator;
         this.fesProcessor = fesProcessor;
         this.xmlHelper = xmlHelper;
+        this.companyDetails = companyDetails;
     }
 
 
@@ -56,6 +60,7 @@ public class ElectronicFilingStepDefs {
         final Company company = dbUtil.cloneCompany(CompanySql.CS_SQL_LTD_COMPANY_WITH_CS_DUE);
         documentDetails.setBarcode(barcode);
         documentDetails.setReceivedDate(todayAsChipsDateString);
+        companyDetails.setCompanyObject(company);
         Date lastCs01Date = dbUtil.getLastConfirmationStatementDate(company.getCorporateBodyId());
         Date nextCsDue = DateUtils.addYears(lastCs01Date, 1);
         String xmlDateNextCsDue = xmlDateFormatter.format(nextCsDue);

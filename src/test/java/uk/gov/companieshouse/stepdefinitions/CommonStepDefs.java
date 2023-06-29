@@ -24,6 +24,7 @@ import uk.gov.companieshouse.pageobjects.CompanySearchPage;
 import uk.gov.companieshouse.pageobjects.GlobalNavBar;
 import uk.gov.companieshouse.pageobjects.OrgUnitPage;
 import uk.gov.companieshouse.pageobjects.ProcessStartOfDocumentPage;
+import uk.gov.companieshouse.testdata.CompanyDetails;
 import uk.gov.companieshouse.testdata.DocumentDetails;
 import uk.gov.companieshouse.testdata.User;
 import uk.gov.companieshouse.utils.TestContext;
@@ -41,6 +42,7 @@ public class CommonStepDefs {
     public final DbUtil dbUtil;
     public final DocumentDetails documentDetails;
     public final CompanySearchPage companySearchPage;
+    public final CompanyDetails companyDetails;
 
     /**
      * Required constructor for class.
@@ -48,7 +50,7 @@ public class CommonStepDefs {
     public CommonStepDefs(TestContext context, ChipsHomePage chipsHomePage, CompanyDetailsScreen companyDetailsScreen,
                           OrgUnitPage orgUnitPage, ProcessStartOfDocumentPage processStartOfDocumentPage,
                           GlobalNavBar globalNavBar, DbUtil dbUtil, DocumentDetails documentDetails,
-                          CompanySearchPage companySearchPage) {
+                          CompanySearchPage companySearchPage, CompanyDetails companyDetails) {
         this.context = context;
         this.chipsHomePage = chipsHomePage;
         this.companyDetailsScreen = companyDetailsScreen;
@@ -58,6 +60,7 @@ public class CommonStepDefs {
         this.dbUtil = dbUtil;
         this.documentDetails = documentDetails;
         this.companySearchPage = companySearchPage;
+        this.companyDetails = companyDetails;
     }
 
     /**
@@ -136,6 +139,7 @@ public class CommonStepDefs {
                 company = dbUtil.cloneCompany(BASE_SQL_lTD_WITH_ACTIVE_CORPORATE_DIRECTOR);
                 break;
             case "AD01":
+            case "CONNOT":
                 company = dbUtil.cloneCompany(BASE_SQL_PRIVATE_LIMITED_COMPANY_ENG_WALES_ID);
                 break;
             case "DS01":
@@ -146,6 +150,9 @@ public class CommonStepDefs {
                 break;
             case "CS01":
                 company = dbUtil.cloneCompany(CS_SQL_LTD_COMPANY_WITH_CS_DUE);
+                break;
+            case "RES15":
+                company = companyDetails.getCompanyObject();
                 break;
             default:
                 log.error("There is no current option for form {}", formType);
