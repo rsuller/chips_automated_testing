@@ -1,4 +1,4 @@
-@ad02
+@ad02 @company_addresses
 Feature: AD02 - Change SAIL address details
 
   As a user in the RM1 organisation team
