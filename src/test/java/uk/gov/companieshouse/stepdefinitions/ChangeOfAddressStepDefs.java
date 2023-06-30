@@ -2,32 +2,17 @@ package uk.gov.companieshouse.stepdefinitions;
 
 import io.cucumber.java.en.Given;
 import uk.gov.companieshouse.data.datamodel.Address;
-import uk.gov.companieshouse.data.dbutil.DbUtil;
 import uk.gov.companieshouse.enums.Form;
 import uk.gov.companieshouse.pageobjects.ChangeToRoPage;
-import uk.gov.companieshouse.pageobjects.GlobalNavBar;
-import uk.gov.companieshouse.pageobjects.ProcessStartOfDocumentPage;
-import uk.gov.companieshouse.utils.TestContext;
-
 
 public class ChangeOfAddressStepDefs {
-
-    public final TestContext context;
     public final ChangeToRoPage changeToRoPage;
-    public final GlobalNavBar globalNavBar;
-    public final DbUtil dbUtil;
-    public final ProcessStartOfDocumentPage processStartOfDocumentPage;
 
     /**
      * Required constructor for class.
      */
-    public ChangeOfAddressStepDefs(TestContext context, ChangeToRoPage changeToRoPage, GlobalNavBar globalNavBar, DbUtil dbUtil,
-                                   ProcessStartOfDocumentPage processStartOfDocumentPage) {
-        this.context = context;
+    public ChangeOfAddressStepDefs(ChangeToRoPage changeToRoPage) {
         this.changeToRoPage = changeToRoPage;
-        this.globalNavBar = globalNavBar;
-        this.dbUtil = dbUtil;
-        this.processStartOfDocumentPage = processStartOfDocumentPage;
     }
 
     /**
