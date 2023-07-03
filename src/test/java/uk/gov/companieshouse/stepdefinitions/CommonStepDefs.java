@@ -140,6 +140,7 @@ public class CommonStepDefs {
                 break;
             case "AD01":
             case "CONNOT":
+            case "AD02":
                 company = dbUtil.cloneCompany(BASE_SQL_PRIVATE_LIMITED_COMPANY_ENG_WALES_ID);
                 break;
             case "DS01":

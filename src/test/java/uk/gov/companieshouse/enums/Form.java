@@ -6,6 +6,7 @@ public enum Form {
     // date used within each specific test
     ACCOUNTS("AA", "Accounts Filing", false, ""),
     AD01("AD01", "AD01: Change to registered office address", false, "REGISTERED OFFICE CHANGED"),
+    AD02("AD02","AD02: Change to Sail address" ,false ,"SAIL ADDRESS CREATED"),
     AP01("AP01", "Officers", false, "DIRECTOR APPOINTED"),
     CH01("CH01", "Change Officers", false, "DIRECTOR'S CHANGE OF PARTICULA..."),
     CH02("CH02", "Change Officers", false, "CORPORATE DIRECTOR'S CHANGE OF..."),

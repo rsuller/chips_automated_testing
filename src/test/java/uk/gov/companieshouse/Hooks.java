@@ -29,10 +29,16 @@ public class Hooks {
         this.documentDetails = documentDetails;
     }
 
+
+    /**
+     * Set up the webdriver.
+     */
     @Before
     public void setUp() {
+        testContext.getWebDriver().manage().deleteAllCookies();
         testContext.getWebDriver().get(
                 testContext.getEnv().config.getString("chips_url"));
+        testContext.getWebDriver().manage().window().maximize();
     }
 
     @Before("not @fes_scanned")
