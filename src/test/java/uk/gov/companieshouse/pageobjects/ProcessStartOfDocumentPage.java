@@ -215,7 +215,7 @@ public class ProcessStartOfDocumentPage extends ElementInteraction {
      * returns the company name, or a blank string if not populated.
      */
     public String getPopulatedCompanyName() {
-        String expectedCompanyName = companyDetails.getCompanyName();
+        String expectedCompanyName = companyDetails.getCompanyObject().getName();
         //Wait for company name to be populated
         try {
             waitForSpecificTextInElement(elementCompanyNameOutput, expectedCompanyName);
@@ -447,8 +447,7 @@ public class ProcessStartOfDocumentPage extends ElementInteraction {
     }
 
     private ProcessStartOfDocumentPage setCompanyContext(Company company) {
-        companyDetails.setCompanyNumber(company.getNumber());
-        companyDetails.setCompanyName(company.getName());
+        companyDetails.setCompanyObject(company);
         return this;
     }
 

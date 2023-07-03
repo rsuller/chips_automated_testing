@@ -15,23 +15,20 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import uk.gov.companieshouse.testdata.CompanyDetails;
 
 public class XmlHelper extends ElementInteraction {
 
     private String xml;
     private final TestContext testContext;
-    private final CompanyDetails companyDetails;
 
     private static final Logger LOG = LoggerFactory.getLogger(XmlHelper.class);
 
     /**
      * Required constructor for class.
      */
-    public XmlHelper(TestContext testContext, CompanyDetails companyDetails) {
+    public XmlHelper(TestContext testContext) {
         super(testContext);
         this.testContext = testContext;
-        this.companyDetails = companyDetails;
     }
 
 
@@ -108,7 +105,6 @@ public class XmlHelper extends ElementInteraction {
      */
     private String insertCompanyNumber(final String xml, String companyNumber) {
         LOG.info("Replacing ${COMPANY_NUMBER} with: " + companyNumber);
-        companyDetails.setCompanyNumber(companyNumber);
         return xml.replaceAll("\\$\\{COMPANY_NUMBER}", companyNumber);
     }
 
@@ -126,7 +122,6 @@ public class XmlHelper extends ElementInteraction {
             newCompanyName = companyName;
         }
         LOG.info("Replacing ${COMPANY_NAME} with: " + newCompanyName);
-        companyDetails.setCompanyName(companyName);
         return xml.replaceAll("\\$\\{COMPANY_NAME}", newCompanyName);
     }
 

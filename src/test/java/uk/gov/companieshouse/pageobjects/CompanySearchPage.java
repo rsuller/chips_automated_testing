@@ -49,7 +49,7 @@ public class CompanySearchPage extends ElementInteraction {
      * Open the company search screen and find the number used in the test.
      */
     public CompanySearchPage findCompanyByNumberFromMenu() {
-        String companyNumber = companyDetails.getCompanyNumber();
+        String companyNumber = companyDetails.getCompanyObject().getNumber();
         openMenuCompanySearch();
         enterCompanyNumber(companyNumber);
         searchLink.click();
@@ -69,7 +69,9 @@ public class CompanySearchPage extends ElementInteraction {
     }
 
     private CompanySearchPage openMenuCompanySearch() {
-        globalNavBar.clickSubMenuItem("Company...", "Company Search");
+        globalNavBar
+                .waitUntilDisplayed()
+                .clickSubMenuItem("Company...", "Company Search");
         log.info("Opening Company Search from Menu...");
         waitCompanySearch();
         return this;

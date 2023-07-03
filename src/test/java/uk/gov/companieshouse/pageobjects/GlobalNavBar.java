@@ -1,7 +1,10 @@
 package uk.gov.companieshouse.pageobjects;
 
+import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
@@ -87,10 +90,14 @@ public class GlobalNavBar extends ElementInteraction {
 
     /**
      * Wait for main menu nav bar to be displayed.
-     *
+     * Extra timeout here due to waiting for certificates to be loaded before nav bar appears.
      */
     public GlobalNavBar waitUntilDisplayed() {
-        waitUntilElementDisplayed(mainMenuElement);
+        try {
+            getWebDriverWait(30).until(visibilityOf(mainMenuElement));
+        } catch (TimeoutException exception) {
+            throw new TimeoutException("Global Nav Bar was not displayed as expected");
+        }
         return this;
     }
 
