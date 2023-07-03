@@ -69,7 +69,9 @@ public class CompanySearchPage extends ElementInteraction {
     }
 
     private CompanySearchPage openMenuCompanySearch() {
-        globalNavBar.clickSubMenuItem("Company...", "Company Search");
+        globalNavBar
+                .waitUntilDisplayed()
+                .clickSubMenuItem("Company...", "Company Search");
         log.info("Opening Company Search from Menu...");
         waitCompanySearch();
         return this;

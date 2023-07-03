@@ -34,7 +34,7 @@ public class ElementInteraction extends WebDriverWaitConditions {
      * @param value the value to select.
      */
     public void typeText(WebElement element, String value) {
-        String js = "arguments[0].setAttribute('value','"+value+"')";
+        String js = "arguments[0].setAttribute('value','" + value + "')";
         ((JavascriptExecutor) testContext.getWebDriver()).executeScript(js, element);
         //((JavascriptExecutor) testContext.getWebDriver()).executeScript("return document.readyState").equals("complete");
         ((JavascriptExecutor) testContext.getWebDriver()).executeScript("arguments[0].click();", element);

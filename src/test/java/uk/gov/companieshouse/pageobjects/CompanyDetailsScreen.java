@@ -41,6 +41,9 @@ public class CompanyDetailsScreen extends ElementInteraction {
     @FindBy(how = How.ID, using = "form1:companySearchTabs:companySearchHeaderAndTabs:corporateBody:corporateBody:"
             + "corporateBody_actionCode__1:output")
     private WebElement elementActionCode;
+    @FindBy(how = How.ID, using = "form1:companySearchTabs:companySearchHeaderAndTabs:corporateBody:"
+            + "corporateBody:corporateBody_name:output")
+    private WebElement elementCompanyName;
 
     /**
      * Locates specific transaction from the filing history table.
@@ -90,6 +93,17 @@ public class CompanyDetailsScreen extends ElementInteraction {
      */
     public CompanyDetailsScreen verifyActionCode(String actionCodeDesc) {
         waitForSpecificTextInElement(elementActionCode, actionCodeDesc);
+        return this;
+    }
+
+    /**
+     * Verify the new company name after a name change.
+     *
+     * @param companyName the company name to find.
+     */
+    public CompanyDetailsScreen verifyNewCompanyName(String companyName) {
+        log.info("Checking for new company name: {}", companyName);
+        waitForSpecificTextInElement(elementCompanyName, companyName);
         return this;
     }
 

@@ -25,7 +25,7 @@ public enum Form {
     RT01("RT01", "Admin Restoration", false, "COMPANY RESTORED ON"),
     MR04("MR04", "Search and Select Charge", true, "STATEMENT OF SATISFACTION"),
     CONNOT("CONNOT", "Change of Name - Notice", true, "NOTICE OF CHANGE OF NAME NM01"),
-    RES15("RES15", "Change of Name - Noticerun", true, "XXX");
+    RES15("RES15", "Change of Name - Resolution", true, "CHANGE OF NAME");
 
 
     private final String type;

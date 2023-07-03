@@ -50,8 +50,7 @@ public class ElectronicFilingStepDefs {
      */
     @When("I process a no update e-filed CS01 form for a private limited company")
     public void processElectronicFiledCS01Form() throws IOException {
-        String filename = "confirmation_statement_no_updates.xml";
-
+        final String filename = "confirmation_statement_no_updates.xml";
         SimpleDateFormat xmlDateFormatter = new SimpleDateFormat("yyyy-MM-dd");
         Date today = new Date();
         String barcode = barcodeGenerator.generateNewStyleBarcode(today);

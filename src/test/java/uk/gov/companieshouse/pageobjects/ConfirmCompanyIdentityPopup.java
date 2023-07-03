@@ -21,8 +21,6 @@ public class ConfirmCompanyIdentityPopup extends ChipsCommonPage<ConfirmCompanyI
 
     /**
      * Required constructor for class.
-     *
-     * @param testContext
      */
     public ConfirmCompanyIdentityPopup(TestContext testContext) {
         super(testContext);

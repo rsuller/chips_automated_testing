@@ -1,22 +1,17 @@
 package uk.gov.companieshouse.pageobjects;
 
-import com.google.errorprone.annotations.Keep;
+import static uk.gov.companieshouse.utils.DateFormat.getDateAsString;
+
+import java.util.Date;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import uk.gov.companieshouse.utils.DateFormat;
 import uk.gov.companieshouse.utils.TestContext;
-import uk.gov.companieshouse.utils.WebDriverWaitConditions;
-
-import java.util.Date;
-
-import static uk.gov.companieshouse.utils.DateFormat.getDateAsString;
 
 
 public class ChangeCompanyNamePage extends ChipsCommonPage<ChangeCompanyNamePage> {
@@ -48,6 +43,10 @@ public class ChangeCompanyNamePage extends ChipsCommonPage<ChangeCompanyNamePage
     private WebElement elementUseRoAddress;
 
 
+    /**
+     * Enter the proposed company name and tab from the field as a workaround for the issue in the method below.
+     * @param proposedName the proposed name to enter.
+     */
     public ChangeCompanyNamePage enterProposedName(String proposedName) {
         elementProposedName.sendKeys(proposedName);
         elementProposedName.sendKeys(Keys.TAB);
@@ -72,12 +71,12 @@ public class ChangeCompanyNamePage extends ChipsCommonPage<ChangeCompanyNamePage
     }
 
     public ChangeCompanyNamePage enterMeetingDateAsToday() {
-        elementMeetingDate.sendKeys(getDateAsString(new Date()));
+        typeText(elementMeetingDate, getDateAsString(new Date()));
         return this;
     }
 
-    public ChangeCompanyNamePage selectMethodOfChange(String methodOfChange) {
-        selectByText(elementChangeMethod, methodOfChange);
+    public ChangeCompanyNamePage selectNm01MethodOfChange() {
+        selectByText(elementChangeMethod, "NM01 - Resolution");
         return this;
     }
 
@@ -86,7 +85,11 @@ public class ChangeCompanyNamePage extends ChipsCommonPage<ChangeCompanyNamePage
         return this;
     }
 
+    /**
+     * Wait until the use RO address link is displayed and click it.
+     */
     public ChangeCompanyNamePage useRoAddressAsPresenter() {
+        waitUntilElementDisplayed(elementUseRoAddress);
         elementUseRoAddress.click();
         return this;
     }
