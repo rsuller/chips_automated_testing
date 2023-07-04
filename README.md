@@ -41,3 +41,25 @@ To enable this in IntelliJ:
    - set Checkstyle version back to 8.10.1
    - Add path to configuration file `companieshouse_checks.xml` with a suitable description. E.g. CH checkstyle
    - Violations will be flagged when running tests through the command line or can be run in IntelliJ from the Checkstyle tab
+
+### Feature/Scenario Tagging
+All tags should be lowercase, with underscores used for any spaces between words. The following guidelines should 
+be adhered to at the feature/scenario level:
+
+Feature tags:
+1. (Required) The section of Chips corresponds to the feature. For
+   example `@insolvency/@company_addresses/@company_officers`
+2. (Optional) the sub-section above that the feature corresponds to, if
+   applicable. For example:
+   `@liquidation/@administration/@receivership`
+3. (Required) The form(s) that are covered by the scenarios within the
+   feature file. For example:
+   `@liq13 @liq14`
+
+Scenario tags:
+1. (required) The filing method of the scenario under test. For example:
+   `@electronic/@fes_scanned/@paper`
+2. (optional) The specific form tag is being tested in the scenario. Useful
+   if more than one form type is being tested within the feature. For example:
+   `@liq13/@liq14`
+
