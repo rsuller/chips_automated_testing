@@ -41,3 +41,16 @@ To enable this in IntelliJ:
    - set Checkstyle version back to 8.10.1
    - Add path to configuration file `companieshouse_checks.xml` with a suitable description. E.g. CH checkstyle
    - Violations will be flagged when running tests through the command line or can be run in IntelliJ from the Checkstyle tab
+
+### Refactoring
+When refactoring code, please ensure that you run the tests and checkstyle before committing your changes.
+
+Please refactor code to the highest standard possible, and ensure that you are following the 
+[Selenium best practices](https://www.selenium.dev/documentation/en/guidelines_and_recommendations/).
+
+Refactoring is essential for code maintenance and project sustainability. 
+It involves restructuring code without altering its external behaviour, 
+improving readability and maintainability. Regular refactoring reduces technical debt, 
+simplifies complexity, and enhances code quality. It facilitates collaboration and eases modification and debugging, 
+reducing the risk of introducing bugs. By keeping the codebase flexible and efficient, refactoring ensures 
+long-term project viability.
