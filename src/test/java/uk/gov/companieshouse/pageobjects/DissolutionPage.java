@@ -71,7 +71,7 @@ public class DissolutionPage extends ChipsCommonPage<DissolutionPage> implements
     @Override
     public AddressPageInterface waitUntilStreetPopulated() {
         waitElementTextNotEmpty(elementStreetName);
-        return null;
+        return this;
     }
 
 }

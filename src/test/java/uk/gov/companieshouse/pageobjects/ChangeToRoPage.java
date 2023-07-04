@@ -63,7 +63,7 @@ public class ChangeToRoPage extends ChipsCommonPage<ChangeToRoPage> implements A
     @Override
     public AddressPageInterface clickLookUp() {
         elementRoLookUp.click();
-        return null;
+        return this;
     }
 
 }
