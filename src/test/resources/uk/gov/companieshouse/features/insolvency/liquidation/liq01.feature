@@ -1,5 +1,4 @@
 @insolvency @liquidation @liq01
-
 Feature: Liquidation LIQ01 Form Processing
 
   As a Liquidation 2016 or Insolvency (FES) user

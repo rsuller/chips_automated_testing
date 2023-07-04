@@ -6,7 +6,7 @@ Feature: DS01 Form
 * It also cannot be filed if a previous Ds01 has been filed
 * There is a fee of £10 for paper forms, £8 for DS01's filed online
 
-  @regression @smoke_test
+  @paper
   Scenario: Process DS01 with acceptable data
     Given I am logged in as a user in the "Dissolution Section" organisational unit
     When I process the start document for form "DS01"

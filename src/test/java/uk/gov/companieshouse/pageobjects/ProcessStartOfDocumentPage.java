@@ -111,7 +111,7 @@ public class ProcessStartOfDocumentPage extends ElementInteraction {
     private WebElement elementPopupCloseLink;
     @FindBy(how = How.ID, using = "cff_page_message_div_messages")
     private WebElement messagePopup;
-    @FindBy(how = How.ID, using = "a[class='messageClose']")
+    @FindBy(how = How.CSS, using = "a[class='messageClose']")
     private WebElement messageClose;
 
     // elements for the attachments pop up

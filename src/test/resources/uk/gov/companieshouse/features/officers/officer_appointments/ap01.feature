@@ -1,4 +1,4 @@
-@company_appointments @ap01
+@officers @company_appointments @ap01
 Feature: AP01 - Appoint a director
 
   As a FES or Registrar's Functions user

@@ -4,10 +4,10 @@ Feature: CS01 - Confirmation Statement.
 * This form is the replacement for the old Annual Return.
 * It required to be filed annually to ensure company information is kept up to date.
 * Only the following information can be updated using CS01:
-  - Principal business activities or standard industrial classification (SIC)
-  - Statement of capital
-  - Trading status of shares and exemption from keeping a register of people with significant control (PSC)
-  - Shareholder information
+- Principal business activities or standard industrial classification (SIC)
+- Statement of capital
+- Trading status of shares and exemption from keeping a register of people with significant control (PSC)
+- Shareholder information
 * Any other changes must be done by filing the relevant separate forms.
 * A CS01 cannot be processed on a dissolved company
 * A CS01 cannot be processed on a closed company
@@ -20,11 +20,12 @@ Feature: CS01 - Confirmation Statement.
 * Total number of shares must accurate
 * Aggregate Nominal value of shares must accurate
 * According to filing stats, the most popular method for receiving CS01s are as follows (in order):
-  Web Filing, Electronic Filing, Single Service, Front-End Scan, Post
+Web Filing, Electronic Filing, Single Service, Front-End Scan, Post
 * Electronically filed CS01 forms with no updates are usually auto accepted (there is no need to open
 query handling). Therefore in order to verify interaction with the CS01 screens in Chips, a test with a
 different filing method is necesssary.
 
+  @electronic
   Scenario: Electronically Filed auto accepted CS01 form
     Given I am logged in as a user in the "EF Registration Team" organisational unit
     When I process a no update e-filed CS01 form for a private limited company
@@ -44,6 +45,7 @@ different filing method is necesssary.
       | Scottish DEB (FES)            | Scotland         |
       | NI Document Examination (FES) | Northern Ireland |
 
+  @paper
   Scenario: Accepted paper CS01 form
     Given I am logged in as a user in the "RM1" organisational unit
     When I process the start document for form "CS01"

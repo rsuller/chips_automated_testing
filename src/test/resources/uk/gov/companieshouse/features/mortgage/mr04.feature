@@ -1,15 +1,14 @@
-@insolvency @liquidation @lressp
+@mortgage @mr04
+Feature: MR04 mortgage form processing
 
-Feature: Liquidation LRESSP Form Processing
+  As an mortgage user
+  I want to update company records with a form MR04
+  So that the companies records can reflect when a charge has been satisfied in part or in full
 
-  As an insolvency case user
-  I want to update company records with a LRESSP
-  So that the companies records can reflect when a MVL (Members Voluntary Liquidation) case has been set up
+  MR04: An MR04 is Statement of satisfaction in full or in part of a charge
 
-  LRESSP  Special resolution to wind up
-
-  *  Must enter a valid Case start date
-  *  Can have an existing MVL case on file (add to case option)
+  Notes:
+  * Company must have a current mortgage charge against it
 
   Front End Scanning (FES) notes:
   * Forms in FES with a status of 5(ready for chips) generate a JSON message as below and post it to CHIPS over HTTP
@@ -27,10 +26,8 @@ Feature: Liquidation LRESSP Form Processing
   * Submissions appear in the relevant work queues, just as they would for FES'd forms in the real world.
 
   @fes_scanned
-  Scenario: Creating a Liquidation case with FES Scanned LRESSP form
-    Given I am logged in as a user in the "Insolvency (FES)" organisational unit
-    When I process a FES "LRESSP" for a "private limited company" registered in "Eng/Wales"
-    And I create an insolvency case
-    Then company history information is updated with the accepted LRESSP transaction
-    And the company action code should be "Member's Voluntary Liquidation"
-
+  Scenario: Successfully submit an MR04 form processing a statement of satisfaction
+    Given I am logged in as a user in the "Mortgage (FES)" organisational unit
+    And I process a FES "MR04" for a "private limited company" registered in "Eng/Wales"
+    When I complete mandatory details to process a statement of satisfaction of a charge
+    Then company history information is updated with the accepted MR04 transaction
