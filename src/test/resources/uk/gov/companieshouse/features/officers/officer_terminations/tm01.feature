@@ -1,11 +1,18 @@
-@company_addresses @ad01
-Feature: AD01 Change of Registered Office Address
+@officers @appointment_terminations @tm01
+Feature: TM01 - Termination of a director appointment
+
+  As a Chips Examiner
+  I want to update company records with a TM01
+  So that the company's records can reflect when a new director has been terminated
+
+  TM01: Is the 'termination of appointment of director' form
 
   Notes:
-  * The form must be submitted within 14 days of the change taking place.
-  * A valid UK address must be provided
-  * According to filing stats, the most popular method for receiving AD01's are as follows (in order):
-  Web Filing, Electronic Filing, Front-End Scan, Single Service, Post
+  * According to filing stats, the most popular method for receiving TM01's are as follows (in order):
+  Web Filing, Electronic Filing, Front-End Scan, Post
+  * Must select a current appointment from the list
+  * Must enter a valid termination date
+  * If a matching name cannot be found in list must enter supplied name and select the inconsistency marker
 
   Front End Scanning (FES) notes:
   * Forms in FES with a status of 5(ready for chips) generate a JSON message as below and post it to CHIPS over HTTP
@@ -24,16 +31,9 @@ Feature: AD01 Change of Registered Office Address
 
 
   @fes_scanned
-  Scenario: FES scanned accepted AD01 form
+  Scenario: FES scanned accepted TM01 forms
     Given I am logged in as a user in the "CFS (FES)" organisational unit
-    When I process a FES "AD01" for a "private limited company" registered in "Eng/Wales"
-    And I complete mandatory details to change a registered office address
-    Then company history information is updated with the accepted AD01 transaction
-
-  @regression @smoke_test
-  Scenario: Process AD01 with acceptable data
-    Given I am logged in as a user in the "RM1" organisational unit
-    When I process the start document for form "AD01"
-    And I complete mandatory details to change a registered office address
-    Then the form is submitted without rules fired
-    And company history information is updated with the accepted AD01 transaction
+    When I process a FES "TM01" for a "private limited company" registered in "Eng/Wales"
+    And I select a current active appointment
+    And I complete mandatory details to terminate a director
+    Then company history information is updated with the accepted TM01 transaction

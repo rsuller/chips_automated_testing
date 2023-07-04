@@ -22,6 +22,7 @@ Feature: Successfully process change of name by special resolution
   Background:
     Given I am logged in as a user in the "Change of Name Section" organisational unit
 
+    @paper
   Scenario: Change of company name by special resolution (NM01) can be successfully executed
     Given I process the start document for form "CONNOT"
     And I complete details giving notice of a change of company name

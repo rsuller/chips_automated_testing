@@ -1,4 +1,4 @@
-@ad02 @company_addresses
+@company_addresses @ad02
 Feature: AD02 - Change SAIL address details
 
   As a user in the RM1 organisation team
@@ -7,6 +7,7 @@ Feature: AD02 - Change SAIL address details
 
   * SAIL = Single Alternative Inspection Location
 
+  @paper
   Scenario: Change SAIL address details of a company
     Given I am logged in as a user in the "RM1" organisational unit
     And I process the start document for form "AD02"

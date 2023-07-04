@@ -25,6 +25,7 @@ Feature: CS01 - Confirmation Statement.
 query handling). Therefore in order to verify interaction with the CS01 screens in Chips, a test with a
 different filing method is necesssary.
 
+  @electronic
   Scenario: Electronically Filed auto accepted CS01 form
     Given I am logged in as a user in the "EF Registration Team" organisational unit
     When I process a no update e-filed CS01 form for a private limited company
@@ -44,6 +45,7 @@ different filing method is necesssary.
       | Scottish DEB (FES)            | Scotland         |
       | NI Document Examination (FES) | Northern Ireland |
 
+    @paper
   Scenario: Accepted paper CS01 form
     Given I am logged in as a user in the "RM1" organisational unit
     When I process the start document for form "CS01"
