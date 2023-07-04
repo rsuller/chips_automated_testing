@@ -1,4 +1,4 @@
-@ch01
+@officers @appointment_changes @ch01
 Feature: CH01 - Change the details of a director
 
   As a FES or Registrar's Functions user
@@ -39,6 +39,7 @@ Feature: CH01 - Change the details of a director
   * There is no need to change the batchName, batchNumber, envelopeId or paymentInd between tests.
   * Submissions appear in the relevant work queues, just as they would for FES'd forms in the real world.
 
+  @fes_scanned
   Scenario: FES Scanned CH01
     Given I am logged in as a user in the "CFS (FES)" organisational unit
     And I process a FES "CH01" for a "private limited company" registered in "Eng/Wales"

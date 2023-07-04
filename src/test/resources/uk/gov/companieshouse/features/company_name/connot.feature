@@ -7,9 +7,9 @@ Feature: Successfully process change of name by special resolution
 
   Notes:
   * New company name must not be ‘Same as’ current company names. I.e:
-     - Where the only difference to an existing name is punctuation, special characters, a word or character that’s
-       similar in appearance or meaning to another from the existing name/ a word or character used commonly in UK
-       company names
+  - Where the only difference to an existing name is punctuation, special characters, a word or character that’s
+  similar in appearance or meaning to another from the existing name/ a word or character used commonly in UK
+  company names
   * New company name must not be ‘too like’ a name registered before.
   * New company name cannot contain offensive or sensitive words. (Sensitive words need permission to be able to use)
   * A resolution of company officials must be passed and delivered to CH along with the change of name form in order
@@ -22,6 +22,7 @@ Feature: Successfully process change of name by special resolution
   Background:
     Given I am logged in as a user in the "Change of Name Section" organisational unit
 
+  @paper
   Scenario: Change of company name by special resolution (NM01) can be successfully executed
     Given I process the start document for form "CONNOT"
     And I complete details giving notice of a change of company name

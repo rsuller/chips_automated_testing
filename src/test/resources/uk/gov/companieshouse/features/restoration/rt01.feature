@@ -14,6 +14,7 @@ Feature: RT01 - Apply for administrative restoration to the register
   * The strike off date is the init_trans_status_date of the latest GAZ2/GAZ2A transaction.
   * All documents must be filed and penalties paid to bring the company up to date.
 
+  @paper
   Scenario: RT01 accepted
     Given I am logged in as a user in the "Restoration Section" organisational unit
     When I process the start document for form "RT01"

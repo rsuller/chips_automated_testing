@@ -1,8 +1,9 @@
-@ch02
+@officers @appointment_changes @ch02
 Feature: Process Change of Director Details - CH02 Form
 
   CH02 - Corporate Director Change Details
 
+  @paper
   Scenario: Change detail of Corporate Director
     Given I am logged in as a user in the "RM1" organisational unit
     And I process the start document for form "CH02"
