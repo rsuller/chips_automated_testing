@@ -1,4 +1,4 @@
-package uk.gov.companieshouse.pageobjects;
+package uk.gov.companieshouse.pageobjects.officers;
 
 import java.util.Date;
 import java.util.List;
@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.gov.companieshouse.data.datamodel.Director;
 import uk.gov.companieshouse.enums.Form;
+import uk.gov.companieshouse.pageobjects.ChipsCommonPage;
 import uk.gov.companieshouse.utils.DateFormat;
 import uk.gov.companieshouse.utils.TestContext;
 

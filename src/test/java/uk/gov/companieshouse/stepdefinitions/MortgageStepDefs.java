@@ -2,7 +2,7 @@ package uk.gov.companieshouse.stepdefinitions;
 
 import io.cucumber.java.en.When;
 import uk.gov.companieshouse.enums.Form;
-import uk.gov.companieshouse.pageobjects.MortgageStatementOfSatisfactionPage;
+import uk.gov.companieshouse.pageobjects.mortgage.MortgageStatementOfSatisfactionPage;
 
 
 public class MortgageStepDefs {

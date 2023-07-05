@@ -1,4 +1,4 @@
-package uk.gov.companieshouse.pageobjects;
+package uk.gov.companieshouse.pageobjects.accounts;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -7,6 +7,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.gov.companieshouse.enums.Form;
+import uk.gov.companieshouse.pageobjects.ChipsCommonPage;
 import uk.gov.companieshouse.testdata.DocumentDetails;
 import uk.gov.companieshouse.utils.TestContext;
 

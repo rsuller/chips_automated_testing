@@ -1,4 +1,4 @@
-package uk.gov.companieshouse.pageobjects;
+package uk.gov.companieshouse.pageobjects.companysearch;
 
 import java.util.HashMap;
 import java.util.List;

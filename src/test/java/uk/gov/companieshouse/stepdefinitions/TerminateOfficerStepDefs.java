@@ -1,7 +1,7 @@
 package uk.gov.companieshouse.stepdefinitions;
 
 import io.cucumber.java.en.When;
-import uk.gov.companieshouse.pageobjects.TerminateOfficerPage;
+import uk.gov.companieshouse.pageobjects.officers.TerminateOfficerPage;
 
 
 public class TerminateOfficerStepDefs {

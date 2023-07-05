@@ -1,9 +1,10 @@
-package uk.gov.companieshouse.pageobjects;
+package uk.gov.companieshouse.pageobjects.insolvency;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
+import uk.gov.companieshouse.pageobjects.ChipsCommonPage;
 import uk.gov.companieshouse.utils.TestContext;
 
 
@@ -14,7 +15,6 @@ public class ViewInsolvencyCaseDetailsPage extends ChipsCommonPage<ViewInsolvenc
      */
     public ViewInsolvencyCaseDetailsPage(TestContext testContext) {
         super(testContext);
-        this.testContext = testContext;
         PageFactory.initElements(testContext.getWebDriver(), this);
     }
 

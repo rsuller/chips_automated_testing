@@ -20,13 +20,13 @@ import uk.gov.companieshouse.data.dbutil.DbUtil;
 import uk.gov.companieshouse.enums.Form;
 import uk.gov.companieshouse.pageobjects.ChipsCommonPage;
 import uk.gov.companieshouse.pageobjects.ChipsHomePage;
-import uk.gov.companieshouse.pageobjects.CompanyDetailsScreen;
-import uk.gov.companieshouse.pageobjects.CompanySearchPage;
 import uk.gov.companieshouse.pageobjects.GlobalNavBar;
-import uk.gov.companieshouse.pageobjects.MyWorkPage;
 import uk.gov.companieshouse.pageobjects.OrgUnitPage;
 import uk.gov.companieshouse.pageobjects.ProcessStartOfDocumentPage;
-import uk.gov.companieshouse.pageobjects.TeamWorkPage;
+import uk.gov.companieshouse.pageobjects.companysearch.CompanyDetailsScreen;
+import uk.gov.companieshouse.pageobjects.companysearch.CompanySearchPage;
+import uk.gov.companieshouse.pageobjects.workitems.MyWorkPage;
+import uk.gov.companieshouse.pageobjects.workitems.TeamWorkPage;
 import uk.gov.companieshouse.testdata.DocumentDetails;
 
 

@@ -1,4 +1,4 @@
-package uk.gov.companieshouse.pageobjects;
+package uk.gov.companieshouse.pageobjects.workitems;
 
 import java.util.ArrayList;
 import java.util.List;
