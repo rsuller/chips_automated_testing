@@ -31,8 +31,6 @@ public class CompanySearchPage extends ElementInteraction {
         PageFactory.initElements(testContext.getWebDriver(), this);
     }
 
-    @FindBy(how = How.ID, using = "form1:task_companySearchParameters_companyNumber:field")
-    private WebElement companyNumberInput;
     @FindBy(how = How.LINK_TEXT, using = "search")
     private WebElement searchLink;
     @FindBy(how = How.CSS, using = "#header > .pageheader > .titleLabel")
@@ -43,8 +41,6 @@ public class CompanySearchPage extends ElementInteraction {
     private WebElement elementSearchResultCompanyNumber;
     @FindBy(how = How.ID, using = "form1:task_allMatchingCompanies:0:task_selectCompanyDetailsFromTable")
     private WebElement elementSearchViewCompany;
-    @FindBy(how = How.CSS, using = "a[title='Show next page']")
-    private WebElement nextPage;
 
     /**
      * Open the company search screen and find the number used in the test.

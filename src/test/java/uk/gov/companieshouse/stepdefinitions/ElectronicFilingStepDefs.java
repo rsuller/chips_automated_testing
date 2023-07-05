@@ -13,7 +13,6 @@ import uk.gov.companieshouse.data.dbutil.sql.CompanySql;
 import uk.gov.companieshouse.testdata.CompanyDetails;
 import uk.gov.companieshouse.testdata.DocumentDetails;
 import uk.gov.companieshouse.utils.BarcodeGenerator;
-import uk.gov.companieshouse.utils.FesProcessor;
 import uk.gov.companieshouse.utils.TestContext;
 import uk.gov.companieshouse.utils.XmlHelper;
 
@@ -21,7 +20,6 @@ import uk.gov.companieshouse.utils.XmlHelper;
 public class ElectronicFilingStepDefs {
 
     public final TestContext context;
-    public final FesProcessor fesProcessor;
     private final DbUtil dbUtil;
     private final DocumentDetails documentDetails;
     private final BarcodeGenerator barcodeGenerator;
@@ -33,13 +31,12 @@ public class ElectronicFilingStepDefs {
      * Required constructor for class.
      */
     public ElectronicFilingStepDefs(TestContext context, DbUtil dbUtil, DocumentDetails documentDetails,
-                                    BarcodeGenerator barcodeGenerator, FesProcessor fesProcessor, XmlHelper xmlHelper,
+                                    BarcodeGenerator barcodeGenerator, XmlHelper xmlHelper,
                                     CompanyDetails companyDetails) {
         this.context = context;
         this.dbUtil = dbUtil;
         this.documentDetails = documentDetails;
         this.barcodeGenerator = barcodeGenerator;
-        this.fesProcessor = fesProcessor;
         this.xmlHelper = xmlHelper;
         this.companyDetails = companyDetails;
     }

@@ -38,13 +38,8 @@ public class AppointDirectorPage extends ChipsCommonPage<AppointDirectorPage> {
     private WebElement elementTitle;
     @FindBy(how = How.ID, using = "form1:officerDetailsTabSubView:partialBirthDate:field")
     private WebElement elementPartialDob;
-    @FindBy(how = How.ID, using = "form1:officerDetailsTabSubView:doc_corporateBody_appointments_"
-            + "officers0_personName_title:other:field")
-    private WebElement elementTitleOther;
     @FindBy(how = How.ID, using = "form1:officerDetailsTabSubView:officer_personName_forename:field")
     private WebElement elementForename;
-    @FindBy(how = How.ID, using = "form1:officerDetailsTabSubView:officer_personName_middlenames:field")
-    private WebElement elementMiddlename;
     @FindBy(how = How.ID, using = "form1:officerDetailsTabSubView:officer_personName_surname:field")
     private WebElement elementSurname;
     @FindBy(how = How.ID, using = "form1:officerDetailsTabSubView:serviceAddress:address:houseNumber:field")
@@ -80,14 +75,6 @@ public class AppointDirectorPage extends ChipsCommonPage<AppointDirectorPage> {
     private WebElement elementInvalidUraCountry;
     @FindBy(how = How.ID, using = "form1:officerDetailsTabSubView:serviceAddress:address:street:field")
     private WebElement elementSaStreet;
-    @FindBy(how = How.ID, using = "form1:officerDetailsTabSubView:serviceAddress:address:town:field")
-    private WebElement elementSaTown;
-    @FindBy(how = How.ID, using = "form1:officerDetailsTabSubView:serviceAddress:address:country:field")
-    private WebElement elementSaCountry;
-    @FindBy(how = How.ID, using = "form1:officerDetailsTabSubView:officer_personName_surname:field")
-    private WebElement elementCompanyName;
-    @FindBy(how = How.ID, using = "form1:officerDetailsTabSubView:selectedNationalityList:field")
-    private WebElement elementSelectedNationality;
 
     /**
      * Enter form details with default information and multiple nationalities.

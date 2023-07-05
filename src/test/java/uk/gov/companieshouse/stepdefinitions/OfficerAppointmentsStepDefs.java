@@ -2,10 +2,6 @@ package uk.gov.companieshouse.stepdefinitions;
 
 import io.cucumber.java.en.When;
 import uk.gov.companieshouse.data.datamodel.Director;
-import uk.gov.companieshouse.data.dbutil.DbUtil;
-import uk.gov.companieshouse.pageobjects.GlobalNavBar;
-import uk.gov.companieshouse.pageobjects.ProcessStartOfDocumentPage;
-import uk.gov.companieshouse.pageobjects.companyaddresses.ChangeToRoPage;
 import uk.gov.companieshouse.pageobjects.officers.AppointDirectorPage;
 import uk.gov.companieshouse.pageobjects.workitems.MyWorkPage;
 import uk.gov.companieshouse.utils.TestContext;
@@ -14,10 +10,6 @@ import uk.gov.companieshouse.utils.TestContext;
 public class OfficerAppointmentsStepDefs {
 
     public final TestContext context;
-    public final ChangeToRoPage changeToRoPage;
-    public final GlobalNavBar globalNavBar;
-    public final DbUtil dbUtil;
-    public final ProcessStartOfDocumentPage processStartOfDocumentPage;
     public final AppointDirectorPage appointDirectorPage;
     public final MyWorkPage myWorkPage;
 
@@ -25,14 +17,8 @@ public class OfficerAppointmentsStepDefs {
     /**
      * Required constructor for class.
      */
-    public OfficerAppointmentsStepDefs(TestContext context, ChangeToRoPage changeToRoPage, GlobalNavBar globalNavBar, DbUtil dbUtil,
-                                       ProcessStartOfDocumentPage processStartOfDocumentPage, AppointDirectorPage appointDirectorPage,
-                                       MyWorkPage myWorkPage) {
+    public OfficerAppointmentsStepDefs(TestContext context, AppointDirectorPage appointDirectorPage, MyWorkPage myWorkPage) {
         this.context = context;
-        this.changeToRoPage = changeToRoPage;
-        this.globalNavBar = globalNavBar;
-        this.dbUtil = dbUtil;
-        this.processStartOfDocumentPage = processStartOfDocumentPage;
         this.appointDirectorPage = appointDirectorPage;
         this.myWorkPage = myWorkPage;
     }

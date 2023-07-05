@@ -19,12 +19,8 @@ import uk.gov.companieshouse.data.datamodel.Company;
 import uk.gov.companieshouse.data.dbutil.DbUtil;
 import uk.gov.companieshouse.enums.Form;
 import uk.gov.companieshouse.pageobjects.ChipsCommonPage;
-import uk.gov.companieshouse.pageobjects.ChipsHomePage;
 import uk.gov.companieshouse.pageobjects.GlobalNavBar;
-import uk.gov.companieshouse.pageobjects.OrgUnitPage;
 import uk.gov.companieshouse.pageobjects.ProcessStartOfDocumentPage;
-import uk.gov.companieshouse.pageobjects.companysearch.CompanyDetailsScreen;
-import uk.gov.companieshouse.pageobjects.companysearch.CompanySearchPage;
 import uk.gov.companieshouse.pageobjects.workitems.MyWorkPage;
 import uk.gov.companieshouse.pageobjects.workitems.TeamWorkPage;
 import uk.gov.companieshouse.testdata.DocumentDetails;
@@ -33,14 +29,10 @@ import uk.gov.companieshouse.testdata.DocumentDetails;
 public class FesProcessor extends ChipsCommonPage<FesProcessor> {
 
     public final TestContext testContextContext;
-    public final ChipsHomePage chipsHomePage;
-    public final CompanyDetailsScreen companyDetailsScreen;
-    public final OrgUnitPage orgUnitPage;
     public final ProcessStartOfDocumentPage processStartOfDocumentPage;
     public final GlobalNavBar globalNavBar;
     public final DbUtil dbUtil;
     public final DocumentDetails documentDetails;
-    public final CompanySearchPage companySearchPage;
     public final BarcodeGenerator barcodeGenerator;
     public final TeamWorkPage teamWorkPage;
     public final MyWorkPage myWorkPage;
@@ -51,21 +43,15 @@ public class FesProcessor extends ChipsCommonPage<FesProcessor> {
     /**
      * Required constructor for class.
      */
-    public FesProcessor(TestContext testContext, ChipsHomePage chipsHomePage, CompanyDetailsScreen companyDetailsScreen,
-                        OrgUnitPage orgUnitPage, ProcessStartOfDocumentPage processStartOfDocumentPage,
+    public FesProcessor(TestContext testContext, ProcessStartOfDocumentPage processStartOfDocumentPage,
                         GlobalNavBar globalNavBar, DbUtil dbUtil, DocumentDetails documentDetails,
-                        CompanySearchPage companySearchPage, BarcodeGenerator barcodeGenerator,
-                        TeamWorkPage teamWorkPage, MyWorkPage myWorkPage) {
+                        BarcodeGenerator barcodeGenerator, TeamWorkPage teamWorkPage, MyWorkPage myWorkPage) {
         super(testContext);
         this.testContextContext = testContext;
-        this.chipsHomePage = chipsHomePage;
-        this.companyDetailsScreen = companyDetailsScreen;
-        this.orgUnitPage = orgUnitPage;
         this.processStartOfDocumentPage = processStartOfDocumentPage;
         this.globalNavBar = globalNavBar;
         this.dbUtil = dbUtil;
         this.documentDetails = documentDetails;
-        this.companySearchPage = companySearchPage;
         this.barcodeGenerator = barcodeGenerator;
         this.teamWorkPage = teamWorkPage;
         this.myWorkPage = myWorkPage;

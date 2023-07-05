@@ -35,8 +35,6 @@ public class ConfirmationStatementPage extends ChipsCommonPage<ConfirmationState
     private WebElement elementNoUpdatesCheckbox;
     @FindBy(how = How.ID, using = "form1:capitalTab:indicator")
     private WebElement elementCapitalTab;
-    @FindBy(how = How.ID, using = "form1:task_tabBookUITabHeader:0")
-    private WebElement elementDatesTab;
     @FindBy(how = How.ID, using = "form1:confirmationstatement_capital:_id66")
     private WebElement elementSocSelector;
     @FindBy(how = How.ID, using = "form1:statementOfCapital_shareValuesElement:0:shareValue_totalAmountUnpaid:field")
@@ -51,6 +49,7 @@ public class ConfirmationStatementPage extends ChipsCommonPage<ConfirmationState
      */
     public ConfirmationStatementPage completeNoUpdateCs01() {
         waitUntilFormDisplayed(Form.CS01);
+        log.info("Completing a no update CS01");
         elementCsDateInput.sendKeys(DateFormat.getDateAsString(new Date()));
         elementPaymentReceivedYes.click();
         elementNoUpdatesCheckbox.click();
@@ -67,6 +66,7 @@ public class ConfirmationStatementPage extends ChipsCommonPage<ConfirmationState
         waitUntilFormDisplayed(Form.CS01);
         String nextCsDue = elementNextCsDue.getText();
         elementCsDateInput.sendKeys(nextCsDue);
+        log.info("Completing paper CS01 for date {}", nextCsDue);
         elementPaymentReceivedYes.click();
         completeCapitalTab();
         saveForm();
@@ -79,6 +79,7 @@ public class ConfirmationStatementPage extends ChipsCommonPage<ConfirmationState
     private ConfirmationStatementPage completeCapitalTab() {
         elementCapitalTab.click();
         waitUntilElementDisplayed(elementSocSelector);
+        log.info("Completing capital tab");
         typeText(elementTotalUnpaid, "0");
         selectByText(elementSocSelector, "YES");
         return this;

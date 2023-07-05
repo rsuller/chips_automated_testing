@@ -27,34 +27,21 @@ public class ChangeOfficerPage extends ChipsCommonPage<ChangeOfficerPage> {
 
     @FindBy(how = How.ID, using = "form1:ukSubView:ukDetails_nonUk_registrationNumber:field")
     private WebElement elementNonUkRegistrationNumber;
-
     @FindBy(how = How.ID, using = "form1:ukSubView:ukDetails_nonUk_registerLocation:field")
     private WebElement elementNonUkRegisterLocation;
-
     @FindBy(how = How.ID, using = "form1:ukSubView:ukDetails_nonUk_governingLaw:field")
     private WebElement elementNonUkLawGoverned;
-
     @FindBy(how = How.ID, using = "form1:ukSubView:ukDetails_nonUk_legalForm:field")
     private WebElement elementNonUkLegalForm;
-
     @FindBy(how = How.ID, using = "form1:ukSubView:ukDetails_uk_registrationNumber:field")
     private WebElement elementUkRegistrationNumber;
-
     @FindBy(how = How.ID, using = "form1:task_tabBookTabHeader:1")
     private WebElement corporateInfoTab;
-
-    @FindBy(how = How.CSS, using = "[id^='form1:viewCorporateBodyAppointments:corporateAppointments:"
-            + "corporateBodyAppointments_corporateAppointmentList']")
-    private WebElement appointmentTypeColumn;
-
     @FindBy(how = How.ID, using = "form1:changeOfficerDetailsTabSubView:appointmentChangeModifiedOfficer_officer_actionDate:field")
     private WebElement dateField;
     @FindBy(how = How.ID, using = "form1:changeOfficerDetailsTabSubView:forenames:appointmentChangeModifiedOfficer_"
             + "officer_personName_middlenames:field")
     private WebElement middleNameField;
-    @FindBy(how = How.ID, using = "form1:changeOfficerDetailsTabSubView:appointmentChangeModifiedOfficer_officer"
-            + "_businessOccupation:field")
-    private WebElement businessOccupationField;
 
     /**
      * Enter the details of the director that need changing.
@@ -71,6 +58,7 @@ public class ChangeOfficerPage extends ChipsCommonPage<ChangeOfficerPage> {
                 }
                 // Currently this name is not causing an issue but may need to review at another time
                 middleNameField.sendKeys("Sam");
+                log.info("Changing director middle name.");
                 break;
             default:
                 throw new RuntimeException("There is no option for " + typeOfChange + " please amend.");

@@ -63,8 +63,6 @@ public class ProcessStartOfDocumentPage extends ElementInteraction {
     private WebElement elementProceedLinkKey;
     @FindBy(how = How.ID, using = "form1:companyNumber:field")
     private WebElement elementCompanyNumberInputKey;
-    @FindBy(how = How.ID, using = "form1:suppliedNumber:field")
-    private WebElement elementSuppliedNumberInputKey;
     @FindBy(how = How.ID, using = "form1:_id7")
     private WebElement elementCompanyNumber1HiddenInputKey;
     @FindBy(how = How.ID, using = "form1:_id10")
@@ -87,28 +85,8 @@ public class ProcessStartOfDocumentPage extends ElementInteraction {
     private WebElement elementCheckCharactersPrefixInputKey;
     @FindBy(how = How.ID, using = "form1:checkEndCharacters:field")
     private WebElement elementCheckCharactersSuffixInputKey;
-    @FindBy(how = How.ID, using = "form1:suppliedName:field")
-    private WebElement elementSuppliedCompanyNameKey;
     @FindBy(how = How.ID, using = "form1:task_startOfDocument_companyName__1:output")
     private WebElement elementCompanyNameOutput;
-    @FindBy(how = How.ID, using = "div[id='form1:psodPopupDiv'] span[class='popTitle']")
-    private WebElement elementErrorTitle;
-    @FindBy(how = How.ID, using = "form1:task_processStartOfDocumentValidator_popUp_allBodyText")
-    private WebElement elementErrorBody;
-    @FindBy(how = How.ID, using = "form1:companyNumberHighRisk:field")
-    private WebElement elementRejectCompanyNumberKey;
-    @FindBy(how = How.ID, using = "form1:fieldGroup:rejectionCharacters:field")
-    private WebElement elementRejectCheckCharactersPrefixKey;
-    @FindBy(how = How.ID, using = "form1:fieldGroup:rejectionCheckEndCharacters:field")
-    private WebElement elementRejectCheckCharactersSuffixKey;
-    @FindBy(how = How.ID, using = "form1:fieldGroup:reject")
-    private WebElement elementRejectLink;
-    @FindBy(how = How.ID, using = "form1:task_reject")
-    private WebElement elementPopupRejectLink;
-    @FindBy(how = How.ID, using = "form1:task_startOfDocument_cutSuppliedCompanyName:field")
-    private WebElement elementNameEndingMissingCheckbox;
-    @FindBy(how = How.ID, using = "form1:psodPopupDiv:close")
-    private WebElement elementPopupCloseLink;
     @FindBy(how = How.ID, using = "cff_page_message_div_messages")
     private WebElement messagePopup;
     @FindBy(how = How.CSS, using = "a[class='messageClose']")
@@ -125,8 +103,6 @@ public class ProcessStartOfDocumentPage extends ElementInteraction {
     // elements for the confirmation pop up
     @FindBy(how = How.ID, using = "form1:task_yes")
     private WebElement elementPopupYesLink;
-    @FindBy(how = How.ID, using = "form1:task_no")
-    private WebElement elementPopupNoLink;
 
 
     /**

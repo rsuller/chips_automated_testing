@@ -18,12 +18,6 @@ import uk.gov.companieshouse.data.datamodel.Company;
 import uk.gov.companieshouse.data.dbutil.DbUtil;
 import uk.gov.companieshouse.data.dbutil.sql.CompanySql;
 import uk.gov.companieshouse.enums.Form;
-import uk.gov.companieshouse.pageobjects.ChipsHomePage;
-import uk.gov.companieshouse.pageobjects.GlobalNavBar;
-import uk.gov.companieshouse.pageobjects.OrgUnitPage;
-import uk.gov.companieshouse.pageobjects.ProcessStartOfDocumentPage;
-import uk.gov.companieshouse.pageobjects.companysearch.CompanyDetailsScreen;
-import uk.gov.companieshouse.pageobjects.companysearch.CompanySearchPage;
 import uk.gov.companieshouse.testdata.DocumentDetails;
 import uk.gov.companieshouse.utils.FesProcessor;
 import uk.gov.companieshouse.utils.TestContext;
@@ -32,14 +26,8 @@ import uk.gov.companieshouse.utils.TestContext;
 public class FesProcessingStepDefs {
 
     public final TestContext context;
-    public final ChipsHomePage chipsHomePage;
-    public final CompanyDetailsScreen companyDetailsScreen;
-    public final OrgUnitPage orgUnitPage;
-    public final ProcessStartOfDocumentPage processStartOfDocumentPage;
-    public final GlobalNavBar globalNavBar;
     public final DbUtil dbUtil;
     public final DocumentDetails documentDetails;
-    public final CompanySearchPage companySearchPage;
     public final FesProcessor fesProcessor;
 
     public static final Logger log = LoggerFactory.getLogger(FesProcessingStepDefs.class);
@@ -48,19 +36,10 @@ public class FesProcessingStepDefs {
     /**
      * Required constructor for class.
      */
-    public FesProcessingStepDefs(TestContext context, ChipsHomePage chipsHomePage, CompanyDetailsScreen companyDetailsScreen,
-                                 OrgUnitPage orgUnitPage, ProcessStartOfDocumentPage processStartOfDocumentPage,
-                                 GlobalNavBar globalNavBar, DbUtil dbUtil, DocumentDetails documentDetails,
-                                 CompanySearchPage companySearchPage, FesProcessor fesProcessor) {
+    public FesProcessingStepDefs(TestContext context, DbUtil dbUtil, DocumentDetails documentDetails, FesProcessor fesProcessor) {
         this.context = context;
-        this.chipsHomePage = chipsHomePage;
-        this.companyDetailsScreen = companyDetailsScreen;
-        this.orgUnitPage = orgUnitPage;
-        this.processStartOfDocumentPage = processStartOfDocumentPage;
-        this.globalNavBar = globalNavBar;
         this.dbUtil = dbUtil;
         this.documentDetails = documentDetails;
-        this.companySearchPage = companySearchPage;
         this.fesProcessor = fesProcessor;
     }
 

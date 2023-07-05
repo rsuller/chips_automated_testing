@@ -7,8 +7,8 @@ import io.cucumber.java.en.When;
 import java.util.Date;
 import uk.gov.companieshouse.enums.Form;
 import uk.gov.companieshouse.pageobjects.ConfirmCompanyIdentityPopup;
-import uk.gov.companieshouse.pageobjects.companysearch.CompanyDetailsScreen;
 import uk.gov.companieshouse.pageobjects.companyname.ChangeCompanyNamePage;
+import uk.gov.companieshouse.pageobjects.companysearch.CompanyDetailsScreen;
 import uk.gov.companieshouse.testdata.CompanyDetails;
 import uk.gov.companieshouse.testdata.DocumentDetails;
 

@@ -33,8 +33,6 @@ public class AnnualAccountsPage extends ChipsCommonPage<AnnualAccountsPage> {
     private WebElement elementAccountsMud;
     @FindBy(how = How.ID, using = "form1:doc_corporateBody_accounts_accountsType__1:field")
     private WebElement elementAccountsTypeSelect;
-    @FindBy(how = How.ID, using = "form1:editableTable:0")
-    private WebElement elementLastAccountsFiled;
 
     public String readNextAaMudDueFromScreen() {
         waitUntilFormDisplayed(Form.ACCOUNTS);
@@ -48,6 +46,7 @@ public class AnnualAccountsPage extends ChipsCommonPage<AnnualAccountsPage> {
     public AnnualAccountsPage enterAccountsMud(String nextAccountsMud) {
         documentDetails.setAccountsMud(nextAccountsMud);
         elementAccountsMud.sendKeys(nextAccountsMud);
+        log.info("Filing accounts for date {}", nextAccountsMud);
         return this;
     }
 
@@ -58,6 +57,7 @@ public class AnnualAccountsPage extends ChipsCommonPage<AnnualAccountsPage> {
     public AnnualAccountsPage selectAccountsType(String accountsType) {
         documentDetails.setAccountsType(accountsType);
         selectByText(elementAccountsTypeSelect, accountsType);
+        log.info("Accounts type {} selected", accountsType);
         return this;
     }
 

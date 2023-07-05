@@ -9,7 +9,6 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.gov.companieshouse.pageobjects.ChipsCommonPage;
-import uk.gov.companieshouse.testdata.DocumentDetails;
 import uk.gov.companieshouse.utils.DateFormat;
 import uk.gov.companieshouse.utils.TestContext;
 
@@ -17,23 +16,19 @@ import uk.gov.companieshouse.utils.TestContext;
 public class LiquidationScreen extends ChipsCommonPage<LiquidationScreen> {
 
     public final TestContext testContext;
-    public final DocumentDetails documentDetails;
     public static final Logger log = LoggerFactory.getLogger(LiquidationScreen.class);
 
     /**
      * Required constructor for class.
      */
-    public LiquidationScreen(TestContext testContext, DocumentDetails documentDetails) {
+    public LiquidationScreen(TestContext testContext) {
         super(testContext);
         this.testContext = testContext;
-        this.documentDetails = documentDetails;
         PageFactory.initElements(testContext.getWebDriver(), this);
     }
 
     @FindBy(how = How.ID, using = "form1:doc_liquidation_decSolSwornDate:field")
     private WebElement solvencyDeclarationDateEntry;
-    @FindBy(how = How.ID, using = "form1:allocateIP:task_allocateIP")
-    private WebElement elementAllocateIpLink;
     @FindBy(how = How.ID, using = "form1:doc_liquidation_caseDate:field")
     private WebElement caseStartDate;
     @FindBy(how = How.ID, using = "form1:doc_liquidation_broughtDownDate:field")
@@ -46,6 +41,7 @@ public class LiquidationScreen extends ChipsCommonPage<LiquidationScreen> {
      */
     public LiquidationScreen enterDateSolvencySworn() {
         waitUntilElementDisplayed(solvencyDeclarationDateEntry);
+        log.info("Entering date solvency is sworn...");
         solvencyDeclarationDateEntry.sendKeys(DateFormat.getDateAsString(new Date()));
         return this;
     }
@@ -55,6 +51,7 @@ public class LiquidationScreen extends ChipsCommonPage<LiquidationScreen> {
      */
     public LiquidationScreen enterCaseStartDate() {
         waitUntilElementDisplayed(caseStartDate);
+        log.info("Entering case start date...");
         caseStartDate.sendKeys(DateFormat.getDateAsString(new Date()));
         return this;
     }
@@ -65,11 +62,13 @@ public class LiquidationScreen extends ChipsCommonPage<LiquidationScreen> {
      */
     public LiquidationScreen enterYesterdayAsPeriodEndDate() {
         waitUntilElementDisplayed(statementPeriodEndDate);
+        log.info("Entering yesterday as period end date...");
         statementPeriodEndDate.sendKeys(DateFormat.getDateAsString(DateUtils.addDays(new Date(),-1)));
         return this;
     }
 
     public void saveProcessStatement() {
+        log.info("Saving statement...");
         saveProcessStatement.click();
     }
 
