@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 import uk.gov.companieshouse.utils.TestContext;
 
 
-public class ChangeToRoPage extends ChipsCommonPage<ChangeToRoPage> {
+public class ChangeToRoPage extends ChipsCommonPage<ChangeToRoPage> implements AddressPageInterface {
 
     public final TestContext testContext;
     public static final Logger log = LoggerFactory.getLogger(ChangeToRoPage.class);
@@ -40,24 +40,28 @@ public class ChangeToRoPage extends ChipsCommonPage<ChangeToRoPage> {
     /**
      * Wait until the address fields are populated after postcode lookup.
      */
+    @Override
     public ChangeToRoPage waitUntilStreetPopulated() {
         waitElementTextNotEmpty(elementRoStreet);
         log.info("Postcode lookup completed successfully for address");
         return this;
     }
 
+
+    @Override
     public ChangeToRoPage enterHouseNumber(String string) {
         elementRoHouseNumber.sendKeys(string);
         return this;
     }
 
+    @Override
     public ChangeToRoPage enterPostCode(String string) {
         elementRoPostCode.sendKeys(string);
         return this;
     }
 
-
-    public ChangeToRoPage clickLookup() {
+    @Override
+    public AddressPageInterface clickLookUp() {
         elementRoLookUp.click();
         return this;
     }

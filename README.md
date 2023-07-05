@@ -63,3 +63,16 @@ Scenario tags:
    if more than one form type is being tested within the feature. For example:
    `@liq13/@liq14`
 
+
+### Refactoring
+When refactoring code, please ensure that you run the tests and checkstyle before committing your changes.
+
+Please refactor code to the highest standard possible, and ensure that you are following the 
+[Selenium best practices](https://www.selenium.dev/documentation/en/guidelines_and_recommendations/).
+
+Refactoring is essential for code maintenance and project sustainability. 
+It involves restructuring code without altering its external behaviour, 
+improving readability and maintainability. Regular refactoring reduces technical debt, 
+simplifies complexity, and enhances code quality. It facilitates collaboration and eases modification and debugging, 
+reducing the risk of introducing bugs. By keeping the codebase flexible and efficient, refactoring ensures 
+long-term project viability.
