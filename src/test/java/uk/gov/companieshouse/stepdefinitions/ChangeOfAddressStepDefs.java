@@ -25,7 +25,7 @@ public class ChangeOfAddressStepDefs {
                 .waitUntilFormDisplayed(Form.AD01)
                 .enterHouseNumber(address.getHouseNumber())
                 .enterPostCode(address.getPostcode())
-                .clickLookup()
+                .clickLookUp()
                 .waitUntilStreetPopulated()
                 .saveForm();
     }

@@ -41,8 +41,8 @@ public class DissolutionStepDefs {
                 .waitUntilFormDisplayed(Form.DS01)
                 .enterSignatureDate()
                 .enterHouseNumber(address.getHouseNumber())
-                .enterPostcode(address.getPostcode())
-                .clickPostcodeLookup()
+                .enterPostCode(address.getPostcode())
+                .clickLookUp()
                 .saveForm();
 
     }
