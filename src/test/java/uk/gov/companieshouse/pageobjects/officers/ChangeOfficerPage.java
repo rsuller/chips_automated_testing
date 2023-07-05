@@ -1,4 +1,4 @@
-package uk.gov.companieshouse.pageobjects;
+package uk.gov.companieshouse.pageobjects.officers;
 
 import java.util.Date;
 import org.openqa.selenium.WebElement;
@@ -7,6 +7,7 @@ import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import uk.gov.companieshouse.pageobjects.ChipsCommonPage;
 import uk.gov.companieshouse.utils.DateFormat;
 import uk.gov.companieshouse.utils.TestContext;
 

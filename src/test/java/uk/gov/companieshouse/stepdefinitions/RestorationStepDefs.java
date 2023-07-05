@@ -1,7 +1,7 @@
 package uk.gov.companieshouse.stepdefinitions;
 
 import io.cucumber.java.en.When;
-import uk.gov.companieshouse.pageobjects.Rt01Page;
+import uk.gov.companieshouse.pageobjects.restoration.Rt01Page;
 
 
 public class RestorationStepDefs {

@@ -3,11 +3,11 @@ package uk.gov.companieshouse.stepdefinitions;
 import io.cucumber.java.en.When;
 import uk.gov.companieshouse.data.datamodel.Director;
 import uk.gov.companieshouse.data.dbutil.DbUtil;
-import uk.gov.companieshouse.pageobjects.AppointDirectorPage;
-import uk.gov.companieshouse.pageobjects.ChangeToRoPage;
 import uk.gov.companieshouse.pageobjects.GlobalNavBar;
-import uk.gov.companieshouse.pageobjects.MyWorkPage;
 import uk.gov.companieshouse.pageobjects.ProcessStartOfDocumentPage;
+import uk.gov.companieshouse.pageobjects.companyaddresses.ChangeToRoPage;
+import uk.gov.companieshouse.pageobjects.officers.AppointDirectorPage;
+import uk.gov.companieshouse.pageobjects.workitems.MyWorkPage;
 import uk.gov.companieshouse.utils.TestContext;
 
 

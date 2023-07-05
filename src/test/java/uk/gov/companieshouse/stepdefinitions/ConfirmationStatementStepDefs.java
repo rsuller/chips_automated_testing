@@ -1,7 +1,7 @@
 package uk.gov.companieshouse.stepdefinitions;
 
 import io.cucumber.java.en.When;
-import uk.gov.companieshouse.pageobjects.ConfirmationStatementPage;
+import uk.gov.companieshouse.pageobjects.confirmationstatement.ConfirmationStatementPage;
 import uk.gov.companieshouse.utils.TestContext;
 
 

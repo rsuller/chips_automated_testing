@@ -2,7 +2,7 @@ package uk.gov.companieshouse.stepdefinitions;
 
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.When;
-import uk.gov.companieshouse.pageobjects.ChangeOfficerPage;
+import uk.gov.companieshouse.pageobjects.officers.ChangeOfficerPage;
 
 public class ChangeCorporateOfficerStepDefs {
     private final ChangeOfficerPage changeOfficerPage;

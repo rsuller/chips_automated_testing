@@ -1,8 +1,9 @@
-package uk.gov.companieshouse.pageobjects;
+package uk.gov.companieshouse.pageobjects.insolvency;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
+import uk.gov.companieshouse.pageobjects.ChipsCommonPage;
 import uk.gov.companieshouse.utils.TestContext;
 
 public class ViewInsolvencyPractitionerAddressPage
