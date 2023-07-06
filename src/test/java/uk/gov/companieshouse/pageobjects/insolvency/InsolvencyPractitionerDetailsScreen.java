@@ -51,13 +51,18 @@ public class InsolvencyPractitionerDetailsScreen extends ChipsCommonPage<Insolve
 
             if (!columnValue.isEmpty()) {
                 doubleClick(webElement);
+                log.info("Clicking first complete address row");
                 break;
             }
         }
         return this;
     }
 
+    /**
+     * Select the first IP from the list.
+     */
     public InsolvencyPractitionerDetailsScreen clickFirstIp() {
+        log.info("Selecting first IP");
         elementFirstIp.click();
         return this;
     }

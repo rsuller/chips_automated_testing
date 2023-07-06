@@ -21,7 +21,6 @@ public class Company {
     private final String nameEndingField;
     private final String sicCodeField;
     private final String sicDescriptionField;
-    private final String supplyCompanyNameField;
     private final Address addressField;
     private final String incorporationDateField;
     private final String memberStateField;
@@ -38,7 +37,6 @@ public class Company {
         this.suffixField = companyBuilder.suffixField;
         this.nameEndingField = companyBuilder.nameEndingField;
         this.sicCodeField = companyBuilder.sicCodeField;
-        this.supplyCompanyNameField = companyBuilder.supplyCompanyNameField;
         this.sicDescriptionField = companyBuilder.sicDescriptionField;
         this.addressField = companyBuilder.addressField;
         this.incorporationDateField = companyBuilder.incorporationDateField;
@@ -87,10 +85,6 @@ public class Company {
 
     public String getSicCode() {
         return sicCodeField;
-    }
-
-    public String getSuppliedCompanyName() {
-        return supplyCompanyNameField;
     }
 
     public String getSicDescription() {
@@ -147,7 +141,6 @@ public class Company {
         private String nameEndingField;
         private String sicCodeField;
         private String sicDescriptionField;
-        private String supplyCompanyNameField;
         private Address addressField;
         private String incorporationDateField;
         private String memberStateField;
@@ -268,18 +261,6 @@ public class Company {
             return new Company(this);
         }
 
-    }
-
-
-    /**
-     * Check if corporate body is an LLP.
-     *
-     * @return boolean
-     */
-    public boolean isLlp() {
-        String companyNumber = getNumber();
-        String prefix = companyNumber.substring(0, 2);
-        return prefix.equals("OC") || prefix.equals("SO") || prefix.equals("NC");
     }
 
 }

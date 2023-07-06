@@ -15,16 +15,12 @@ import uk.gov.companieshouse.utils.TestContext;
 
 public class MyWorkPage extends ElementInteraction {
 
-    @FindBy(how = How.CSS, using = "[id='form1:task_workObjects'] > tbody > tr")
-    private WebElement elementMyWorkTableRows;
     @FindBy(how = How.CSS, using = "*[class='subtitle']")
     private WebElement elementMwPageTitle;
     @FindBy(how = How.ID, using = "form1:task_workObjects:task_sortByStartDate")
     private WebElement elementSortByDate;
     @FindBy(how = How.ID, using = "form1:task_workObjects:receiptCreationDateColumn:sortIcon")
     private WebElement elementSortDateIndicator;
-    @FindBy(how = How.ID, using = "form1:task_workObjects:0:documentContactTypeColumn")
-    private WebElement elementDocumentType;
 
     private static final Logger LOG = LoggerFactory.getLogger(MyWorkPage.class);
     public final TestContext testContext;

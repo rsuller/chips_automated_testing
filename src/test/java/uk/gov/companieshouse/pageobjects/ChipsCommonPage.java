@@ -30,10 +30,6 @@ public class ChipsCommonPage<T extends ChipsCommonPage<?>> extends ElementIntera
         PageFactory.initElements(testContext.getWebDriver(),this);
     }
 
-    @FindBy(how = How.ID, using = "form1:task_tabBookTabHeader:2")
-    private WebElement residentialAddressLink;
-    @FindBy(how = How.ID, using = "form1:residentialAddressTabSubView:officer_residentialAddress_uraBarcode:field")
-    private WebElement uraBarcodeInputField;
     @FindBy(how = How.ID, using = "form1:task_save")
     private WebElement globalSaveFormElement;
     @FindBy(how = How.ID, using = "form1:task_submit")
@@ -45,18 +41,7 @@ public class ChipsCommonPage<T extends ChipsCommonPage<?>> extends ElementIntera
     private WebElement viewAllAppointmentsLink;
     @FindBy(how = How.ID, using = "form1:task_appointments:0:surname")
     private WebElement surnameTableElement;
-    @FindBy(how = How.ID, using = "form1:officer_suppliedPersonName_surname:field")
-    private WebElement elementSurnameTextField;
 
-
-    /**
-     * Enter the URA barcode.
-     */
-    public T enterUraBarcode() {
-        residentialAddressLink.click();
-        uraBarcodeInputField.sendKeys(URA_BARCODE);
-        return (T) this;
-    }
 
     @FindBy(how = How.CSS, using = "div[class='subheader'] > span[class='subtitle']")
     private WebElement elementPageSubTitle;

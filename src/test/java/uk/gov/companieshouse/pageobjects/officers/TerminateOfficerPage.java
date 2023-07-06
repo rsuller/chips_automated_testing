@@ -34,6 +34,7 @@ public class TerminateOfficerPage extends ChipsCommonPage<TerminateOfficerPage> 
      */
     public TerminateOfficerPage enterDateOfTermination() {
         waitUntilElementDisplayed(elementEnterTerminationDate);
+        log.info("Entering yesterday as termination date...");
         elementEnterTerminationDate.sendKeys(DateFormat.getDateAsString(DateUtils.addDays(new Date(),-1)));
         return this;
 

@@ -25,16 +25,12 @@ public class TeamWorkPage extends ElementInteraction {
     private WebElement teamWorkTabLink;
     @FindBy(how = How.CSS, using = "table[id='teamQueueForm:workObjects'] tbody tr")
     private WebElement workObjectRows;
-    @FindBy(how = How.ID, using = "teamQueueForm:workObjects:sortByStartDate")
-    private WebElement receiptDateFilterLink;
     @FindBy(how = How.ID, using =  "teamQueueForm:task_allocate")
     private WebElement allocateWorkObjectLink;
     @FindBy(how = How.ID, using =  "form1:task_selectedUser:field")
     private WebElement allocateUserSelect;
     @FindBy(how = How.ID, using =  "form1:task_save")
     private WebElement allocateWorkSaveButton;
-    @FindBy(how = How.ID, using = "teamQueueForm:task_teamFilterValue:field")
-    private WebElement filterValueSelect;
     @FindBy(how = How.ID, using = "teamQueueForm:task_custom:field")
     private WebElement customValueEntryField;
     private static final Logger LOG = LoggerFactory.getLogger(TeamWorkPage.class);

@@ -1,6 +1,5 @@
 package uk.gov.companieshouse.pageobjects.insolvency;
 
-import java.util.List;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
@@ -34,8 +33,6 @@ public class InsolvencyPractitionerSearchScreen extends ChipsCommonPage<Insolven
     private WebElement elementIpNumberField;
     @FindBy(how = How.ID, using = "form1:task_search")
     private WebElement elementSearchLink;
-    @FindBy(how = How.CSS, using = "table[id='form1:task_dataModel'] tbody tr")
-    private List<WebElement> elementSearchResultRows;
     @FindBy(how = How.ID, using = "form1:allocateIP:task_allocateIP")
     private WebElement elementAllocateIp;
     @FindBy(how = How.ID, using = "form1:task_insolvencyPractitioner_ipNumber:output")
@@ -46,6 +43,7 @@ public class InsolvencyPractitionerSearchScreen extends ChipsCommonPage<Insolven
      */
     public InsolvencyPractitionerSearchScreen searchAndSelectIp() {
         waitUntilElementDisplayed(elementAllocateIp);
+        log.info("Searching and selecting IP...");
         clickAllocateIpLink();
         clickIpNumberRadioButton();
         typeIpNumber();
@@ -59,7 +57,7 @@ public class InsolvencyPractitionerSearchScreen extends ChipsCommonPage<Insolven
         return this;
     }
 
-    public InsolvencyPractitionerSearchScreen clickIpNumberRadioButton() {
+    private InsolvencyPractitionerSearchScreen clickIpNumberRadioButton() {
         elementIpNumberRadioButton.click();
         return this;
     }

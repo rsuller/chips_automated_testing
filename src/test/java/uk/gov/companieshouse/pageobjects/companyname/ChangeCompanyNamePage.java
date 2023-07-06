@@ -50,6 +50,7 @@ public class ChangeCompanyNamePage extends ChipsCommonPage<ChangeCompanyNamePage
      */
     public ChangeCompanyNamePage enterProposedName(String proposedName) {
         elementProposedName.sendKeys(proposedName);
+        log.info("Entering new company name {}", proposedName);
         elementProposedName.sendKeys(Keys.TAB);
         return this;
     }
@@ -62,27 +63,44 @@ public class ChangeCompanyNamePage extends ChipsCommonPage<ChangeCompanyNamePage
      */
     public ChangeCompanyNamePage reKeyProposedName(String proposedName) {
         Actions actions = new Actions(testContext.getWebDriver());
+        log.info("Re-entering new company name {}", proposedName);
         actions.moveToElement(elementRekeyProposedName).sendKeys(elementRekeyProposedName, proposedName).perform();
         return this;
     }
 
+    /**
+     * Select name ending form the dropdown.
+     * @param nameEnding the name ending to select.
+     */
     public ChangeCompanyNamePage selectNameEnding(String nameEnding) {
         selectByText(elementNameEnding, nameEnding);
+        log.info("Selected name ending {}", nameEnding);
         return this;
     }
 
+    /**
+     * Enter today's date as the meeting date.
+     */
     public ChangeCompanyNamePage enterMeetingDateAsToday() {
         typeText(elementMeetingDate, getDateAsString(new Date()));
         return this;
     }
 
+    /**
+     * Select NM01 as method of change from the dropdown.
+     */
     public ChangeCompanyNamePage selectNm01MethodOfChange() {
         selectByText(elementChangeMethod, "NM01 - Resolution");
+        log.info("Selected NM01 as method of change.");
         return this;
     }
 
+    /**
+     * Click the execute change of name checkbox.
+     */
     public ChangeCompanyNamePage executeChangeOfName() {
         elementExecuteNameChange.click();
+        log.info("Execute change of name clicked");
         return this;
     }
 

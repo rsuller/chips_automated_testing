@@ -47,6 +47,7 @@ public class MortgageStatementOfSatisfactionPage extends ChipsCommonPage<Mortgag
      */
     public MortgageStatementOfSatisfactionPage clickProcessStmntOfSatisfaction() {
         waitUntilElementDisplayed(elementProcessStmntOfSatisfaction);
+        log.info("Processing statement of satisfaction...");
         elementProcessStmntOfSatisfaction.click();
         return this;
     }

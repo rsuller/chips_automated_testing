@@ -39,14 +39,6 @@ public class DissolutionPage extends ChipsCommonPage<DissolutionPage> implements
     @FindBy(how = How.ID, using = "form1:address:address:postcodefg:postcodeLookup")
     private WebElement elementPostcodeLookup;
 
-    // TODO: Some of these elements are not used in the test, so they should be removed.
-    @FindBy(how = How.ID, using = "form1:address:address:country:other:field")
-    private WebElement elementInvalidDs01Country;
-    @FindBy(how = How.ID, using = "form1:doc_filingDetails_presenterDocumentReference:field")
-    private WebElement elementPresenterReference;
-    @FindBy(how = How.ID, using = "form1:task_pend")
-    private WebElement elementPendLink;
-
     public DissolutionPage enterSignatureDate() {
         typeText(elementSignatureDate, getDateAsString(new Date()));
         return this;
@@ -66,12 +58,14 @@ public class DissolutionPage extends ChipsCommonPage<DissolutionPage> implements
 
     @Override
     public AddressPageInterface clickLookUp() {
+        log.info("Looking up address");
         elementPostcodeLookup.click();
         return this;
     }
 
     @Override
     public AddressPageInterface waitUntilStreetPopulated() {
+        log.info("Address populated successfully");
         waitElementTextNotEmpty(elementStreetName);
         return this;
     }

@@ -25,14 +25,13 @@ public class GlobalNavBar extends ElementInteraction {
     private WebElement elementBanner;
 
     // xpath is used here as previous method of retaining all .item elements was costly
-    // and time consuming this speeds up menu selection significantly
+    // and time-consuming this speeds up menu selection significantly
     @FindBy(how = How.XPATH, using = "//td[contains(@class, 'label')][contains(text(), 'menu')]")
     private WebElement mainMenuElement;
 
     @FindBy(how = How.CSS, using = "div[class='bannerrow']>[class='bannerright']>"
             + "[title='Process Start of Document']")
     private WebElement statusLink;
-
 
 
     /**
@@ -67,6 +66,7 @@ public class GlobalNavBar extends ElementInteraction {
     public GlobalNavBar clickLogoutLabel() {
         try {
             clickNavBarElement("logout");
+            log.info("Logging out of Chips");
         } catch (NoSuchElementException ex) {
             throw new RuntimeException("Logout button was not available. Check donut report or "
                     + "test video for details");
@@ -95,6 +95,7 @@ public class GlobalNavBar extends ElementInteraction {
     public GlobalNavBar waitUntilDisplayed() {
         try {
             getWebDriverWait(30).until(visibilityOf(mainMenuElement));
+            log.info("Waiting for Nav bar to be displayed...");
         } catch (TimeoutException exception) {
             throw new TimeoutException("Global Nav Bar was not displayed as expected");
         }
@@ -157,7 +158,7 @@ public class GlobalNavBar extends ElementInteraction {
     private WebElement getMenuItem(String textValue) {
         String xpath = "//td[contains(@class, 'label')][contains(text(), '" + textValue + "')]";
         WebElement element = testContext.getWebDriver().findElement(By.xpath(xpath));
-
+        log.info("Finding menu item {}", textValue);
         if (element == null) {
             throw new RuntimeException(
                     "Unable to locate menu item with a text value of '" + textValue + "'");

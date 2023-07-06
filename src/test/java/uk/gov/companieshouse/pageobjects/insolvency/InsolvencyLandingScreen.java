@@ -64,8 +64,10 @@ public class InsolvencyLandingScreen extends ChipsCommonPage<InsolvencyLandingSc
     public InsolvencyLandingScreen createInsolvencyCase(String caseType) {
             if (caseType.equals("MVL")) {
                 createMvlCaseLink.click();
+                log.info("Creating an MVL case");
             } else {
                 createCvlCaseLink.click();
+                log.info("Creating a CVL case");
             }
         return this;
     }
@@ -78,6 +80,7 @@ public class InsolvencyLandingScreen extends ChipsCommonPage<InsolvencyLandingSc
     public InsolvencyLandingScreen enterIpApptDate(String date) {
         waitUntilElementDisplayed(elementIpApptDate);
         typeText(elementIpApptDate, date);
+        log.info("Entering IP appointment date {}", date);
         return this;
     }
 
@@ -85,41 +88,70 @@ public class InsolvencyLandingScreen extends ChipsCommonPage<InsolvencyLandingSc
      * click live case radio button.
      */
     public InsolvencyLandingScreen clickLiveCaseRadioButton() {
+        log.info("Selectign live case button...");
         elementLiveCaseRadioButton.click();
         return this;
     }
 
+    /**
+     * Click on the first insolvency case displayed.
+     */
     public InsolvencyLandingScreen selectFirstCase() {
+        log.info("Selecting first case");
         elementCases.get(0).click();
         return this;
     }
 
+    /**
+     * Click on the last insolvency case displayed.
+     */
     public InsolvencyLandingScreen selectLastCase() {
+        log.info("Selecting last case");
         elementCases.get(elementCases.size() - 1).click();
         return this;
     }
 
+    /**
+     * Click the process statement link.
+     */
     public InsolvencyLandingScreen clickProcessStatementLink() {
+        log.info("Processing statement...");
         elementProcessStatementLink.click();
         return this;
     }
 
+    /**
+     * Click the cease IP link.
+     */
     public InsolvencyLandingScreen clickCeaseIpLink() {
+        log.info("Ceasing IP...");
         elementCeaseIpLink.click();
         return this;
     }
 
+    /**
+     * Click the convert MVL to CVL link.
+     */
     public InsolvencyLandingScreen clickConvertMvlToCvlLink() {
+        log.info("Converting MVL to CVL...");
         elementConvertMvlToCvlLink.click();
         return this;
     }
 
+    /**
+     * Click the add to case link.
+     */
     public InsolvencyLandingScreen clickAddToCase() {
+        log.info("Adding to case..");
         addToCaseLink.click();
         return this;
     }
 
+    /**
+     * Click the cease case link.
+     */
     public InsolvencyLandingScreen clickCeaseLiveCase() {
+        log.info("Ceasing a live case...");
         elementCessationLiveCaseLink.click();
         return this;
     }
