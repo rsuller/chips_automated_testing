@@ -19,7 +19,7 @@ import uk.gov.companieshouse.data.dbutil.DbUtil;
 import uk.gov.companieshouse.data.dbutil.sql.CompanySql;
 import uk.gov.companieshouse.enums.Form;
 import uk.gov.companieshouse.testdata.DocumentDetails;
-import uk.gov.companieshouse.utils.FesProcessor;
+import uk.gov.companieshouse.utils.DocumentProcessor;
 import uk.gov.companieshouse.utils.TestContext;
 
 
@@ -28,7 +28,7 @@ public class FesProcessingStepDefs {
     public final TestContext context;
     public final DbUtil dbUtil;
     public final DocumentDetails documentDetails;
-    public final FesProcessor fesProcessor;
+    public final DocumentProcessor documentProcessor;
 
     public static final Logger log = LoggerFactory.getLogger(FesProcessingStepDefs.class);
 
@@ -36,11 +36,11 @@ public class FesProcessingStepDefs {
     /**
      * Required constructor for class.
      */
-    public FesProcessingStepDefs(TestContext context, DbUtil dbUtil, DocumentDetails documentDetails, FesProcessor fesProcessor) {
+    public FesProcessingStepDefs(TestContext context, DbUtil dbUtil, DocumentDetails documentDetails, DocumentProcessor documentProcessor) {
         this.context = context;
         this.dbUtil = dbUtil;
         this.documentDetails = documentDetails;
-        this.fesProcessor = fesProcessor;
+        this.documentProcessor = documentProcessor;
     }
 
 
@@ -132,7 +132,7 @@ public class FesProcessingStepDefs {
                 throw new RuntimeException("Unable to find SQL for specified form type");
         }
         documentDetails.setFormType(formType);
-        fesProcessor
+        documentProcessor
                 .processFesDocumentForLocation(registerLocationTypeId, formType, company.getNumber(), company.getName())
                 .allocateWorkAndPsodFes(formType, company);
     }

@@ -9,55 +9,80 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.gov.companieshouse.testdata.DocumentDetails;
+import uk.gov.companieshouse.utils.DocumentProcessor;
 import uk.gov.companieshouse.utils.TestContext;
 
 public class EfTestHarnessResponsePage extends ChipsCommonPage<EfTestHarnessResponsePage> {
 
     public final TestContext testContext;
     public final DocumentDetails documentDetails;
+    public final DocumentProcessor documentProcessor;
     public static final Logger log = LoggerFactory.getLogger(EfTestHarnessResponsePage.class);
 
     /**
      * Required constructor for class.
      */
-    public EfTestHarnessResponsePage(TestContext testContext, DocumentDetails documentDetails) {
+    public EfTestHarnessResponsePage(TestContext testContext, DocumentDetails documentDetails, DocumentProcessor documentProcessor) {
         super(testContext);
         this.testContext = testContext;
         this.documentDetails = documentDetails;
+        this.documentProcessor = documentProcessor;
         PageFactory.initElements(testContext.getWebDriver(), this);
     }
 
     @FindBy(how = How.ID, using = "form1:_id25")
     private WebElement submissionResponseField;
-    @FindBy(how = How.CSS, using = "div[class='data'] > span[id='form1:formTrackerView:_id31']")
-    private WebElement formTrackerDocStatus;
+    @FindBy(how = How.CSS, using = "div[class='data'] > span[id='form1:formTrackerView:_id32']")
+    private WebElement transDocStatusMessage;
+    @FindBy(how = How.ID, using = "form1:formTrackerView:formTrackerView_scriptVar_allocateToCurrentUserreturnfalsealloc"
+            + "ateworkitemtocurrentuser")
+    private WebElement allocateWorkItemToCurrentUserLink;
+    @FindBy(how = How.CSS, using = "span[id='form1:formTrackerView:_id48']")
+    private WebElement workItemAllocatedMessage;
+    @FindBy(how = How.CSS, using = "a[title='select work item']")
+    private WebElement selectWorkItemLink;
 
 
     public EfTestHarnessResponsePage verifyFormResponse() {
-        Verify.verify(submissionResponseField.getText().equals("Response code is: 0"), "Response code is not 0");
+        String submissionResponse = submissionResponseField.getText();
+        Verify.verify(submissionResponse.equals("Response code is: 0"), "Received response: " + submissionResponse
+                + ". Expected code should be 0. Check XML submission for errors");
         return this;
     }
 
     /**
-     * Verify that the XML form submission has been accepted.
+     * Verify that the XML form submission has gone through to the transaction_doc_xml table for processing.
      */
-    public void verifyFormAccepted() {
-        int maxTries = 20;
+    public void verifyFormInTransDocXmlTable() {
+        String docId = documentProcessor.checkDocumentSubmission();
+        int maxTries = 10;
         for (int i = 1; i <= maxTries; ++i) {
-            log.info("Checking form has been accepted. Attempt {} of {} ", i, maxTries);
+            log.info("Checking form is in transaction_doc_xml table. Attempt {} of {} ", i, maxTries);
             try {
-                waitForSpecificTextInElement(formTrackerDocStatus, "The form is in the transaction table with status: ACCEPTED.");
+                waitForSpecificTextInElement(transDocStatusMessage, "The form is in the transaction_doc_xml table "
+                        + "with document ID: " + docId);
                 break;
-            }
-            catch (TimeoutException exception) {
-                log.info("Accepted form not found, retrying");
+            } catch (TimeoutException exception) {
+                log.info("Form not in transaction_doc_xml table, retrying");
             }
             if (i == maxTries) {
-                log.error("Unable to find accepted form submission");
-                throw new RuntimeException("Unable to find accepted form submission");
+                log.error("Unable to find form in transaction_doc_xml table after {} attempts", maxTries);
+                throw new RuntimeException("Unable to find form in transaction_doc_xml table after " + maxTries + " attempts");
             }
         }
-        log.info("Accepted form found, continuing with test.");
+        log.info("Form in transaction_doc_xml table, continuing with test.");
+    }
+
+    public EfTestHarnessResponsePage allocateWorkItem() {
+        waitUntilElementClickable(allocateWorkItemToCurrentUserLink);
+        allocateWorkItemToCurrentUserLink.click();
+        return this;
+    }
+
+    public void selectWorkItem() {
+        waitForSpecificTextInElement(workItemAllocatedMessage, "The form has been allocated to the current user.");
+        waitUntilElementClickable(selectWorkItemLink);
+        selectWorkItemLink.click();
     }
 
 }

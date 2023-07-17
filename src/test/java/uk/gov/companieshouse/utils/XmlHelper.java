@@ -54,6 +54,7 @@ public class XmlHelper extends ElementInteraction {
         xml = insertConfirmationStatementDate(xml, csDate);
         xml = insertFirstName(xml, firstName);
         xml = insertSurname(xml, surname);
+        xml = insertNewChargeNumber(xml);
         return this;
     }
 
@@ -291,6 +292,29 @@ public class XmlHelper extends ElementInteraction {
         } else {
             return xml;
         }
+    }
+
+    /**
+     * Changes any instances of ${CHARGE_NUMBER}
+     * in the xml with randomly generated information.
+     *
+     * @param xml xml to be transformed
+     * @return xml provided with CHARGE_NUMBER replaced with randomChargeNumber
+     */
+    private String insertNewChargeNumber(final String xml) {
+        if (!xml.contains("${CHARGE_NUMBER}")) {
+            return xml;
+        }
+        int length = 12;
+        Random random = new Random();
+        char[] digits = new char[length];
+        digits[0] = (char) (random.nextInt(9) + '1');
+        for (int i = 1; i < length; i++) {
+            digits[i] = (char) (random.nextInt(10) + '0');
+        }
+        String randomChargeNumber = String.valueOf(Long.parseLong(new String(digits)));
+        LOG.info("Replacing ${CHARGE_NUMBER} with: " + randomChargeNumber);
+        return xml.replaceAll("\\$\\{CHARGE_NUMBER}", randomChargeNumber);
     }
 
 }

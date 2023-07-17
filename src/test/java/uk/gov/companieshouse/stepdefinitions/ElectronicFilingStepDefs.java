@@ -77,19 +77,32 @@ public class ElectronicFilingStepDefs {
     }
 
     /**
-     * Simulate a submission of an AP01 form that has been filed through electronic filing.
+     * Simulate a submission of a form that has been filed through electronic filing.
      */
-    @When("I process an e-filed AP01 form for a private limited company")
-    public void processElectronicFiledAP01Form() throws IOException {
+    @When("I process an e-filed {string} form for a private limited company")
+    public void processElectronicFiledForm(String formType) throws IOException {
         testContext.getWebDriver().get(
                 testContext.getEnv().config.getString("ef-test-harness"));
-        final String filename = "ap01_successful_submission.xml";
+        String filename;
+        Company company;
+        switch (formType) {
+            case "AP01":
+                filename = "ap01_successful_submission.xml";
+                company = dbUtil.cloneCompany(CompanySql.BASE_SQL_PRIVATE_LIMITED_COMPANY_ENG_WALES_ID);
+                break;
+            case "MR04":
+                filename = "mr04_successful_submission.xml";
+                company = dbUtil.cloneCompany(CompanySql.MORTGAGE_SQL_PRIVATE_LIMITED_COMPANY_ID_WITH_MORTGAGES);
+                break;
+            default:
+                throw new RuntimeException("Unable to find SQL for specified form type");
+
+        }
         SimpleDateFormat xmlDateFormatter = new SimpleDateFormat("yyyy-MM-dd");
         Date today = new Date();
         String barcode = barcodeGenerator.generateNewStyleBarcode(today);
         final String todayAsXmlDateString = xmlDateFormatter.format(today);
         final String todayAsChipsDateString = getDateAsString(today);
-        Company company = dbUtil.cloneCompany(CompanySql.BASE_SQL_PRIVATE_LIMITED_COMPANY_ENG_WALES_ID);
         documentDetails.setBarcode(barcode);
         documentDetails.setReceivedDate(todayAsChipsDateString);
         companyDetails.setCompanyObject(company);
@@ -103,9 +116,15 @@ public class ElectronicFilingStepDefs {
                 .saveForm();
         efTestHarnessResponsePage
                 .verifyFormResponse()
-                .verifyFormAccepted();
+                .verifyFormInTransDocXmlTable();
     }
 
+    @When("I allocate and select the work item for processing")
+    public void allocateAndSelectWorkItem() {
+        efTestHarnessResponsePage
+                .allocateWorkItem()
+                .selectWorkItem();
+    }
 
 
 }

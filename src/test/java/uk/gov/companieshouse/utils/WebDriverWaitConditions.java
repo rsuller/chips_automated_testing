@@ -1,6 +1,7 @@
 package uk.gov.companieshouse.utils;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.attributeToBeNotEmpty;
+import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
 
 import java.time.Duration;
@@ -54,6 +55,18 @@ public class WebDriverWaitConditions {
     public void waitUntilElementDisplayed(WebElement element) {
         try {
             getWebDriverWait(10).until(visibilityOf(element));
+        } catch (TimeoutException exception) {
+            throw new TimeoutException("The following element was not displayed as expected: " + element);
+        }
+    }
+
+    /**
+     * Common method to wait for an element to be clickable.
+     * @param element the element to be checked.
+     */
+    public void waitUntilElementClickable(WebElement element) {
+        try {
+            getWebDriverWait(20).until(elementToBeClickable(element));
         } catch (TimeoutException exception) {
             throw new TimeoutException("The following element was not displayed as expected: " + element);
         }
