@@ -9,10 +9,10 @@ public class DocumentDetails {
     String formType;
     String liquidationType;
     String allocatedIpNumber;
-    Boolean fesScanned;
+    String filingMethod;
 
-    public void setFesScanned(Boolean fesScanned) {
-        this.fesScanned = fesScanned;
+    public void setFilingMethod(String filingMethod) {
+        this.filingMethod = filingMethod;
     }
 
     public void setAllocatedIpNumber(String allocatedIpNumber) {
@@ -35,8 +35,8 @@ public class DocumentDetails {
         this.receivedDate = receivedDate;
     }
 
-    public Boolean getFesScanned() {
-        return fesScanned;
+    public String getFilingMethod() {
+        return filingMethod;
     }
 
     public String getReceivedDate() {

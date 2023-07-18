@@ -41,16 +41,22 @@ public class Hooks {
         testContext.getWebDriver().manage().window().maximize();
     }
 
-    @Before("not @fes_scanned")
-    public void setNotFesScanned() {
-        documentDetails.setFesScanned(false);
-        log.info("Not a FES document");
+    @Before("@electronic")
+    public void setElectronicFilingMethod() {
+        documentDetails.setFilingMethod("electronic filing");
+        log.info("Testing an electronic filing");
     }
 
     @Before("@fes_scanned")
-    public void setFesScanned() {
-        documentDetails.setFesScanned(true);
-        log.info("FES document");
+    public void setFesScannedFilingMethod() {
+        documentDetails.setFilingMethod("front-end scanned");
+        log.info("Testing a FES filing");
+    }
+
+    @Before("@paper")
+    public void setPaperFilingMethod() {
+        documentDetails.setFilingMethod("paper filing");
+        log.info("Testing a paper filing");
     }
 
     /**

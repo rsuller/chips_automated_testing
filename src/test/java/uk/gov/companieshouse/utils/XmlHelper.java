@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
 
 public class XmlHelper extends ElementInteraction {
 
-    private String xml;
+    public String xml;
     private final TestContext testContext;
 
     private static final Logger LOG = LoggerFactory.getLogger(XmlHelper.class);
@@ -37,7 +37,7 @@ public class XmlHelper extends ElementInteraction {
      */
     public XmlHelper modifyXml(String filename, String corporateBodyId, String companyNumber,
                                String companyName, String alphaKey, String receiptDate,
-                               String barcode, String csDate)
+                               String barcode, String csDate, String firstName, String surname)
             throws IOException {
         // Load original XML file
         loadXml(filename);
@@ -52,6 +52,8 @@ public class XmlHelper extends ElementInteraction {
         xml = insertNewDocumentNumber(xml);
         xml = insertNewSubmissionReference(xml);
         xml = insertConfirmationStatementDate(xml, csDate);
+        xml = insertFirstName(xml, firstName);
+        xml = insertSurname(xml, surname);
         return this;
     }
 
@@ -77,13 +79,16 @@ public class XmlHelper extends ElementInteraction {
         LOG.info("Successful request to CHIPS REST API. Proceeding with test");
     }
 
-    private void loadXml(String xmlFile) throws IOException {
+    /**
+     * Load the xml file from the resources folder.
+     * @param xmlFile the file to load.
+     */
+    public void loadXml(String xmlFile) throws IOException {
         // Load original XML file
         LOG.info("Loading XML file " + xmlFile);
         File file = new File("src/test/resources/uk/gov/companieshouse/xml_documents/" + xmlFile);
         BufferedInputStream bis = new BufferedInputStream(Files.newInputStream(file.toPath()));
         xml = new String(IOUtils.toByteArray(bis), Charsets.UTF_8);
-
     }
 
     /**
@@ -93,8 +98,12 @@ public class XmlHelper extends ElementInteraction {
      * @return xml that was provided with RECEIPT_DATE replaced with date
      */
     private String insertReceiptDate(final String xml, String date) {
-        LOG.info("Replacing ${RECEIPT_DATE} with: " + date);
-        return xml.replaceAll("\\$\\{RECEIPT_DATE}", date);
+        if (xml.contains("${RECEIPT_DATE}")) {
+            LOG.info("Replacing ${RECEIPT_DATE} with: " + date);
+            return xml.replaceAll("\\$\\{RECEIPT_DATE}", date);
+        } else {
+            return xml;
+        }
     }
 
     /**
@@ -104,8 +113,12 @@ public class XmlHelper extends ElementInteraction {
      * @return xml that was provided with COMPANY_NUMBER replaced with companyNumber
      */
     private String insertCompanyNumber(final String xml, String companyNumber) {
-        LOG.info("Replacing ${COMPANY_NUMBER} with: " + companyNumber);
-        return xml.replaceAll("\\$\\{COMPANY_NUMBER}", companyNumber);
+        if (xml.contains("${COMPANY_NUMBER}")) {
+            LOG.info("Replacing ${COMPANY_NUMBER} with: " + companyNumber);
+            return xml.replaceAll("\\$\\{COMPANY_NUMBER}", companyNumber);
+        } else {
+            return xml;
+        }
     }
 
     /**
@@ -121,8 +134,12 @@ public class XmlHelper extends ElementInteraction {
         } else {
             newCompanyName = companyName;
         }
-        LOG.info("Replacing ${COMPANY_NAME} with: " + newCompanyName);
-        return xml.replaceAll("\\$\\{COMPANY_NAME}", newCompanyName);
+        if (xml.contains("${COMPANY_NAME}")) {
+            LOG.info("Replacing ${COMPANY_NAME} with: " + newCompanyName);
+            return xml.replaceAll("\\$\\{COMPANY_NAME}", newCompanyName);
+        } else {
+            return xml;
+        }
     }
 
     /**
@@ -132,8 +149,12 @@ public class XmlHelper extends ElementInteraction {
      * @return xml that was provided with BARCODE replaced with barcode
      */
     private String insertBarcode(final String xml, String barcode) {
-        LOG.info("Replacing ${BARCODE} with: " + barcode);
-        return xml.replaceAll("\\$\\{BARCODE}", barcode);
+        if (xml.contains("${BARCODE}")) {
+            LOG.info("Replacing ${BARCODE} with: " + barcode);
+            return xml.replaceAll("\\$\\{BARCODE}", barcode);
+        } else {
+            return xml;
+        }
     }
 
     /**
@@ -144,8 +165,12 @@ public class XmlHelper extends ElementInteraction {
      * @return xml that was provided with CORPORATE_BODY_ID replaced with corpBodyId
      */
     private String insertCorporateBodyId(final String xml, String corpBodyId) {
-        LOG.info("Replacing ${CORPORATE_BODY_ID} with: " + corpBodyId);
-        return xml.replaceAll("\\$\\{CORPORATE_BODY_ID}", corpBodyId);
+        if (xml.contains("${CORPORATE_BODY_ID}")) {
+            LOG.info("Replacing ${CORPORATE_BODY_ID} with: " + corpBodyId);
+            return xml.replaceAll("\\$\\{CORPORATE_BODY_ID}", corpBodyId);
+        } else {
+            return xml;
+        }
     }
 
     /**
@@ -156,8 +181,12 @@ public class XmlHelper extends ElementInteraction {
      * @return xml that was provided with ALPHA_KEY replaced with alphakey
      */
     private String insertAlphaKey(final String xml, String alphaKey) {
-        LOG.info("Replacing ${ALPHA_KEY} with: " + alphaKey);
-        return xml.replaceAll("\\$\\{ALPHA_KEY}", alphaKey);
+        if (xml.contains("${ALPHA_KEY}")) {
+            LOG.info("Replacing ${ALPHA_KEY} with: " + alphaKey);
+            return xml.replaceAll("\\$\\{ALPHA_KEY}", alphaKey);
+        } else {
+            return xml;
+        }
     }
 
     /**
@@ -165,12 +194,16 @@ public class XmlHelper extends ElementInteraction {
      * information.
      *
      * @param xml xml to be transformed
-     * @return xml provided with APPLICATION_REFERENCE replaced with randomSubmissionReference
+     * @return xml provided with APPLICATION_REFERENCE replaced with randomApplicationReference
      */
     private String insertNewApplicationReference(final String xml) {
         String randomApplicationReference = UUID.randomUUID().toString();
-        LOG.info("Replacing ${APPLICATION_REFERENCE} with: " + randomApplicationReference);
-        return xml.replaceAll("\\$\\{APPLICATION_REFERENCE}", randomApplicationReference);
+        if (xml.contains("${APPLICATION_REFERENCE}")) {
+            LOG.info("Replacing ${APPLICATION_REFERENCE} with: " + randomApplicationReference);
+            return xml.replaceAll("\\$\\{APPLICATION_REFERENCE}", randomApplicationReference);
+        } else {
+            return xml;
+        }
     }
 
     /**
@@ -181,10 +214,14 @@ public class XmlHelper extends ElementInteraction {
      * @return xml provided with DOCUMENT_NUMBER replaced with randomDocNumber
      */
     private String insertNewDocumentNumber(final String xml) {
+        if (!xml.contains("${DOCUMENT_NUMBER}")) {
+            return xml;
+        }
         Random random = new Random();
         String randomDocNumber = String.valueOf(random.nextInt(9999));
         LOG.info("Replacing ${DOCUMENT_NUMBER} with: " + randomDocNumber);
         return xml.replaceAll("\\$\\{DOCUMENT_NUMBER}", randomDocNumber);
+
     }
 
     /**
@@ -195,6 +232,9 @@ public class XmlHelper extends ElementInteraction {
      * @return xml provided with SUBMISSION_REFERENCE replaced with randomSubmissionReference
      */
     private String insertNewSubmissionReference(final String xml) {
+        if (!xml.contains("${SUBMISSION_REFERENCE}")) {
+            return xml;
+        }
         Random random = new Random();
         String num = String.valueOf(random.nextLong());
         // In the case of a negative number being generated, remove the -
@@ -214,11 +254,43 @@ public class XmlHelper extends ElementInteraction {
      * selected from the DB.
      *
      * @param xml xml to be transformed
-     * @return xml that was provided with ALPHA_KEY replaced with alphakey
+     * @return xml that was provided with CONFIRMATION_STATEMENT_DATE replaced with confirmationStmtDate
      */
     private String insertConfirmationStatementDate(final String xml, String confirmationStmtDate) {
-        LOG.info("Replacing ${CONFIRMATION_STATEMENT_DATE} with: " + confirmationStmtDate);
-        return xml.replaceAll("\\$\\{CONFIRMATION_STATEMENT_DATE}", confirmationStmtDate);
+        if (xml.contains("${CONFIRMATION_STATEMENT_DATE}")) {
+            LOG.info("Replacing ${CONFIRMATION_STATEMENT_DATE} with: " + confirmationStmtDate);
+            return xml.replaceAll("\\$\\{CONFIRMATION_STATEMENT_DATE}", confirmationStmtDate);
+        } else {
+            return xml;
+        }
+    }
+
+    /**
+     * Changes any instances of ${FIRST_NAME} in the xml with the first name.
+     * @param xml xml to be transformed
+     * @return xml that was provided with FIRST_NAME replaced with firstName
+     */
+    private String insertFirstName(final String xml, String firstName) {
+        if (xml.contains("${FIRST_NAME}")) {
+            LOG.info("Replacing ${FIRST_NAME} with: " + firstName);
+            return xml.replaceAll("\\$\\{FIRST_NAME}", firstName);
+        } else {
+            return xml;
+        }
+    }
+
+    /**
+     * Changes any instances of ${SURNAME} in the xml with the surname.
+     * @param xml xml to be transformed
+     * @return xml that was provided with SURNAME replaced with surname
+     */
+    private String insertSurname(final String xml, String surname) {
+        if (xml.contains("${SURNAME}")) {
+            LOG.info("Replacing ${SURNAME} with: " + surname);
+            return xml.replaceAll("\\$\\{SURNAME}", surname);
+        } else {
+            return xml;
+        }
     }
 
 }
