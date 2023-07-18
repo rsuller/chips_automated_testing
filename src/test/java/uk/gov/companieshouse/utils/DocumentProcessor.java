@@ -160,6 +160,9 @@ public class DocumentProcessor extends ChipsCommonPage<DocumentProcessor> {
         }
     }
 
+    /**
+     * Check the document ID exists in the database for the form barcode.
+     */
     public String checkDocumentSubmission() {
         String barcode = documentDetails.getBarcode();
         String documentId = dbUtil.getDocumentId(barcode);

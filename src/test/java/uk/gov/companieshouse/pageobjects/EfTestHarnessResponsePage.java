@@ -43,6 +43,9 @@ public class EfTestHarnessResponsePage extends ChipsCommonPage<EfTestHarnessResp
     private WebElement selectWorkItemLink;
 
 
+    /**
+     * Verify that the xml submission has returned the expected response.
+     */
     public EfTestHarnessResponsePage verifyFormResponse() {
         String submissionResponse = submissionResponseField.getText();
         Verify.verify(submissionResponse.equals("Response code is: 0"), "Received response: " + submissionResponse
@@ -73,12 +76,18 @@ public class EfTestHarnessResponsePage extends ChipsCommonPage<EfTestHarnessResp
         log.info("Form in transaction_doc_xml table, continuing with test.");
     }
 
+    /**
+     * Allocate the work item to the current user by clicking the link.
+     */
     public EfTestHarnessResponsePage allocateWorkItem() {
         waitUntilElementClickable(allocateWorkItemToCurrentUserLink);
         allocateWorkItemToCurrentUserLink.click();
         return this;
     }
 
+    /**
+     * Select the work item to open up the form by clicking the link.
+     */
     public void selectWorkItem() {
         waitForSpecificTextInElement(workItemAllocatedMessage, "The form has been allocated to the current user.");
         waitUntilElementClickable(selectWorkItemLink);

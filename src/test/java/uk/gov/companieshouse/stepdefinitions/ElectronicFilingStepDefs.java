@@ -119,12 +119,14 @@ public class ElectronicFilingStepDefs {
                 .verifyFormInTransDocXmlTable();
     }
 
+    /**
+     * Allocate and select the work item for processing through the Electronic Filing Test Harness Response page.
+     */
     @When("I allocate and select the work item for processing")
     public void allocateAndSelectWorkItem() {
         efTestHarnessResponsePage
                 .allocateWorkItem()
                 .selectWorkItem();
     }
-
 
 }
