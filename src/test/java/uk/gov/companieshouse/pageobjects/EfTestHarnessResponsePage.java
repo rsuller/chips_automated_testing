@@ -8,24 +8,21 @@ import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import uk.gov.companieshouse.testdata.DocumentDetails;
 import uk.gov.companieshouse.utils.DocumentProcessor;
 import uk.gov.companieshouse.utils.TestContext;
 
 public class EfTestHarnessResponsePage extends ChipsCommonPage<EfTestHarnessResponsePage> {
 
     public final TestContext testContext;
-    public final DocumentDetails documentDetails;
     public final DocumentProcessor documentProcessor;
     public static final Logger log = LoggerFactory.getLogger(EfTestHarnessResponsePage.class);
 
     /**
      * Required constructor for class.
      */
-    public EfTestHarnessResponsePage(TestContext testContext, DocumentDetails documentDetails, DocumentProcessor documentProcessor) {
+    public EfTestHarnessResponsePage(TestContext testContext, DocumentProcessor documentProcessor) {
         super(testContext);
         this.testContext = testContext;
-        this.documentDetails = documentDetails;
         this.documentProcessor = documentProcessor;
         PageFactory.initElements(testContext.getWebDriver(), this);
     }
