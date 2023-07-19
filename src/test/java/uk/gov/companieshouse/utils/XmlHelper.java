@@ -59,28 +59,6 @@ public class XmlHelper extends ElementInteraction {
     }
 
     /**
-     * Submits the modified XML to the Chips REST interface.
-     *
-     * @param filename the name of the filename that has been modified and submitted.
-     */
-    public void submitXmlRequest(String filename) throws IOException {
-        LOG.info("Processing XML submission for updated file: {}", filename);
-        HttpPost request = new HttpPost(testContext.getEnv().config.getString("ef-submission-api"));
-        StringEntity params = new StringEntity(xml);
-        params.setContentType("application/xml");
-        request.setEntity(params);
-        HttpResponse response = HttpClientBuilder.create().build().execute(request);
-        String responseEntity = EntityUtils.toString(response.getEntity());
-        int responseCode = response.getStatusLine().getStatusCode();
-
-        if (202 != responseCode) {
-            throw new RuntimeException("CHIPS REST API failed to return correct response. Code: "
-                    + responseCode + ", " + responseEntity);
-        }
-        LOG.info("Successful request to CHIPS REST API. Proceeding with test");
-    }
-
-    /**
      * Load the xml file from the resources folder.
      * @param xmlFile the file to load.
      */
