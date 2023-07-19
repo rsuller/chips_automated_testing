@@ -103,7 +103,7 @@ public class DocumentProcessor extends ChipsCommonPage<DocumentProcessor> {
      * @param formType The form type to allocate.
      * @param company  The company to allocate.
      */
-    public DocumentProcessor allocateWorkAndPsodFes(String formType, Company company) {
+    public DocumentProcessor allocateWorkAndPsod(String formType, Company company) {
         globalNavBar.waitUntilDisplayed();
         teamWorkPage
                 .filterTeamWorkSummaryByCompanyNumberAndFormType(company.getNumber(), formType)
@@ -114,8 +114,11 @@ public class DocumentProcessor extends ChipsCommonPage<DocumentProcessor> {
         if (formType.equalsIgnoreCase("NEWINC")) {
             //No need to fill in PSOD company details for an incorporation
             processStartOfDocumentPage.clickProceedLink();
-        } else {
+        } else if (documentDetails.getFilingMethod().equals("front-end scanned")) {
             processStartOfDocumentPage.processFesForm(formType, company, Form.getFormByType(formType).isHighRiskForm());
+        } else if (documentDetails.getFilingMethod().equals("electronic filing")) {
+            // EF forms go straight to the processing screen
+            waitUntilFormDisplayed(Form.getFormByType(formType));
         }
         return this;
     }

@@ -134,7 +134,7 @@ public class FesProcessingStepDefs {
         documentDetails.setFormType(formType);
         documentProcessor
                 .processFesDocumentForLocation(registerLocationTypeId, formType, company.getNumber(), company.getName())
-                .allocateWorkAndPsodFes(formType, company);
+                .allocateWorkAndPsod(formType, company);
     }
 
 }

@@ -36,6 +36,5 @@ Feature: MR04 mortgage form processing
   Scenario: Electronic Filed MR04 form processing a statement of satisfaction
     Given I am logged in as a user in the "EF Mortgage" organisational unit
     And I process an e-filed "MR04" form for a private limited company
-    When I allocate and select the work item for processing
     And I complete mandatory details to process a statement of satisfaction of a charge
     Then company history information is updated with the accepted MR04 transaction

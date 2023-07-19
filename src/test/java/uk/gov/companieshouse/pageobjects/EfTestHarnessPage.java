@@ -28,6 +28,8 @@ public class EfTestHarnessPage extends ChipsCommonPage<EfTestHarnessPage> {
 
     @FindBy(how = How.ID, using = "form1:_id5")
     private WebElement xmlTextField;
+    @FindBy(how = How.ID, using = "form1:_id24")
+    private WebElement disableFormTracker;
 
     /**
      * Enter the form XML into the text field.
@@ -36,6 +38,11 @@ public class EfTestHarnessPage extends ChipsCommonPage<EfTestHarnessPage> {
     public EfTestHarnessPage enterFormXml(String xml) {
         xmlTextField.sendKeys(xml);
         waitElementTextNotEmpty(xmlTextField);
+        return this;
+    }
+
+    public  EfTestHarnessPage clickDisableFormTracker() {
+        disableFormTracker.click();
         return this;
     }
 
