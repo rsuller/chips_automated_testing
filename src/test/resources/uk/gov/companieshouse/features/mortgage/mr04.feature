@@ -26,8 +26,15 @@ Feature: MR04 mortgage form processing
   * Submissions appear in the relevant work queues, just as they would for FES'd forms in the real world.
 
   @fes_scanned
-  Scenario: Successfully submit an MR04 form processing a statement of satisfaction
+  Scenario: Successfully submit a FES scanned MR04 form processing a statement of satisfaction
     Given I am logged in as a user in the "Mortgage (FES)" organisational unit
     And I process a FES "MR04" for a "private limited company" registered in "Eng/Wales"
     When I complete mandatory details to process a statement of satisfaction of a charge
+    Then company history information is updated with the accepted MR04 transaction
+
+  @electronic
+  Scenario: Electronic Filed MR04 form processing a statement of satisfaction
+    Given I am logged in as a user in the "EF Mortgage" organisational unit
+    And I process an e-filed "MR04" form for a private limited company
+    And I complete mandatory details to process a statement of satisfaction of a charge
     Then company history information is updated with the accepted MR04 transaction

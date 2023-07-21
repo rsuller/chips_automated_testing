@@ -26,7 +26,7 @@ import uk.gov.companieshouse.pageobjects.workitems.TeamWorkPage;
 import uk.gov.companieshouse.testdata.DocumentDetails;
 
 
-public class FesProcessor extends ChipsCommonPage<FesProcessor> {
+public class DocumentProcessor extends ChipsCommonPage<DocumentProcessor> {
 
     public final TestContext testContextContext;
     public final ProcessStartOfDocumentPage processStartOfDocumentPage;
@@ -37,15 +37,15 @@ public class FesProcessor extends ChipsCommonPage<FesProcessor> {
     public final TeamWorkPage teamWorkPage;
     public final MyWorkPage myWorkPage;
 
-    public static final Logger log = LoggerFactory.getLogger(FesProcessor.class);
+    public static final Logger log = LoggerFactory.getLogger(DocumentProcessor.class);
 
 
     /**
      * Required constructor for class.
      */
-    public FesProcessor(TestContext testContext, ProcessStartOfDocumentPage processStartOfDocumentPage,
-                        GlobalNavBar globalNavBar, DbUtil dbUtil, DocumentDetails documentDetails,
-                        BarcodeGenerator barcodeGenerator, TeamWorkPage teamWorkPage, MyWorkPage myWorkPage) {
+    public DocumentProcessor(TestContext testContext, ProcessStartOfDocumentPage processStartOfDocumentPage,
+                             GlobalNavBar globalNavBar, DbUtil dbUtil, DocumentDetails documentDetails,
+                             BarcodeGenerator barcodeGenerator, TeamWorkPage teamWorkPage, MyWorkPage myWorkPage) {
         super(testContext);
         this.testContextContext = testContext;
         this.processStartOfDocumentPage = processStartOfDocumentPage;
@@ -60,8 +60,8 @@ public class FesProcessor extends ChipsCommonPage<FesProcessor> {
     /**
      * Json builder specific to fes forms scanned from the location specified in the feature file.
      */
-    public FesProcessor processFesDocumentForLocation(int locationTypeId, String formType, String companyNumber,
-                                                      String companyName) throws IOException {
+    public DocumentProcessor processFesDocumentForLocation(int locationTypeId, String formType, String companyNumber,
+                                                           String companyName) throws IOException {
         String batchName = null;
         String batchNumber = null;
         String envelopeId = null;
@@ -103,7 +103,7 @@ public class FesProcessor extends ChipsCommonPage<FesProcessor> {
      * @param formType The form type to allocate.
      * @param company  The company to allocate.
      */
-    public FesProcessor allocateWorkAndPsodFes(String formType, Company company) {
+    public DocumentProcessor allocateWorkAndPsod(String formType, Company company) {
         globalNavBar.waitUntilDisplayed();
         teamWorkPage
                 .filterTeamWorkSummaryByCompanyNumberAndFormType(company.getNumber(), formType)
@@ -114,8 +114,11 @@ public class FesProcessor extends ChipsCommonPage<FesProcessor> {
         if (formType.equalsIgnoreCase("NEWINC")) {
             //No need to fill in PSOD company details for an incorporation
             processStartOfDocumentPage.clickProceedLink();
-        } else {
+        } else if (documentDetails.getFilingMethod().equals("front-end scanned")) {
             processStartOfDocumentPage.processFesForm(formType, company, Form.getFormByType(formType).isHighRiskForm());
+        } else if (documentDetails.getFilingMethod().equals("electronic filing")) {
+            // EF forms go straight to the processing screen
+            waitUntilFormDisplayed(Form.getFormByType(formType));
         }
         return this;
     }
@@ -160,7 +163,10 @@ public class FesProcessor extends ChipsCommonPage<FesProcessor> {
         }
     }
 
-    private String checkDocumentSubmission() {
+    /**
+     * Check the document ID exists in the database for the form barcode.
+     */
+    public String checkDocumentSubmission() {
         String barcode = documentDetails.getBarcode();
         String documentId = dbUtil.getDocumentId(barcode);
         if (documentId == null) {

@@ -57,5 +57,5 @@ Feature: AP01 - Appoint a director
   @electronic
   Scenario: Electronic Filed auto accepted AP01 form
     Given I am logged in as a user in the "EF Registration Team" organisational unit
-    When I process an e-filed AP01 form for a private limited company
+    When I process an e-filed "AP01" form for a private limited company
     Then company history information is updated with the accepted AP01 transaction
