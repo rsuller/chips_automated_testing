@@ -1,8 +1,15 @@
 package uk.gov.companieshouse.pageobjects;
 
+import static org.apache.commons.lang3.StringUtils.strip;
+
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
@@ -11,7 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.gov.companieshouse.data.datamodel.Company;
 import uk.gov.companieshouse.data.dbutil.DbUtil;
-import uk.gov.companieshouse.enums.Forms.Form;
+import uk.gov.companieshouse.enums.Form;
 import uk.gov.companieshouse.testdata.CompanyDetails;
 import uk.gov.companieshouse.testdata.DocumentDetails;
 import uk.gov.companieshouse.testdata.SqlDetails;
@@ -19,14 +26,15 @@ import uk.gov.companieshouse.utils.BarcodeGenerator;
 import uk.gov.companieshouse.utils.ElementInteraction;
 import uk.gov.companieshouse.utils.TestContext;
 
+
 public class ProcessStartOfDocumentPage extends ElementInteraction {
 
-    public TestContext testContext;
-    private BarcodeGenerator barcodeGenerator;
-    private DbUtil dbUtil;
-    public SqlDetails sqlDetails;
-    public CompanyDetails companyDetails;
-    public DocumentDetails documentDetails;
+    public final TestContext testContext;
+    private final BarcodeGenerator barcodeGenerator;
+    private final DbUtil dbUtil;
+    public final SqlDetails sqlDetails;
+    public final CompanyDetails companyDetails;
+    public final DocumentDetails documentDetails;
 
     public static final Logger log = LoggerFactory.getLogger(ProcessStartOfDocumentPage.class);
 
@@ -55,8 +63,6 @@ public class ProcessStartOfDocumentPage extends ElementInteraction {
     private WebElement elementProceedLinkKey;
     @FindBy(how = How.ID, using = "form1:companyNumber:field")
     private WebElement elementCompanyNumberInputKey;
-    @FindBy(how = How.ID, using = "form1:suppliedNumber:field")
-    private WebElement elementSuppliedNumberInputKey;
     @FindBy(how = How.ID, using = "form1:_id7")
     private WebElement elementCompanyNumber1HiddenInputKey;
     @FindBy(how = How.ID, using = "form1:_id10")
@@ -79,46 +85,24 @@ public class ProcessStartOfDocumentPage extends ElementInteraction {
     private WebElement elementCheckCharactersPrefixInputKey;
     @FindBy(how = How.ID, using = "form1:checkEndCharacters:field")
     private WebElement elementCheckCharactersSuffixInputKey;
-    @FindBy(how = How.ID, using = "form1:suppliedName:field")
-    private WebElement elementSuppliedCompanyNameKey;
     @FindBy(how = How.ID, using = "form1:task_startOfDocument_companyName__1:output")
     private WebElement elementCompanyNameOutput;
-    @FindBy(how = How.ID, using = "div[id='form1:psodPopupDiv'] span[class='popTitle']")
-    private WebElement elementErrorTitle;
-    @FindBy(how = How.ID, using = "form1:task_processStartOfDocumentValidator_popUp_allBodyText")
-    private WebElement elementErrorBody;
-    @FindBy(how = How.ID, using = "form1:companyNumberHighRisk:field")
-    private WebElement elementRejectCompanyNumberKey;
-    @FindBy(how = How.ID, using = "form1:fieldGroup:rejectionCharacters:field")
-    private WebElement elementRejectCheckCharactersPrefixKey;
-    @FindBy(how = How.ID, using = "form1:fieldGroup:rejectionCheckEndCharacters:field")
-    private WebElement elementRejectCheckCharactersSuffixKey;
-    @FindBy(how = How.ID, using = "form1:fieldGroup:reject")
-    private WebElement elementRejectLink;
-    @FindBy(how = How.ID, using = "form1:task_reject")
-    private WebElement elementPopupRejectLink;
-    @FindBy(how = How.ID, using = "form1:task_startOfDocument_cutSuppliedCompanyName:field")
-    private WebElement elementNameEndingMissingCheckbox;
-    @FindBy(how = How.ID, using = "form1:psodPopupDiv:close")
-    private WebElement elementPopupCloseLink;
     @FindBy(how = How.ID, using = "cff_page_message_div_messages")
     private WebElement messagePopup;
-    @FindBy(how = How.ID, using = "a[class='messageClose']")
+    @FindBy(how = How.CSS, using = "a[class='messageClose']")
     private WebElement messageClose;
 
     // elements for the attachments pop up
     @FindBy(how = How.ID, using = "form1:task_startOfDocument_attachments:field:add")
     private WebElement elementAddAttachmentsLink;
-    @FindBy(how = How.ID, using = "table[id='form1:task_startOfDocument_attachments:field:dataTable'] tbody tr")
-    private WebElement elementListOfAttachments;
+    @FindBy(how = How.CSS, using = "table[id='form1:task_startOfDocument_attachments:field:dataTable'] tbody tr")
+    private List<WebElement> elementListOfAttachments;
     @FindBy(how = How.ID, using = "form1:task_startOfDocument_attachments:field:save")
     private WebElement elementSaveAttachmentsLink;
 
     // elements for the confirmation pop up
     @FindBy(how = How.ID, using = "form1:task_yes")
     private WebElement elementPopupYesLink;
-    @FindBy(how = How.ID, using = "form1:task_no")
-    private WebElement elementPopupNoLink;
 
 
     /**
@@ -148,7 +132,7 @@ public class ProcessStartOfDocumentPage extends ElementInteraction {
 
     /**
      * Generate a barcode for specific date.
-     * @param date the date to genrate a barcode for.
+     * @param date the date to generate a barcode for.
      */
     public String generateBarcode(Date date) {
         Date today = new Date();
@@ -207,8 +191,13 @@ public class ProcessStartOfDocumentPage extends ElementInteraction {
      * returns the company name, or a blank string if not populated.
      */
     public String getPopulatedCompanyName() {
+        String expectedCompanyName = companyDetails.getCompanyObject().getName();
         //Wait for company name to be populated
-        getWebDriverWait(1000);
+        try {
+            waitForSpecificTextInElement(elementCompanyNameOutput, expectedCompanyName);
+        } catch (TimeoutException exception) {
+            log.info("Expected value: {} not found", expectedCompanyName);
+        }
         return elementCompanyNameOutput.getText();
     }
 
@@ -222,15 +211,15 @@ public class ProcessStartOfDocumentPage extends ElementInteraction {
      * Log an error if the barcode field on PSOD cannot be found.
      */
     public ProcessStartOfDocumentPage waitUntilDisplayed() {
-            waitUntilElementDisplayed(elementBarcodeInputKey);
-            log.info("Process start of document page displayed successfully.");
+        waitUntilElementDisplayed(elementBarcodeInputKey);
+        log.info("Process start of document page displayed successfully.");
         return this;
     }
 
     /**
      * Complete the company identification fields on the process start of document screen.
      *
-     * @param company      the company object containing the company details to fill in
+     * @param company the company object containing the company details to fill in
      */
     public ProcessStartOfDocumentPage processForm(Company company, Form form) {
         Date today = new Date();
@@ -259,6 +248,11 @@ public class ProcessStartOfDocumentPage extends ElementInteraction {
         }
         fillInPsodFields(company, twoCompanyForm, form);
         documentDetails.setReceivedDate(getGeneratedReceiptDate());
+        if (form.equalsIgnoreCase("LIQ02") || form.equalsIgnoreCase("NDISC")) {
+            clickAddAttachmentsLink();
+            selectAttachments(form);
+            clickSaveAttachmentsLink();
+        }
         clickProceedLink();
         clickPsodPopUpYesLink();
         return this;
@@ -293,14 +287,14 @@ public class ProcessStartOfDocumentPage extends ElementInteraction {
                             .setCompanyNumber2NameField(company.getName())
                             .setCompanySelect(company.getName(), company.getNameEnding());
                 }
+                setCompanyContext(company);
             }
-            assert company != null;
-            setCompanyContext(company);
         } while (!retryCloneIfCompanyNameNotPopulated());
     }
 
     private void selectFormType(Form form) {
         String formName = form.getType();
+        waitUntilDisplayed();
         selectByText(elementFormTypeSelectKey, formName);
         // There is a known issue with Selenium 4 where after using the necessary select method above, the screen
         // does not refresh and hidden company name/number fields are not displayed. The following methods moving
@@ -309,10 +303,54 @@ public class ProcessStartOfDocumentPage extends ElementInteraction {
         elementFormTypeSelectKey.sendKeys(Keys.DOWN);
     }
 
-    public ProcessStartOfDocumentPage clickPsodPopUpYesLink() {
+    /**
+     * Click the yes option in the popup in PSOD screen.
+     */
+    private void clickPsodPopUpYesLink() {
+        waitUntilElementDisplayed(elementPopupYesLink);
         elementPopupYesLink.click();
+    }
+
+    private void clickAddAttachmentsLink() {
+        elementAddAttachmentsLink.click();
+    }
+
+    /**
+     * Select attachments from the popup.
+     */
+    private void selectAttachments(String form) {
+        List<String> attachments = new ArrayList<>();
+        if (form.equalsIgnoreCase("LIQ02")) {
+            attachments.add("LIQ02SOAL");
+            attachments.add("LIQ02SOC");
+        } else {
+            attachments.add("NDISCA");
+        }
+        int nrAttachmentsSelected = 0;
+
+        for (WebElement webElement : elementListOfAttachments) {
+            List<WebElement> columns = webElement.findElements(By.tagName("td"));
+            String attachmentName = strip(columns.get(1)
+                    .getAttribute("innerText")).trim();
+            if (attachments.contains(attachmentName)) {
+                columns.get(0).click();
+
+                // Attachments listed in the pop-up window are unique
+                // so it's sufficient to just count the number selected
+                // for the check below
+                nrAttachmentsSelected++;
+            }
+        }
+        if (nrAttachmentsSelected != attachments.size()) {
+            throw new RuntimeException("Not all of the expected attachments were found");
+        }
+    }
+
+    public ProcessStartOfDocumentPage clickSaveAttachmentsLink() {
+        elementSaveAttachmentsLink.click();
         return this;
     }
+
 
     /**
      * Check if the company name is populated correctly on PSOD.
@@ -385,8 +423,7 @@ public class ProcessStartOfDocumentPage extends ElementInteraction {
     }
 
     private ProcessStartOfDocumentPage setCompanyContext(Company company) {
-        companyDetails.setCompanyNumber(company.getNumber());
-        companyDetails.setCompanyName(company.getName());
+        companyDetails.setCompanyObject(company);
         return this;
     }
 

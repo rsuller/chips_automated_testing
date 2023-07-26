@@ -9,7 +9,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
-import java.text.ParseException;
 import java.util.Properties;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
@@ -21,8 +20,8 @@ import uk.gov.companieshouse.utils.TestContext;
 
 public class DbUtil {
 
-    public TestContext testContext;
-    public SqlDetails sqlDetails;
+    public final TestContext testContext;
+    public final SqlDetails sqlDetails;
     private static final Logger LOG = LoggerFactory.getLogger(DbUtil.class);
 
     /**
@@ -40,7 +39,8 @@ public class DbUtil {
 
     /**
      * Clone a company with parameter specified added to the QL file specified.
-     * @param sql the SQL file to use.
+     *
+     * @param sql       the SQL file to use.
      * @param parameter the parameter to be added the SQL statement.
      */
     public Company cloneCompanyWithParameterInternal(CompanySql sql, Object parameter) {
@@ -67,7 +67,7 @@ public class DbUtil {
                 String message = "No company data found for the given query in environment: " + env;
                 //writeToScenario(message);
                 LOG.error(message, ex);
-            } catch (ParseException | ClassNotFoundException ex) {
+            } catch (ClassNotFoundException ex) {
                 throw new RuntimeException(ex);
             }
             throw new RuntimeException("Could not select a company using sql: " + sql.getSql());
@@ -83,7 +83,7 @@ public class DbUtil {
                 Company company = dbGetCompanyFromDb(companyNumberCloned);
                 final String message = "Environment: " + env + " - Successfully cloned company " + companyNumberToClone
                         + " to new company " + companyNumberCloned + " [" + company.getName() + "]";
-
+                sqlDetails.setCompanySql(sql);
                 //writeToScenario(message);
                 LOG.info(message);
                 return company;
@@ -119,7 +119,8 @@ public class DbUtil {
                 docId = rs.getString("input_document_id");
                 LOG.info("Document ID found: {}.  Continuing with test", docId);
                 break;
-            } catch (SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException exception) {
+            } catch (SQLException | ClassNotFoundException | InstantiationException
+                     | IllegalAccessException exception) {
                 if (i == maxTries) {
                     LOG.error("Error attempting to find document ID: {}", exception.getMessage());
                     return null;
@@ -128,6 +129,28 @@ public class DbUtil {
             }
         }
         return docId;
+    }
+
+    /**
+     * Use the corporateBodyId stored in memory to get the latest confirmation statement date for that company.
+     * @param corporateBodyId the ID of the company used to search the DB for.
+     */
+    public Date getLastConfirmationStatementDate(String corporateBodyId) {
+        final String sql = "select * from confirmation_statement cs where corporate_body_id = ?"
+                + "order by CONFIRM_STMT_MADE_UP_DATE desc";
+
+        try (Connection conn = dbGetConnection();
+            PreparedStatement preparedStatement = createPreparedStatement(conn, sql, corporateBodyId);
+            ResultSet rs = preparedStatement.executeQuery()) {
+            rs.next();
+            Date confirmationStatementDate = rs.getDate("CONFIRM_STMT_MADE_UP_DATE");
+            conn.close();
+            LOG.info("Last confirmation statement filed on {}", confirmationStatementDate);
+            return confirmationStatementDate;
+        } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException exception) {
+            throw new RuntimeException("Unable to get confirmation statement date from DB", exception);
+        }
+
     }
 
     private PreparedStatement createPreparedStatement(Connection conn, String sql, Object... params) throws SQLException {
@@ -172,12 +195,11 @@ public class DbUtil {
             cstmt.registerOutParameter(1, Types.VARCHAR);
             cstmt.setString(2, companyNumber);
             cstmt.executeUpdate();
-            conn.close();
             return cstmt.getNString(1);
         }
     }
 
-    private Company dbGetCompanyFromDb(String companyNumber) throws SQLException, ParseException,
+    private Company dbGetCompanyFromDb(String companyNumber) throws SQLException,
             ClassNotFoundException, InstantiationException, IllegalAccessException {
         final String sql = "select * from corporate_body cb where cb.incorporation_number = ?";
         Connection conn = dbGetConnection();
@@ -214,5 +236,6 @@ public class DbUtil {
         prop.setProperty("password", pass);
         return DriverManager.getConnection(url, prop);
     }
+
 
 }

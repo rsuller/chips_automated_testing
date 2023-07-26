@@ -6,13 +6,17 @@ import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 import uk.gov.companieshouse.utils.TestContext;
 
-public class ChipsHomePage {
+public class ChipsHomePage extends ChipsCommonPage<ChipsHomePage> {
 
-    public TestContext testContext;
+    public final TestContext testContext;
 
+    /**
+     * Required constructor for class.
+     */
     public ChipsHomePage(TestContext testContext) {
+        super(testContext);
         this.testContext = testContext;
-        PageFactory.initElements(testContext.getWebDriver(),this);
+        PageFactory.initElements(testContext.getWebDriver(), this);
     }
 
     @FindBy(how = How.ID, using = "form1:username")
@@ -31,6 +35,16 @@ public class ChipsHomePage {
     public void logInUser(String username, String password) {
         usernameInput.sendKeys(username);
         passwordInput.sendKeys(password);
+
+        // There is a strange occurrence of the password being entered twice for weblogic
+        if ("weblogic".equals(testContext.getUser().getUsername())
+                && passwordInput.getAttribute("value").length() > 8) {
+
+            clearField(passwordInput);
+            passwordInput.sendKeys(password);
+
+        }
+
         loginLink.click();
     }
 }

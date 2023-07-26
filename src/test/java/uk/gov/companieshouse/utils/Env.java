@@ -36,7 +36,7 @@ public class Env {
      */
     public Env(String env) {
         this.log = LoggerFactory.getLogger(this.getClass().getName());
-        Optional param = Optional.ofNullable(env);
+        Optional<String> param = Optional.ofNullable(env);
         if (param.isPresent()) {
             this.env = env;
             this.config = this.initConfig();
@@ -47,22 +47,19 @@ public class Env {
 
     private Config initConfig() {
         Config systemConfig = ConfigFactory.systemProperties();
-        File envConfig = this.searchConfigFileInClasspath("env.conf");
+        File envConfig = this.searchConfigFileInClasspath();
         return systemConfig.withFallback(ConfigFactory.parseFile(envConfig)).resolve().getConfig(this.env);
     }
 
-    File searchConfigFileInClasspath(String filename) {
+    File searchConfigFileInClasspath() {
         List files;
         try {
             Stream<Path> paths = Files.walk(new File(ConfigConstants.PROJECT_DIR).toPath());
             Throwable var4 = null;
 
             try {
-                files = paths.filter((p) -> {
-                    return p.endsWith(filename);
-                }).filter((p) -> {
-                    return !p.toString().contains("target");
-                }).map(Path::toFile).collect(Collectors.toList());
+                files = paths.filter((p) -> p.endsWith("env.conf")).filter((p) ->
+                        !p.toString().contains("target")).map(Path::toFile).collect(Collectors.toList());
             } catch (Throwable var14) {
                 var4 = var14;
                 throw var14;
@@ -85,10 +82,10 @@ public class Env {
         }
 
         if (files.size() == 0) {
-            throw new Error("Config file with name [" + filename + "] could not be found in your classpath.");
+            throw new Error("Config file with name [" + "env.conf" + "] could not be found in your classpath.");
         } else {
             if (files.size() > 1) {
-                this.log.warn("More than one file found for this environment with name [" + filename + "]");
+                this.log.warn("More than one file found for this environment with name [" + "env.conf" + "]");
             }
 
             if (!((File)files.get(0)).isFile()) {

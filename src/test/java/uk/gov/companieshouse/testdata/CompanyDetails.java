@@ -1,25 +1,17 @@
 package uk.gov.companieshouse.testdata;
 
+import uk.gov.companieshouse.data.datamodel.Company;
+
 public class CompanyDetails {
 
-    String companyNumber;
-    String companyName;
+    Company company;
 
-    public void setCompanyNumber(String companyNumber) {
-        this.companyNumber = companyNumber;
+    public void setCompanyObject(Company company) {
+        this.company = company;
     }
 
-    public String getCompanyNumber() {
-        return companyNumber;
-    }
-
-
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
-    }
-
-    public String getCompanyName() {
-        return companyName;
+    public Company getCompanyObject() {
+        return company;
     }
 
 }

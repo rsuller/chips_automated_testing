@@ -2,32 +2,17 @@ package uk.gov.companieshouse.stepdefinitions;
 
 import io.cucumber.java.en.Given;
 import uk.gov.companieshouse.data.datamodel.Address;
-import uk.gov.companieshouse.data.dbutil.DbUtil;
-import uk.gov.companieshouse.enums.Forms.Form;
-import uk.gov.companieshouse.pageobjects.ChangeToRoPage;
-import uk.gov.companieshouse.pageobjects.GlobalNavBar;
-import uk.gov.companieshouse.pageobjects.ProcessStartOfDocumentPage;
-import uk.gov.companieshouse.utils.TestContext;
-
+import uk.gov.companieshouse.enums.Form;
+import uk.gov.companieshouse.pageobjects.companyaddresses.ChangeToRoPage;
 
 public class ChangeOfAddressStepDefs {
-
-    public TestContext context;
-    public ChangeToRoPage changeToRoPage;
-    public GlobalNavBar globalNavBar;
-    public DbUtil dbUtil;
-    public ProcessStartOfDocumentPage processStartOfDocumentPage;
+    public final ChangeToRoPage changeToRoPage;
 
     /**
      * Required constructor for class.
      */
-    public ChangeOfAddressStepDefs(TestContext context, ChangeToRoPage changeToRoPage, GlobalNavBar globalNavBar, DbUtil dbUtil,
-                                   ProcessStartOfDocumentPage processStartOfDocumentPage) {
-        this.context = context;
+    public ChangeOfAddressStepDefs(ChangeToRoPage changeToRoPage) {
         this.changeToRoPage = changeToRoPage;
-        this.globalNavBar = globalNavBar;
-        this.dbUtil = dbUtil;
-        this.processStartOfDocumentPage = processStartOfDocumentPage;
     }
 
     /**
@@ -40,7 +25,7 @@ public class ChangeOfAddressStepDefs {
                 .waitUntilFormDisplayed(Form.AD01)
                 .enterHouseNumber(address.getHouseNumber())
                 .enterPostCode(address.getPostcode())
-                .clickLookup()
+                .clickLookUp()
                 .waitUntilStreetPopulated()
                 .saveForm();
     }

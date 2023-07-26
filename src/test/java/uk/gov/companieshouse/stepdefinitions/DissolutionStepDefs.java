@@ -2,31 +2,21 @@ package uk.gov.companieshouse.stepdefinitions;
 
 import io.cucumber.java.en.When;
 import uk.gov.companieshouse.data.datamodel.Address;
-import uk.gov.companieshouse.data.dbutil.DbUtil;
-import uk.gov.companieshouse.enums.Forms.Form;
-import uk.gov.companieshouse.pageobjects.DissolutionPage;
-import uk.gov.companieshouse.pageobjects.GlobalNavBar;
-import uk.gov.companieshouse.pageobjects.ProcessStartOfDocumentPage;
+import uk.gov.companieshouse.enums.Form;
+import uk.gov.companieshouse.pageobjects.dissolution.DissolutionPage;
 import uk.gov.companieshouse.utils.TestContext;
 
 
 public class DissolutionStepDefs {
 
-    public TestContext context;
-    public GlobalNavBar globalNavBar;
-    public DbUtil dbUtil;
-    public ProcessStartOfDocumentPage processStartOfDocumentPage;
-    public DissolutionPage dissolutionPage;
+    public final TestContext context;
+    public final DissolutionPage dissolutionPage;
 
     /**
      * Required constructor for class.
      */
-    public DissolutionStepDefs(TestContext context, GlobalNavBar globalNavBar, DbUtil dbUtil,
-                               ProcessStartOfDocumentPage processStartOfDocumentPage, DissolutionPage dissolutionPage) {
+    public DissolutionStepDefs(TestContext context, DissolutionPage dissolutionPage) {
         this.context = context;
-        this.globalNavBar = globalNavBar;
-        this.dbUtil = dbUtil;
-        this.processStartOfDocumentPage = processStartOfDocumentPage;
         this.dissolutionPage = dissolutionPage;
     }
 
@@ -41,8 +31,8 @@ public class DissolutionStepDefs {
                 .waitUntilFormDisplayed(Form.DS01)
                 .enterSignatureDate()
                 .enterHouseNumber(address.getHouseNumber())
-                .enterPostcode(address.getPostcode())
-                .clickPostcodeLookup()
+                .enterPostCode(address.getPostcode())
+                .clickLookUp()
                 .saveForm();
 
     }

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="CS01" imageVersion="v1.0" id="7253" xsi:noNamespaceSchemaLocation="C:\eChips\Source\Java\J2eeAppServer\server\resource\chipsschema.xsd">
+    <taskId>confirmationStatementTask</taskId>
+    <commandId>confirmationStatementCommand</commandId>
+    <qualityReworkTaskId>corporateBodyCorrectionsTask</qualityReworkTaskId>
+    <efTransformerId>confirmationStatementEfTransformer</efTransformerId>
+    <validationMode>payment</validationMode>
+
+
+
+
+
+    <rules>
+        <rulesets>
+            <ruleset>
+                <validationMode>normal</validationMode>
+                <rulesetNames>
+                    <rulesetName>chipsDeb</rulesetName>
+                </rulesetNames>
+            </ruleset>
+            <ruleset>
+                <validationMode>prevalidation</validationMode>
+                <rulesetNames>
+                    <rulesetName>chipsGlobal</rulesetName>
+                </rulesetNames>
+            </ruleset>
+            <ruleset>
+                <validationMode>both</validationMode>
+                <rulesetNames>
+                    <rulesetName>chipsGlobal</rulesetName>
+                    <rulesetName>chipsDeb</rulesetName>
+                </rulesetNames>
+            </ruleset>
+            <ruleset>
+                <validationMode>bothButPaymentSupressed</validationMode>
+                <rulesetNames>
+                    <rulesetName>chipsGlobal</rulesetName>
+                    <rulesetName>chipsDeb</rulesetName>
+                </rulesetNames>
+            </ruleset>
+            <ruleset>
+                <validationMode>payment</validationMode>
+                <rulesetNames>
+                    <rulesetName>chipsPayment</rulesetName>
+                </rulesetNames>
+            </ruleset>
+        </rulesets>
+        <extraObjects>
+            <springService>addressService</springService>
+            <springService>cedarMessageService</springService>
+            <springService>confirmationStatementService</springService>
+            <springService>corporateBodyService</springService>
+            <springService>officerSearchService</springService>
+            <springService>officerService</springService>
+            <springService>referenceDataService</springService>
+        </extraObjects>
+        <extraParams>
+            <param>
+                <springService>annualReturnService</springService>
+                <paramName>annualReturnService</paramName>
+            </param>
+            <param>
+                <springService>referenceDataService</springService>
+                <paramName>referenceDataService</paramName>
+            </param>
+            <param>
+                <springService>eventLogService</springService>
+                <paramName>eventLogService</paramName>
+            </param>
+            <param>
+                <springService>corporateBodyService</springService>
+                <paramName>corporateBodyService</paramName>
+            </param>
+            <param>
+                <springService>capitalService</springService>
+                <paramName>capitalService</paramName>
+            </param>
+            <param>
+                <paramName>officerService</paramName>
+                <springService>officerService</springService>
+            </param>
+        </extraParams>
+    </rules>
+    <filingDetails>
+        <method>chs</method>
+        <barcode>${BARCODE}</barcode>
+        <receiptDate>${RECEIPT_DATE}</receiptDate>
+        <submissionReference>${SUBMISSION_REFERENCE}-1</submissionReference>
+        <presenterDocumentReference>1</presenterDocumentReference>
+        <channelRef>chs</channelRef>
+        <applicationRef>${APPLICATION_REFERENCE}</applicationRef>
+        <presenterTransactionRef>${SUBMISSION_REFERENCE}</presenterTransactionRef>
+        <formLanguage>en</formLanguage>
+        <contactDetails>
+        <contactName> </contactName>
+        </contactDetails>
+        <presenterDetails>
+            <presenterName>Internet Filer</presenterName>
+            <presenterAccountNumber>99999999041</presenterAccountNumber>
+            <presenterEmailIn>nobody@companies-house.gov.uk</presenterEmailIn>
+            <presenterEmailOut>nobody@companies-house.gov.uk</presenterEmailOut>
+        </presenterDetails>
+        <payment>
+            <paymentMethod>creditcard</paymentMethod>
+            <referenceNumber>Vy70fk8EMzgkz02</referenceNumber>
+        </payment>
+        <efDocStatus>0</efDocStatus>
+    </filingDetails>
+    <corporateBody>
+        <corporateBodyId>${CORPORATE_BODY_ID}</corporateBodyId>
+        <corporateBodyName>${COMPANY_NAME}</corporateBodyName>
+        <incorporationNumber>${COMPANY_NUMBER}</incorporationNumber>
+        <tradingOnMarket>false</tradingOnMarket>
+        <dtr5Ind>false</dtr5Ind>
+        <alphaKey>${ALPHA_KEY}</alphaKey>
+        <suppliedIncorporationNumber>${COMPANY_NUMBER}</suppliedIncorporationNumber>
+        <companyTraded>0</companyTraded>
+        <companyTradedUpdated>false</companyTradedUpdated>
+        <pscExemptionUpdated>false</pscExemptionUpdated>
+        <corporateBodyType>2</corporateBodyType>
+    </corporateBody>
+    <general>
+        <confirmationStatementDate>${CONFIRMATION_STATEMENT_DATE}</confirmationStatementDate>
+        <generalIdentity>-1</generalIdentity>
+        <documentNumber>${DOCUMENT_NUMBER}</documentNumber>
+        <documentFormTypeDisplayName>CS01</documentFormTypeDisplayName>
+        <sameDay>false</sameDay>
+        <sightRequiredAction>NONE</sightRequiredAction>
+    </general>
+    <queries />
+    <visualInspections />
+</form>

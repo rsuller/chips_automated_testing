@@ -12,7 +12,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class WebDriverWaitConditions {
 
-    public TestContext testContext;
+    public final TestContext testContext;
 
     public WebDriverWaitConditions(TestContext testContext) {
         this.testContext = testContext;
@@ -48,7 +48,7 @@ public class WebDriverWaitConditions {
     }
 
     /**
-     * Common method to wait for an elementto be displayed.
+     * Common method to wait for an element to be displayed.
      * @param element the element to be checked.
      */
     public void waitUntilElementDisplayed(WebElement element) {
