@@ -54,29 +54,8 @@ public class XmlHelper extends ElementInteraction {
         xml = insertConfirmationStatementDate(xml, csDate);
         xml = insertFirstName(xml, firstName);
         xml = insertSurname(xml, surname);
+        xml = insertNewChargeNumber(xml);
         return this;
-    }
-
-    /**
-     * Submits the modified XML to the Chips REST interface.
-     *
-     * @param filename the name of the filename that has been modified and submitted.
-     */
-    public void submitXmlRequest(String filename) throws IOException {
-        LOG.info("Processing XML submission for updated file: {}", filename);
-        HttpPost request = new HttpPost(testContext.getEnv().config.getString("ef-submission-api"));
-        StringEntity params = new StringEntity(xml);
-        params.setContentType("application/xml");
-        request.setEntity(params);
-        HttpResponse response = HttpClientBuilder.create().build().execute(request);
-        String responseEntity = EntityUtils.toString(response.getEntity());
-        int responseCode = response.getStatusLine().getStatusCode();
-
-        if (202 != responseCode) {
-            throw new RuntimeException("CHIPS REST API failed to return correct response. Code: "
-                    + responseCode + ", " + responseEntity);
-        }
-        LOG.info("Successful request to CHIPS REST API. Proceeding with test");
     }
 
     /**
@@ -291,6 +270,29 @@ public class XmlHelper extends ElementInteraction {
         } else {
             return xml;
         }
+    }
+
+    /**
+     * Changes any instances of ${CHARGE_NUMBER}
+     * in the xml with randomly generated information.
+     *
+     * @param xml xml to be transformed
+     * @return xml provided with CHARGE_NUMBER replaced with randomChargeNumber
+     */
+    private String insertNewChargeNumber(final String xml) {
+        if (!xml.contains("${CHARGE_NUMBER}")) {
+            return xml;
+        }
+        int length = 12;
+        Random random = new Random();
+        char[] digits = new char[length];
+        digits[0] = (char) (random.nextInt(9) + '1');
+        for (int i = 1; i < length; i++) {
+            digits[i] = (char) (random.nextInt(10) + '0');
+        }
+        String randomChargeNumber = String.valueOf(Long.parseLong(new String(digits)));
+        LOG.info("Replacing ${CHARGE_NUMBER} with: " + randomChargeNumber);
+        return xml.replaceAll("\\$\\{CHARGE_NUMBER}", randomChargeNumber);
     }
 
 }
