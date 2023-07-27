@@ -31,6 +31,13 @@ e.g.
                 testContext.getEnv().config.getString("chips_url"));
     }
 ```
+
+### Contributing
+Please follow the standard protocol for adding Pull Requests.
+We ask that you adhere to any instruction in the `PULL_REQUEST_TEMPLATE.md` file.
+
+=======
+
 ### Checkstyle in IntelliJ
 Checkstyle has been enabled in this project using Companies House Java checkstyle config [here](https://github.com/companieshouse/java-checkstyle-config)
 
