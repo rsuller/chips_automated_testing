@@ -101,7 +101,7 @@ public class CompanyDetailsScreen extends ElementInteraction {
      */
     public CompanyDetailsScreen verifyNewCompanyName(String companyName) {
         log.info("Checking for new company name: {}", companyName);
-        waitForSpecificTextInElement(elementCompanyName, companyName);
+        waitForSpecificTextInElement(elementCompanyName, companyName.toUpperCase());
         return this;
     }
 

@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="C:/mapforce/mappings/chips_schemas/INCschema.xsd" type="NEWINC" id="-1">
+    <filingDetails>
+        <method>web</method>
+        <authoriser>subscriber</authoriser>
+        <authentication>
+            <code>000000</code>
+            <status>authenticated</status>
+        </authentication>
+        <eFileValidated>false</eFileValidated>
+        <contactDetails>
+            <contactName>_forename _kpang</contactName>
+        </contactDetails>
+        <signDate>${RECEIPT_DATE}</signDate>
+        <receiptDate>${RECEIPT_DATE}</receiptDate>
+        <presenterDocumentReference>000-033827</presenterDocumentReference>
+        <barcode>${BARCODE}</barcode>
+        <presenterDetails>
+            <presenterName>sbowen@companieshouse.gov.uk</presenterName>
+            <presenterAccountNumber>99999999000</presenterAccountNumber>
+            <presenterEmailIn>sbowen@companieshouse.gov.uk</presenterEmailIn>
+            <presenterEmailOut>sbowen@companieshouse.gov.uk</presenterEmailOut>
+            <presenterAddressLine1>Companies House</presenterAddressLine1>
+            <presenterAddressLine2>Crown Way</presenterAddressLine2>
+            <presenterAddressPostTown>Cardiff</presenterAddressPostTown>
+            <presenterAddressCountry>Wales</presenterAddressCountry>
+            <presenterAddressPostCode>CF14 3UZ</presenterAddressPostCode>
+        </presenterDetails>
+        <payment>
+            <paymentMethod>creditcard</paymentMethod>
+            <referenceNumber>1234567890</referenceNumber>
+        </payment>
+        <commsLanguage>en</commsLanguage>
+        <formLanguage>en</formLanguage>
+    </filingDetails>
+    <general>
+        <sameDay>true</sameDay>
+    </general>
+    <corporateBody>
+        <corporateBodyName>${COMPANY_NAME} LIMITED</corporateBodyName>
+        <registers/>
+        <corporateBodyType>2</corporateBodyType>
+        <nameEnding>7</nameEnding>
+        <corporateBodyTypeDesc>BYSHR</corporateBodyTypeDesc>
+        <sicCodes>
+            <sicCode>
+                <code>01110</code>
+            </sicCode>
+        </sicCodes>
+        <incorporationNumber>00000000</incorporationNumber>
+        <statementOfCapital>
+            <shareValues>
+                <shareValue>
+                    <totalNumberOfShares>1</totalNumberOfShares>
+                    <currencyCode>GBP</currencyCode>
+                    <value>1</value>
+                    <totalAmountUnpaid>0</totalAmountUnpaid>
+                </shareValue>
+            </shareValues>
+            <shareClasses>
+                <shareClass>
+                    <description>FULL RIGHTS REGARDING VOTING, PAYMENT OF DIVIDENDS AND DISTRIBUTIONS</description>
+                    <number>1</number>
+                    <value>1</value>
+                    <suppliedClass>ORDINARY</suppliedClass>
+                    <currencyCode>GBP</currencyCode>
+                </shareClass>
+            </shareClasses>
+        </statementOfCapital>
+        <registeredOffice>
+            <address>
+                <houseNameNum>215</houseNameNum>
+                <street>FOREST ROAD</street>
+                <postTown>LONDON</postTown>
+                <country>ENGLAND</country>
+                <postCode>E17 6HE</postCode>
+                <addressValidation/>
+            </address>
+        </registeredOffice>
+        <section60>false</section60>
+        <jurisdiction>EW</jurisdiction>
+        <modelArticlesAdopted>entire</modelArticlesAdopted>
+        <modelArticlesType>Private (Ltd by Shares)</modelArticlesType>
+        <modelArticlesLanguage>en</modelArticlesLanguage>
+        <appointments>
+            <officers>
+                <officer>
+                    <officerType>director</officerType>
+                    <personName>
+                        <titleOther>MR</titleOther>
+                        <forename>${DIRECTOR_FIRST_NAME}</forename>
+                        <surname>${DIRECTOR_SURNAME}</surname>
+                    </personName>
+                    <serviceAddress>
+                        <isServiceAddressROA>true</isServiceAddressROA>
+                    </serviceAddress>
+                    <otherNames>
+                        <personName>
+                            <titleOther/>
+                            <surname/>
+                        </personName>
+                    </otherNames>
+                    <residentialAddress>
+                        <address>
+                            <houseNameNum>215</houseNameNum>
+                            <street>FOREST ROAD</street>
+                            <postTown>LONDON</postTown>
+                            <country>ENGLAND</country>
+                            <postCode>E17 6HE</postCode>
+                            <addressValidation/>
+                        </address>
+                        <foreignAddressIndicator>false</foreignAddressIndicator>
+                        <isResidentialAddressSA>false</isResidentialAddressSA>
+                    </residentialAddress>
+                    <nationalityOther>BRITISH</nationalityOther>
+                    <birthDate>1990-01-01</birthDate>
+                    <corporateOfficer>false</corporateOfficer>
+                    <businessOccupation>DIRECTOR</businessOccupation>
+                    <usualResidence>ENGLAND</usualResidence>
+                    <personalAuthentication>
+                        <authenticationStatus>1</authenticationStatus>
+                    </personalAuthentication>
+                </officer>
+                <officer>
+                    <officerType>secretary</officerType>
+                    <personName>
+                        <titleOther>DR</titleOther>
+                        <forename>${SECRETARY_FIRST_NAME}</forename>
+                        <surname>${SECRETARY_SURNAME}</surname>
+                    </personName>
+                    <serviceAddress>
+                        <isServiceAddressROA>true</isServiceAddressROA>
+                    </serviceAddress>
+                    <otherNames>
+                        <personName>
+                            <titleOther/>
+                            <surname/>
+                        </personName>
+                    </otherNames>
+                    <corporateOfficer>false</corporateOfficer>
+                    <personalAuthentication>
+                        <authenticationStatus>1</authenticationStatus>
+                    </personalAuthentication>
+                </officer>
+            </officers>
+        </appointments>
+        <subscribers>
+            <subscriber>
+                <subscriberType>subscriber</subscriberType>
+                <personalAuthentication>
+                    <authenticationStatus>1</authenticationStatus>
+                    <authenticationPair>
+                        <authenticationItem>07</authenticationItem>
+                        <authenticationData>MUM</authenticationData>
+                    </authenticationPair>
+                    <authenticationPair>
+                        <authenticationItem>03</authenticationItem>
+                        <authenticationData>123</authenticationData>
+                    </authenticationPair>
+                    <authenticationPair>
+                        <authenticationItem>09</authenticationItem>
+                        <authenticationData>DAD</authenticationData>
+                    </authenticationPair>
+                </personalAuthentication>
+                <forename>JOHN</forename>
+                <surname>DOE</surname>
+                <corporateOfficer>false</corporateOfficer>
+                <address>
+                    <houseNameNum>215</houseNameNum>
+                    <street>FOREST ROAD</street>
+                    <postTown>LONDON</postTown>
+                    <country>ENGLAND</country>
+                    <postCode>E17 6HE</postCode>
+                    <addressValidation/>
+                </address>
+                <numberOfSharesTaken>1</numberOfSharesTaken>
+                <shareClasses>
+                    <shareClass>
+                        <description>ORDINARY</description>
+                        <paidup>1</paidup>
+                        <unpaid>0</unpaid>
+                        <number>1</number>
+                        <value>1</value>
+                        <suppliedClass>ORDINARY</suppliedClass>
+                        <currencyCode>GBP</currencyCode>
+                    </shareClass>
+                </shareClasses>
+            </subscriber>
+        </subscribers>
+        <members/>
+        <membersDesignatedOnlyInd>false</membersDesignatedOnlyInd>
+        <pscAppointments>
+            <pscs>
+                <psc>
+                    <personName>
+                        <titleOther>DR</titleOther>
+                        <forename>${PSC_FIRST_NAME}</forename>
+                        <surname>${PSC_SURNAME}</surname>
+                    </personName>
+                    <residentialAddress>
+                        <address>
+                            <houseNameNum>215</houseNameNum>
+                            <street>FOREST ROAD</street>
+                            <postTown>LONDON</postTown>
+                            <country>ENGLAND</country>
+                            <postCode>E17 6HE</postCode>
+                            <addressValidation/>
+                        </address>
+                        <foreignAddressIndicator>false</foreignAddressIndicator>
+                    </residentialAddress>
+                    <serviceAddress>
+                        <isServiceAddressROA>true</isServiceAddressROA>
+                    </serviceAddress>
+                    <nationalityOther>BRITISH</nationalityOther>
+                    <birthDate>1990-01-01</birthDate>
+                    <usualResidence>ENGLAND</usualResidence>
+                    <natureOfControls>
+                        <natureOfControlType>VOTINGRIGHTS_75TO100PERCENT_AS_PERSON</natureOfControlType>
+                        <natureOfControlType>OWNERSHIPOFSHARES_75TO100PERCENT_AS_PERSON</natureOfControlType>
+                        <natureOfControlType>RIGHTTOAPPOINTANDREMOVEDIRECTORS_AS_PERSON</natureOfControlType>
+                    </natureOfControls>
+                    <appointmentType>5007</appointmentType>
+                    <superSecureIndicator>false</superSecureIndicator>
+                    <consentStatement>true</consentStatement>
+                </psc>
+                <psc>
+                    <corporateName>${RLE_PSC_NAME}</corporateName>
+                    <serviceAddress>
+                        <address>
+                            <houseNameNum>29</houseNameNum>
+                            <street>WALPOLE ROAD</street>
+                            <postTown>LONDON</postTown>
+                            <country>ENGLAND</country>
+                            <postCode>E17 6PS</postCode>
+                            <addressValidation/>
+                        </address>
+                        <foreignAddressIndicator>false</foreignAddressIndicator>
+                    </serviceAddress>
+                    <companyIdentification>
+                        <registerLocation>UK REGISTER OF COMPANIES</registerLocation>
+                        <registrationNumber>1234567890</registrationNumber>
+                        <legalForm>PRIVATE COMPANY LIMITED BY SHARES</legalForm>
+                        <governingLaw>COMPANIES ACT 2006</governingLaw>
+                        <country>UNITED KINGDOM</country>
+                    </companyIdentification>
+                    <natureOfControls>
+                        <natureOfControlType>OWNERSHIPOFSHARES_50TO75PERCENT_AS_PERSON</natureOfControlType>
+                        <natureOfControlType>VOTINGRIGHTS_50TO75PERCENT_AS_PERSON</natureOfControlType>
+                        <natureOfControlType>RIGHTTOAPPOINTANDREMOVEDIRECTORS_AS_PERSON</natureOfControlType>
+                    </natureOfControls>
+                    <appointmentType>5008</appointmentType>
+                </psc>
+                <psc>
+                    <corporateSoleName>${ORP_PSC_NAME}</corporateSoleName>
+                    <serviceAddress>
+                        <address>
+                            <houseNameNum>29</houseNameNum>
+                            <street>WALPOLE ROAD</street>
+                            <postTown>LONDON</postTown>
+                            <country>ENGLAND</country>
+                            <postCode>E17 6PS</postCode>
+                            <addressValidation/>
+                        </address>
+                        <foreignAddressIndicator>false</foreignAddressIndicator>
+                    </serviceAddress>
+                    <companyIdentification>
+                        <legalForm>LOCAL AUTHORITY</legalForm>
+                        <governingLaw>GOVERNING LAW</governingLaw>
+                    </companyIdentification>
+                    <natureOfControls>
+                        <natureOfControlType>SIGINFLUENCECONTROL_AS_PERSON</natureOfControlType>
+                    </natureOfControls>
+                    <appointmentType>5009</appointmentType>
+                </psc>
+                <companyStatement/>
+            </pscs>
+        </pscAppointments>
+        <cicIndicator>false</cicIndicator>
+        <dataMemorandum>true</dataMemorandum>
+    </corporateBody>
+    <attachments/>
+</form>
