@@ -44,6 +44,6 @@ Feature: IN01 - New Company Incorporation
   @electronic
   Scenario: Electronic Filed auto accepted IN01 form successfully processing a new company limited by shares
     Given I am logged in as a user in the "EF New Companies" organisational unit  
-    And I process an e-filed "IN01" form for a private limited company
+    When I process an e-filed "IN01" form for a private limited company
     Then company history information is updated with the accepted NEWINC transaction
     And the new company is displayed correctly

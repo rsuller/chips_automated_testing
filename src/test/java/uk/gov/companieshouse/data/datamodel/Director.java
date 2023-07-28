@@ -30,7 +30,6 @@ public class Director {
     /**
      * Create a new director with default values.
      */
-
     private Director(DirectorBuilder directorBuilder) {
         this.titleField = directorBuilder.titleField;
         this.titleOtherField = directorBuilder.titleOtherField;
