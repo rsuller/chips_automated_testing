@@ -35,23 +35,23 @@ public class CompanySearchPage extends ElementInteraction {
     private WebElement searchLink;
     @FindBy(how = How.CSS, using = "#header > .pageheader > .titleLabel")
     private WebElement elementSearchTitle;
-    @FindBy(how = How.ID, using = "form1:task_companySearchParameters_companyNumber:field")
-    private WebElement elementSearchCompanyNumber;
-    @FindBy(how = How.ID, using = "form1:task_allMatchingCompanies:0:companyRow_companyNumber__1:output")
-    private WebElement elementSearchResultCompanyNumber;
+    @FindBy(how = How.ID, using = "form1:task_companySearchParameters_companyName:field")
+    private WebElement elementSearchCompanyName;
+    @FindBy(how = How.ID, using = "form1:task_allMatchingCompanies:0:companyRow_companyName__1:output")
+    private WebElement elementSearchResultCompanyName;
     @FindBy(how = How.ID, using = "form1:task_allMatchingCompanies:0:task_selectCompanyDetailsFromTable")
     private WebElement elementSearchViewCompany;
 
     /**
-     * Open the company search screen and find the number used in the test.
+     * Open the company search screen and find the name used in the test.
      */
-    public CompanySearchPage findCompanyByNumberFromMenu() {
-        String companyNumber = companyDetails.getCompanyObject().getNumber();
+    public CompanySearchPage findCompanyByNameFromMenu() {
+        String companyName = companyDetails.getCompanyObject().getName();
         openMenuCompanySearch();
-        enterCompanyNumber(companyNumber);
+        enterCompanyName(companyName);
         searchLink.click();
-        log.info("Searching for company {}", companyNumber);
-        verifyCompanyNumber(companyNumber);
+        log.info("Searching for company {}", companyName);
+        verifyCompanyName(companyName);
         return this;
     }
 
@@ -79,14 +79,14 @@ public class CompanySearchPage extends ElementInteraction {
         return this;
     }
 
-    private CompanySearchPage enterCompanyNumber(String companyNumber) {
-       typeText(elementSearchCompanyNumber, companyNumber);
+    private CompanySearchPage enterCompanyName(String companyName) {
+       typeText(elementSearchCompanyName, companyName);
        return this;
     }
 
-    private CompanySearchPage verifyCompanyNumber(String companyNumber) {
-        waitForSpecificTextInElement(elementSearchResultCompanyNumber, companyNumber);
-        log.info("Company number {} found.", companyNumber);
+    private CompanySearchPage verifyCompanyName(String companyName) {
+        waitForSpecificTextInElement(elementSearchResultCompanyName, companyName.toUpperCase());
+        log.info("Company name {} found.", companyName);
         return this;
     }
 

@@ -18,7 +18,7 @@ import uk.gov.companieshouse.utils.TestContext;
 public class ChipsCommonPage<T extends ChipsCommonPage<?>> extends ElementInteraction {
 
     private static final String URA_BARCODE = "7777788888";
-    TestContext testContext;
+    final TestContext testContext;
     public static final Logger log = LoggerFactory.getLogger(ChipsCommonPage.class);
 
     /**

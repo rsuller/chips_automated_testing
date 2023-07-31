@@ -28,7 +28,7 @@ different filing method is necesssary.
   @electronic
   Scenario: Electronically Filed auto accepted CS01 form
     Given I am logged in as a user in the "EF Registration Team" organisational unit
-    When I process a no update e-filed CS01 form for a private limited company
+    When I process an e-filed "CS01" form for a private limited company
     Then company history information is updated with the accepted CS01 transaction
 
   @fes_scanned
