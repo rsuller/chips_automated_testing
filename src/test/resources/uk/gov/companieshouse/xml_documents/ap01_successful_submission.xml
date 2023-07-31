@@ -32,8 +32,8 @@
                     <actionDate>${RECEIPT_DATE}</actionDate>
                     <personName>
                         <titleOther>MR</titleOther>
-                        <forename>${FIRST_NAME}</forename>
-                        <surname>${SURNAME}</surname>
+                        <forename>${DIRECTOR_FIRST_NAME}</forename>
+                        <surname>${DIRECTOR_SURNAME}</surname>
                     </personName>
                     <otherNames>
                         <personName>

@@ -16,8 +16,7 @@ public enum TestDataSurnames {
     ANDERSON("Anderson"),
     JONES("Jones"),
     SMITH("Smith"),
-    COOK("Cook"),
-    POTTER("Potter");
+    COOK("Cook");
 
     TestDataSurnames(String surname) {
     }

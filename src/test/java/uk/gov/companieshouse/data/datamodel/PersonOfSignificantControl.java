@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @SuppressWarnings("CPD-START")
-public class Director {
+public class PersonOfSignificantControl {
 
     private final String titleField;
     private final String titleOtherField;
@@ -23,31 +23,32 @@ public class Director {
     private boolean uraBarcodeRequired;
     private boolean noChangeToUra;
     private final List<String> nationalityField;
-    private final String occupationField;
-    private final Address serviceAddressField;
     private final Address residentialAddressField;
+    private final String natureOfControlField;
+    private final String natureOfControlCategoryField;
+
 
     /**
-     * Create a new director with default values.
+     * Create a new PSC with default values.
      */
-    private Director(DirectorBuilder directorBuilder) {
-        this.titleField = directorBuilder.titleField;
-        this.titleOtherField = directorBuilder.titleOtherField;
-        this.partialDobField = directorBuilder.partialDobField;
-        this.forenameField = directorBuilder.forenameField;
-        this.middleNamesField = directorBuilder.middleNamesField;
-        this.surnameField = directorBuilder.surnameField;
-        this.countryUsuallyResidentField = directorBuilder.countryUsuallyResidentField;
-        this.dobField = directorBuilder.dobField;
-        this.countryField = directorBuilder.countryField;
-        this.countryOtherField = directorBuilder.countryOtherField;
-        this.uraBarcodeField = directorBuilder.uraBarcodeField;
-        this.uraBarcodeRequired = directorBuilder.uraBarcodeRequired;
-        this.noChangeToUra = directorBuilder.noChangeToUra;
-        this.nationalityField = directorBuilder.nationalityField;
-        this.occupationField = directorBuilder.occupationField;
-        this.serviceAddressField = directorBuilder.serviceAddressField;
-        this.residentialAddressField = directorBuilder.residentialAddressField;
+    private PersonOfSignificantControl(PersonOfSignificantControlBuilder personOfSignificantControlBuilder) {
+        this.titleField = personOfSignificantControlBuilder.titleField;
+        this.titleOtherField = personOfSignificantControlBuilder.titleOtherField;
+        this.partialDobField = personOfSignificantControlBuilder.partialDobField;
+        this.forenameField = personOfSignificantControlBuilder.forenameField;
+        this.middleNamesField = personOfSignificantControlBuilder.middleNamesField;
+        this.surnameField = personOfSignificantControlBuilder.surnameField;
+        this.countryUsuallyResidentField = personOfSignificantControlBuilder.countryUsuallyResidentField;
+        this.dobField = personOfSignificantControlBuilder.dobField;
+        this.countryField = personOfSignificantControlBuilder.countryField;
+        this.countryOtherField = personOfSignificantControlBuilder.countryOtherField;
+        this.uraBarcodeField = personOfSignificantControlBuilder.uraBarcodeField;
+        this.uraBarcodeRequired = personOfSignificantControlBuilder.uraBarcodeRequired;
+        this.noChangeToUra = personOfSignificantControlBuilder.noChangeToUra;
+        this.nationalityField = personOfSignificantControlBuilder.nationalityField;
+        this.residentialAddressField = personOfSignificantControlBuilder.residentialAddressField;
+        this.natureOfControlField = personOfSignificantControlBuilder.natureOfControlField;
+        this.natureOfControlCategoryField = personOfSignificantControlBuilder.natureOfControlCategoryField;
     }
 
     public String getTitle() {
@@ -115,12 +116,12 @@ public class Director {
         return nationalityField;
     }
 
-    public String getOccupation() {
-        return occupationField;
+    public String getNatureOfControl() {
+        return natureOfControlField;
     }
 
-    public Address getServiceAddress() {
-        return serviceAddressField;
+    public String getNatureOfControlCategory() {
+        return natureOfControlCategoryField;
     }
 
     public Address getResidentialAddress() {
@@ -128,8 +129,10 @@ public class Director {
     }
 
 
-    public static class DirectorBuilder {
+    public static class PersonOfSignificantControlBuilder {
 
+        public String natureOfControlField;
+        public String natureOfControlCategoryField;
         private String titleField;
         private String titleOtherField;
         private String partialDobField;
@@ -144,108 +147,103 @@ public class Director {
         private boolean uraBarcodeRequired;
         private boolean noChangeToUra;
         private List<String> nationalityField;
-        private String occupationField;
-        private Address serviceAddressField;
         private Address residentialAddressField;
 
-        public DirectorBuilder withTitle(final String title) {
+        public PersonOfSignificantControlBuilder withTitle(final String title) {
             this.titleField = title;
             return this;
         }
 
-        public DirectorBuilder withTitleOther(final String titleOther) {
+        public PersonOfSignificantControlBuilder withTitleOther(final String titleOther) {
             this.titleOtherField = titleOther;
             return this;
         }
 
-        public DirectorBuilder withPatialDateOfBirth(final String partialDob) {
+        public PersonOfSignificantControlBuilder withPatialDateOfBirth(final String partialDob) {
             this.partialDobField = partialDob;
             return this;
         }
 
-        public DirectorBuilder withForename(final String forename) {
+        public PersonOfSignificantControlBuilder withForename(final String forename) {
             this.forenameField = forename;
             return this;
         }
 
-        public DirectorBuilder withMiddleNames(final String middleNames) {
+        public PersonOfSignificantControlBuilder withMiddleNames(final String middleNames) {
             this.middleNamesField = middleNames;
             return this;
         }
 
-        public DirectorBuilder withSurname(final String surname) {
+        public PersonOfSignificantControlBuilder withSurname(final String surname) {
             this.surnameField = surname;
             return this;
         }
 
-        public DirectorBuilder withCountryUsuallyResident(final String usuallyResident) {
+        public PersonOfSignificantControlBuilder withCountryUsuallyResident(final String usuallyResident) {
             this.countryUsuallyResidentField = usuallyResident;
             return this;
         }
 
-        public DirectorBuilder withDateOfBirth(final String dob) {
+        public PersonOfSignificantControlBuilder withDateOfBirth(final String dob) {
             this.dobField = dob;
             return this;
         }
 
-        public DirectorBuilder withCountry(final String country) {
+        public PersonOfSignificantControlBuilder withCountry(final String country) {
             this.countryField = country;
             return this;
         }
 
-        public DirectorBuilder withCountryOther(final String countryOther) {
+        public PersonOfSignificantControlBuilder withCountryOther(final String countryOther) {
             this.countryOtherField = countryOther;
             return this;
         }
 
-        public DirectorBuilder withUraBarcode(final String uraBarcode) {
+        public PersonOfSignificantControlBuilder withUraBarcode(final String uraBarcode) {
             this.uraBarcodeField = uraBarcode;
             return this;
         }
 
-        public DirectorBuilder withNationalities(final List<String> nationalities) {
+        public PersonOfSignificantControlBuilder withNationalities(final List<String> nationalities) {
             this.nationalityField = nationalities;
             return this;
         }
 
-        public DirectorBuilder withOccupation(final String occupation) {
-            this.occupationField = occupation;
+        public PersonOfSignificantControlBuilder withNatureOfControl(final String natureOfControl) {
+            this.natureOfControlField = natureOfControl;
             return this;
         }
 
-        public DirectorBuilder withServiceAddress(final Address address) {
-            this.serviceAddressField = address;
+        public PersonOfSignificantControlBuilder withNatureOfControlCategory(final String natureOfControlCategory) {
+            this.natureOfControlCategoryField = natureOfControlCategory;
             return this;
         }
 
-        public DirectorBuilder withResidentialAddress(final Address address) {
+        public PersonOfSignificantControlBuilder withResidentialAddress(final Address address) {
             this.residentialAddressField = address;
             return this;
         }
 
         /**
-         * Build a new Director that will be used with service address always ro checkbox ticked.
-         * Therefore, service address is not necessary.
+         * Build a new default individual Person Of Significant Control. Appointment type 5007.
          */
-        public DirectorBuilder createDefaultDirector() {
+        public PersonOfSignificantControlBuilder createDefaultPsc() {
             final Address residentialAddress = new Address.AddressBuilder().welshAddress().build();
-            final Address serviceAddress = new Address.AddressBuilder().englishAddress().build();
             withPatialDateOfBirth("01/1990");
             withTitle("DR");
             withForename(getRandomTestForename());
             withSurname(getRandomTestSurname());
-            withServiceAddress(serviceAddress);
             withNationalities(Arrays.asList("Welsh", "Irish"));
-            withOccupation("DIRECTOR");
             withDateOfBirth("01/01/1990");
-            withCountryUsuallyResident(serviceAddress.getCountry());
+            withNatureOfControl("75% or more of voting rights as a person");
+            withNatureOfControlCategory("Ownership of voting rights as a person");
             withResidentialAddress(residentialAddress);
             withCountry(residentialAddress.getCountry());
             return this;
         }
 
-        public Director build() {
-            return new Director(this);
+        public PersonOfSignificantControl build() {
+            return new PersonOfSignificantControl(this);
         }
 
     }

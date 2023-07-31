@@ -1,6 +1,7 @@
 package uk.gov.companieshouse.data.datamodel;
 
-import static uk.gov.companieshouse.utils.RandomStringCreator.randomAlphaString;
+import static uk.gov.companieshouse.utils.DateFormat.getDateAsString;
+import static uk.gov.companieshouse.utils.RandomStringCreator.randomAlphaNumeric;
 
 import java.util.Date;
 import uk.gov.ch.alphakey.SameAsService;
@@ -244,10 +245,11 @@ public class Company {
             withTypeLong("Private Limited");
             withNumber("");
             withSuppliedCompanyNumber("12345678");
-            withName("COMPANY " + randomAlphaString(6));
+            withName("NEW COMPANY AUTOMATION " + randomAlphaNumeric(6)
+                    + " " + getDateAsString(new Date()));
             withPrefix("");
             withSuffix("");
-            withNameEnding("LTD");
+            withNameEnding("LIMITED");
             withSicCode("03110");
             withSicDescription("MARINE FISHING");
             withAddress(new Address.AddressBuilder().welshAddress().build());

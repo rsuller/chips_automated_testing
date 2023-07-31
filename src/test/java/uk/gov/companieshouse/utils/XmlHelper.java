@@ -5,57 +5,73 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Random;
 import java.util.UUID;
 import org.apache.commons.io.IOUtils;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.util.EntityUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import uk.gov.companieshouse.data.datamodel.Company;
+import uk.gov.companieshouse.data.datamodel.CorporatePersonOfSignificantControl;
+import uk.gov.companieshouse.data.datamodel.Director;
+import uk.gov.companieshouse.data.datamodel.PersonOfSignificantControl;
+import uk.gov.companieshouse.data.datamodel.Secretary;
+import uk.gov.companieshouse.data.dbutil.DbUtil;
 
 public class XmlHelper extends ElementInteraction {
 
     public String xml;
-    private final TestContext testContext;
+    private final DbUtil dbUtil;
+    private final Director director = new Director.DirectorBuilder().createDefaultDirector().build();
+    private final Secretary secretary = new Secretary.SecretaryBuilder().createDefaultSecretary().build();
+    private final PersonOfSignificantControl individualPsc = new PersonOfSignificantControl
+            .PersonOfSignificantControlBuilder().createDefaultPsc().build();
+    private final CorporatePersonOfSignificantControl relevantLegalEntityPsc = new
+            CorporatePersonOfSignificantControl.CorporatePersonOfSignificantControlBuilder().createDefaultCorporatePsc().build();
+    private final CorporatePersonOfSignificantControl otherRegistrablePersonPsc = new
+            CorporatePersonOfSignificantControl.CorporatePersonOfSignificantControlBuilder().createDefaultCorporatePsc().build();
+
 
     private static final Logger LOG = LoggerFactory.getLogger(XmlHelper.class);
 
     /**
      * Required constructor for class.
      */
-    public XmlHelper(TestContext testContext) {
+    public XmlHelper(TestContext testContext, DbUtil dbUtil) {
         super(testContext);
-        this.testContext = testContext;
+        this.dbUtil = dbUtil;
     }
 
 
     /**
      * Locates xml file from folder, replace elements and return the new XML document.
      */
-    public XmlHelper modifyXml(String filename, String corporateBodyId, String companyNumber,
-                               String companyName, String alphaKey, String receiptDate,
-                               String barcode, String csDate, String firstName, String surname)
+    public void modifyXml(String filename, Company company, String barcode, String xmlDate)
             throws IOException {
         // Load original XML file
         loadXml(filename);
         //Modify the XML elements
-        xml = insertCompanyNumber(xml, companyNumber);
-        xml = insertCompanyName(xml, companyName);
-        xml = insertReceiptDate(xml, receiptDate);
+        xml = insertCompanyNumber(xml, company.getNumber());
+        xml = insertCompanyName(xml, company.getName());
+        xml = insertReceiptDate(xml, xmlDate);
         xml = insertBarcode(xml, barcode);
-        xml = insertCorporateBodyId(xml, corporateBodyId);
-        xml = insertAlphaKey(xml, alphaKey);
+        xml = insertCorporateBodyId(xml, company.getCorporateBodyId());
+        xml = insertAlphaKey(xml, company.getAlphaKey());
         xml = insertNewApplicationReference(xml);
         xml = insertNewDocumentNumber(xml);
         xml = insertNewSubmissionReference(xml);
-        xml = insertConfirmationStatementDate(xml, csDate);
-        xml = insertFirstName(xml, firstName);
-        xml = insertSurname(xml, surname);
+        xml = insertConfirmationStatementDate(xml, company);
+        xml = insertDirectorFirstName(xml, director.getForename());
+        xml = insertDirectorSurname(xml, director.getSurname());
+        xml = insertSecretaryFirstName(xml, secretary.getForename());
+        xml = insertSecretarySurname(xml, secretary.getSurname());
+        xml = insertPscFirstName(xml, individualPsc.getForename());
+        xml = insertPscSurname(xml, individualPsc.getSurname());
+        xml = insertRlePscName(xml, relevantLegalEntityPsc.getEntityName());
+        xml = insertOrpPscName(xml, otherRegistrablePersonPsc.getEntityName());
         xml = insertNewChargeNumber(xml);
-        return this;
     }
 
     /**
@@ -233,40 +249,128 @@ public class XmlHelper extends ElementInteraction {
      * selected from the DB.
      *
      * @param xml xml to be transformed
-     * @return xml that was provided with CONFIRMATION_STATEMENT_DATE replaced with confirmationStmtDate
+     * @return xml that was provided with CONFIRMATION_STATEMENT_DATE replaced with the next CS date due.
      */
-    private String insertConfirmationStatementDate(final String xml, String confirmationStmtDate) {
+    private String insertConfirmationStatementDate(final String xml, Company company) {
         if (xml.contains("${CONFIRMATION_STATEMENT_DATE}")) {
-            LOG.info("Replacing ${CONFIRMATION_STATEMENT_DATE} with: " + confirmationStmtDate);
-            return xml.replaceAll("\\$\\{CONFIRMATION_STATEMENT_DATE}", confirmationStmtDate);
+            SimpleDateFormat xmlDateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+            Date lastCs01Date = dbUtil.getLastConfirmationStatementDate(company.getCorporateBodyId());
+            Date nextCsDue = DateUtils.addYears(lastCs01Date, 1);
+            LOG.info("Replacing ${CONFIRMATION_STATEMENT_DATE} with: " + nextCsDue);
+            String xmlDateNextCsDue = xmlDateFormatter.format(nextCsDue);
+            return xml.replaceAll("\\$\\{CONFIRMATION_STATEMENT_DATE}", xmlDateNextCsDue);
         } else {
             return xml;
         }
     }
 
     /**
-     * Changes any instances of ${FIRST_NAME} in the xml with the first name.
+     * Changes any instances of ${DIRECTOR_FIRST_NAME} in the xml with the first name.
      * @param xml xml to be transformed
-     * @return xml that was provided with FIRST_NAME replaced with firstName
+     * @return xml that was provided with DIRECTOR_FIRST_NAME replaced with firstName
      */
-    private String insertFirstName(final String xml, String firstName) {
-        if (xml.contains("${FIRST_NAME}")) {
-            LOG.info("Replacing ${FIRST_NAME} with: " + firstName);
-            return xml.replaceAll("\\$\\{FIRST_NAME}", firstName);
+    private String insertDirectorFirstName(final String xml, String firstName) {
+        if (xml.contains("${DIRECTOR_FIRST_NAME}")) {
+            LOG.info("Replacing ${DIRECTOR_FIRST_NAME} with: " + firstName);
+            return xml.replaceAll("\\$\\{DIRECTOR_FIRST_NAME}", firstName);
         } else {
             return xml;
         }
     }
 
     /**
-     * Changes any instances of ${SURNAME} in the xml with the surname.
+     * Changes any instances of ${DIRECTOR_SURNAME} in the xml with the surname.
      * @param xml xml to be transformed
-     * @return xml that was provided with SURNAME replaced with surname
+     * @return xml that was provided with DIRECTOR_SURNAME replaced with surname
      */
-    private String insertSurname(final String xml, String surname) {
-        if (xml.contains("${SURNAME}")) {
-            LOG.info("Replacing ${SURNAME} with: " + surname);
-            return xml.replaceAll("\\$\\{SURNAME}", surname);
+    private String insertDirectorSurname(final String xml, String surname) {
+        if (xml.contains("${DIRECTOR_SURNAME}")) {
+            LOG.info("Replacing ${DIRECTOR_SURNAME} with: " + surname);
+            return xml.replaceAll("\\$\\{DIRECTOR_SURNAME}", surname);
+        } else {
+            return xml;
+        }
+    }
+
+    /**
+     * Changes any instances of ${SECRETARY_FIRST_NAME} in the xml with the first name.
+     * @param xml xml to be transformed
+     * @return xml that was provided with SECRETARY_FIRST_NAME replaced with firstName
+     */
+    private String insertSecretaryFirstName(final String xml, String firstName) {
+        if (xml.contains("${SECRETARY_FIRST_NAME}")) {
+            LOG.info("Replacing ${SECRETARY_FIRST_NAME} with: " + firstName);
+            return xml.replaceAll("\\$\\{SECRETARY_FIRST_NAME}", firstName);
+        } else {
+            return xml;
+        }
+    }
+
+    /**
+     * Changes any instances of ${SECRETARY_SURNAME} in the xml with the surname.
+     * @param xml xml to be transformed
+     * @return xml that was provided with SECRETARY_SURNAME replaced with surname
+     */
+    private String insertSecretarySurname(final String xml, String surname) {
+        if (xml.contains("${SECRETARY_SURNAME}")) {
+            LOG.info("Replacing ${SECRETARY_SURNAME} with: " + surname);
+            return xml.replaceAll("\\$\\{SECRETARY_SURNAME}", surname);
+        } else {
+            return xml;
+        }
+    }
+
+    /**
+     * Changes any instances of ${PSC_FIRST_NAME} in the xml with the firstName.
+     * @param xml xml to be transformed
+     * @return xml that was provided with PSC_FIRST_NAME replaced with firstName
+     */
+    private String insertPscFirstName(final String xml, String firstName) {
+        if (xml.contains("${PSC_FIRST_NAME}")) {
+            LOG.info("Replacing ${PSC_FIRST_NAME} with: " + firstName);
+            return xml.replaceAll("\\$\\{PSC_FIRST_NAME}", firstName);
+        } else {
+            return xml;
+        }
+    }
+
+    /**
+     * Changes any instances of ${PSC_SURNAME} in the xml with the surname.
+     * @param xml xml to be transformed
+     * @return xml that was provided with PSC_SURNAME replaced with surname
+     */
+    private String insertPscSurname(final String xml, String surname) {
+        if (xml.contains("${PSC_SURNAME}")) {
+            LOG.info("Replacing ${PSC_SURNAME} with: " + surname);
+            return xml.replaceAll("\\$\\{PSC_SURNAME}", surname);
+        } else {
+            return xml;
+        }
+    }
+
+    /**
+     * Changes any instances of ${RLE_PSC_NAME} in the xml with the entity name.
+     * @param xml xml to be transformed
+     * @return xml that was provided with RLE_PSC_NAME replaced with entityName
+     */
+    private String insertRlePscName(final String xml, String entityName) {
+        if (xml.contains("${RLE_PSC_NAME}")) {
+            LOG.info("Replacing ${RLE_PSC_NAME} with: " + entityName);
+            return xml.replaceAll("\\$\\{RLE_PSC_NAME}", entityName);
+        } else {
+            return xml;
+        }
+    }
+
+    /**
+     * Changes any instances of ${ORP_PSC_NAME} in the xml with the entity name.
+     * @param xml xml to be transformed
+     * @return xml that was provided with ORP_PSC_NAME replaced with entityName
+     */
+    private String insertOrpPscName(final String xml, String entityName) {
+        if (xml.contains("${ORP_PSC_NAME}")) {
+            LOG.info("Replacing ${ORP_PSC_NAME} with: " + entityName);
+            return xml.replaceAll("\\$\\{ORP_PSC_NAME}", entityName);
         } else {
             return xml;
         }

@@ -98,7 +98,7 @@ public class CommonStepDefs {
         Form form = Form.getFormByType(formName);
         String descriptionToCheck;
         companySearchPage
-                .findCompanyByNumberFromMenu()
+                .findCompanyByNameFromMenu()
                 .openCompanyDetails();
         if (formName.equals("AA")) {
             SimpleDateFormat enquiryScreenFormatter = new SimpleDateFormat("dd/MM/yy");

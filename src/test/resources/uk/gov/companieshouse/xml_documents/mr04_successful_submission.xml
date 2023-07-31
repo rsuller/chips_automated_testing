@@ -32,7 +32,7 @@
         <formattedChargeNumber>${CHARGE_NUMBER}</formattedChargeNumber>
         <satisfactionType>full</satisfactionType>
         <personDelivering>
-            <name>${FIRST_NAME} ${SURNAME}</name>
+            <name>${DIRECTOR_FIRST_NAME} ${DIRECTOR_SURNAME}</name>
             <address>
                 <houseNameNum>1</houseNameNum>
                 <street>HEOL FAWR</street>

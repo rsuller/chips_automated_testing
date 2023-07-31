@@ -6,9 +6,7 @@ import io.cucumber.java.en.When;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import org.apache.commons.lang3.time.DateUtils;
 import uk.gov.companieshouse.data.datamodel.Company;
-import uk.gov.companieshouse.data.datamodel.Director;
 import uk.gov.companieshouse.data.dbutil.DbUtil;
 import uk.gov.companieshouse.data.dbutil.sql.CompanySql;
 import uk.gov.companieshouse.pageobjects.EfTestHarnessPage;
@@ -78,6 +76,12 @@ public class ElectronicFilingStepDefs {
                 company = dbUtil.cloneCompany(CompanySql.CS_SQL_LTD_COMPANY_WITH_CS_DUE);
                 autoAccepted = true;
                 break;
+            case "IN01":
+                filename = "in01_successful_limited_by_shares.xml";
+                company = new Company.CompanyBuilder().createDefaultCompany().build();
+                companyDetails.setCompanyObject(company);
+                autoAccepted = true;
+                break;
             case "MR04":
                 filename = "mr04_successful_submission.xml";
                 company = dbUtil.cloneCompany(CompanySql.MORTGAGE_SQL_PRIVATE_LIMITED_COMPANY_ID_WITH_MORTGAGES);
@@ -94,7 +98,7 @@ public class ElectronicFilingStepDefs {
                 .saveForm();
         efTestHarnessResponsePage.verifyFormResponse();
         documentProcessor.checkDocumentSubmission();
-        // If the form is not auto-accepted, then the document will be allocated to the user through teamwork/My work queues
+        // If the form is not auto-accepted, then the document will be allocated to the user through teamwork/My work queues.
         if (!autoAccepted) {
             globalNavBar.clickSubMenuItem("Work...", "My Work");
             documentProcessor.allocateWorkAndPsod(documentDetails.getFormType(), company);
@@ -106,26 +110,13 @@ public class ElectronicFilingStepDefs {
         SimpleDateFormat xmlDateFormatter = new SimpleDateFormat("yyyy-MM-dd");
         Date today = new Date();
         String barcode = barcodeGenerator.generateNewStyleBarcode(today);
-        String xmlDateNextCsDue;
         final String todayAsXmlDateString = xmlDateFormatter.format(today);
         final String todayAsChipsDateString = getDateAsString(today);
         documentDetails.setBarcode(barcode);
         documentDetails.setReceivedDate(todayAsChipsDateString);
         documentDetails.setFormType(formType);
         companyDetails.setCompanyObject(company);
-        // CS01 forms require the Next CS Due date to be set
-        // all other forms do not.
-        if (formType.equals("CS01")) {
-            Date lastCs01Date = dbUtil.getLastConfirmationStatementDate(company.getCorporateBodyId());
-            Date nextCsDue = DateUtils.addYears(lastCs01Date, 1);
-            xmlDateNextCsDue = xmlDateFormatter.format(nextCsDue);
-        } else {
-            xmlDateNextCsDue = null;
-        }
-        Director director = new Director.DirectorBuilder().createDefaultDirector().build();
-        xmlHelper.modifyXml(filename, company.getCorporateBodyId(), company.getNumber(),
-                company.getName(), company.getAlphaKey(), todayAsXmlDateString, barcode, xmlDateNextCsDue, director.getForename(),
-                director.getSurname());
+        xmlHelper.modifyXml(filename, company, barcode, todayAsXmlDateString);
     }
 
 }
