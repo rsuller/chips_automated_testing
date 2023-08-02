@@ -8,6 +8,7 @@ import uk.gov.companieshouse.pageobjects.GlobalNavBar;
 import uk.gov.companieshouse.pageobjects.Logout;
 import uk.gov.companieshouse.testdata.DocumentDetails;
 import uk.gov.companieshouse.utils.TestContext;
+import uk.gov.companieshouse.utils.WebDriverManager;
 
 public class Hooks {
 
@@ -35,6 +36,10 @@ public class Hooks {
      */
     @Before
     public void setUp() {
+        // Set up WebDriver
+        WebDriverManager.setDriver();
+
+        //Recall the driver
         testContext.getWebDriver().manage().deleteAllCookies();
         testContext.getWebDriver().get(
                 testContext.getEnv().config.getString("chips_url"));
@@ -67,6 +72,6 @@ public class Hooks {
         globalNavBar.clickLogoutLabel();
         testContext.getWebDriver().switchTo().alert().accept();
         logout.clickIgnoreOpenBatches();
-        testContext.getWebDriver().close();
+        testContext.quitWebDriver();
     }
 }
