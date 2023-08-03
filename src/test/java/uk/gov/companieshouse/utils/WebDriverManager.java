@@ -36,7 +36,7 @@ public class WebDriverManager {
     public static WebDriver quitDriver() {
         driver = webDriverThreadLocal.get();
         if (driver != null) {
-            driver.quit();
+            driver.close();
             webDriverThreadLocal.remove();
         }
         return driver;
