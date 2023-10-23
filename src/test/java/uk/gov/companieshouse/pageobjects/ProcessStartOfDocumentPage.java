@@ -37,6 +37,8 @@ public class ProcessStartOfDocumentPage extends ElementInteraction {
     public final DocumentDetails documentDetails;
 
     public static final Logger log = LoggerFactory.getLogger(ProcessStartOfDocumentPage.class);
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
+    private static final int MAX_BARCODE_RETRIES = 5;
 
     /**
      * Required constructor for class.
@@ -136,34 +138,36 @@ public class ProcessStartOfDocumentPage extends ElementInteraction {
      */
     public String generateBarcode(Date date) {
         Date today = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        int maxBarcodeRetries = 5;
         Date barcodeDate = (date == null) ? today : date;
+        String originalDateString = DATE_FORMAT.format(barcodeDate);
         String barcode = "";
-        for (int i = 1; i <= maxBarcodeRetries; i++) {
+        boolean barcodeGeneratedSuccessfully = false;
+
+        for (int i = 0; i < MAX_BARCODE_RETRIES; i++) {
             barcode = generateAndEnterBarcode(barcodeDate);
-            String originalDateString = sdf.format(barcodeDate);
             String generatedDateString = getGeneratedReceiptDate();
 
             if (generatedDateString.equals(originalDateString)) {
                 log.info("Barcode {} generated for date: {}", barcode, generatedDateString);
                 documentDetails.setBarcode(barcode);
                 documentDetails.setReceivedDate(generatedDateString);
+                barcodeGeneratedSuccessfully = true;
                 break;
             }
 
-            if (i == maxBarcodeRetries) {
-                log.error(
-                        "Tried {} barcodes for date {}, all incorrect.",
-                        maxBarcodeRetries, originalDateString
-                );
-                throw new RuntimeException("Unable to generate correct barcode");
-            }
             log.info("Generated barcode {} has incorrect date - retrying", barcode);
             clearBarcodeAndDate();
         }
+
+        if (!barcodeGeneratedSuccessfully) {
+            log.error("Tried {} barcodes for date {}, all incorrect.",
+                    MAX_BARCODE_RETRIES, originalDateString);
+            throw new RuntimeException("Unable to generate correct barcode");
+        }
+
         return barcode;
     }
+
 
     /**
      * Clear the barcode and receipt date field in the event of the error being displayed.
