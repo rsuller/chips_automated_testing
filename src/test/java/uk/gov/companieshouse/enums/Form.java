@@ -28,7 +28,9 @@ public enum Form {
     CONNOT("CONNOT", "Change of Name - Notice", true, "NOTICE OF CHANGE OF NAME NM01"),
     RES15("RES15", "Change of Name - Resolution", true, "CHANGE OF NAME"),
     NEWINC("NEWINC", "New Incorporations", false, "CERTIFICATE OF INCORPORATION"),
-    SH01("SH01", "Allot Shares", false, "STATEMENT OF CAPITAL");
+    SH01("SH01", "Allot Shares", false, "STATEMENT OF CAPITAL"),
+    PSC01("PSC01", "Create Person with Significant Control", false, "NOTIFICATION OF A PERSON WITH "),
+    PSC02("PSC02", "Relevant Legal Entity with Significant Control", false, "NOTIFICATION OF A PERSON WITH");
 
 
     private final String type;
