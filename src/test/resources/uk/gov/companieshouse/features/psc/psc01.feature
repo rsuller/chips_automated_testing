@@ -1,4 +1,4 @@
-@psc @individual_psc @psc01
+@psc @individual_psc @psc_appointments @psc01
 Feature: Process a PSC01 giving notice of appointment of an individual with significant control
 
   Notes:
