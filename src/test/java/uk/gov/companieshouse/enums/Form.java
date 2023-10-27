@@ -31,7 +31,8 @@ public enum Form {
     SH01("SH01", "Allot Shares", false, "STATEMENT OF CAPITAL"),
     PSC01("PSC01", "Create Person with Significant Control", false, "NOTIFICATION OF A PERSON WITH "),
     PSC02("PSC02", "Relevant Legal Entity with Significant Control", false, "NOTIFICATION OF A PERSON WITH"),
-    PSC08("PSC08", "Notification Of PSC Statement", false, "NOTIFICATION OF PSC STATEMENT ");
+    PSC08("PSC08", "Notification Of PSC Statement", false, "NOTIFICATION OF PSC STATEMENT "),
+    PSC09("PSC09", "Withdrawal of an additional matters", false, "WITHDRAWAL OF A PERSON WITH ");
 
 
     private final String type;
