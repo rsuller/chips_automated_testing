@@ -30,7 +30,8 @@ public enum Form {
     NEWINC("NEWINC", "New Incorporations", false, "CERTIFICATE OF INCORPORATION"),
     SH01("SH01", "Allot Shares", false, "STATEMENT OF CAPITAL"),
     PSC01("PSC01", "Create Person with Significant Control", false, "NOTIFICATION OF A PERSON WITH "),
-    PSC02("PSC02", "Relevant Legal Entity with Significant Control", false, "NOTIFICATION OF A PERSON WITH");
+    PSC02("PSC02", "Relevant Legal Entity with Significant Control", false, "NOTIFICATION OF A PERSON WITH"),
+    PSC08("PSC08", "Notification Of PSC Statement", false, "NOTIFICATION OF PSC STATEMENT ");
 
 
     private final String type;
