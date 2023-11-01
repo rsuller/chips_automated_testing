@@ -67,6 +67,6 @@ public class Hooks {
         globalNavBar.clickLogoutLabel();
         testContext.getWebDriver().switchTo().alert().accept();
         logout.clickIgnoreOpenBatches();
-        testContext.getWebDriver().close();
+        testContext.getWebDriver().quit();
     }
 }
