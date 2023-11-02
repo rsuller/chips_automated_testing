@@ -2,9 +2,6 @@ package uk.gov.companieshouse;
 
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
-
-import java.util.Set;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.gov.companieshouse.pageobjects.GlobalNavBar;
@@ -67,16 +64,6 @@ public class Hooks {
      */
     @After
     public void tearDown() {
-        globalNavBar.clickLogoutLabel();
-        testContext.getWebDriver().switchTo().alert().accept();
-        logout.clickIgnoreOpenBatches();
-
-        Set<String> windowHandles = testContext.getWebDriver().getWindowHandles();
-        if (windowHandles != null && windowHandles.isEmpty()) {
-            log.info("All windows closed");
-        } else {
-            log.info("Windows still open");
-            testContext.getWebDriver().quit();
-        }
+      testContext.getWebDriver().quit();
     }
 }
