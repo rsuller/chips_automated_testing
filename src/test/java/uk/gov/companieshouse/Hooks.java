@@ -2,12 +2,16 @@ package uk.gov.companieshouse;
 
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
+
+import java.util.Set;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.gov.companieshouse.pageobjects.GlobalNavBar;
 import uk.gov.companieshouse.pageobjects.Logout;
 import uk.gov.companieshouse.testdata.DocumentDetails;
 import uk.gov.companieshouse.utils.TestContext;
+
 
 public class Hooks {
 
@@ -21,8 +25,7 @@ public class Hooks {
     /**
      * Required constructor for class.
      */
-    public Hooks(TestContext testContext, GlobalNavBar globalNavBar, Logout logout, DocumentDetails documentDetails)
-    {
+    public Hooks(TestContext testContext, GlobalNavBar globalNavBar, Logout logout, DocumentDetails documentDetails) {
         this.testContext = testContext;
         this.globalNavBar = globalNavBar;
         this.logout = logout;
@@ -67,6 +70,13 @@ public class Hooks {
         globalNavBar.clickLogoutLabel();
         testContext.getWebDriver().switchTo().alert().accept();
         logout.clickIgnoreOpenBatches();
-        testContext.getWebDriver().quit();
+
+        Set<String> windowHandles = testContext.getWebDriver().getWindowHandles();
+        if (windowHandles != null && windowHandles.isEmpty()) {
+            log.info("All windows closed");
+        } else {
+            log.info("Windows still open");
+            testContext.getWebDriver().quit();
+        }
     }
 }
