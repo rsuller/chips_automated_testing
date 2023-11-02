@@ -9,6 +9,7 @@ import uk.gov.companieshouse.pageobjects.Logout;
 import uk.gov.companieshouse.testdata.DocumentDetails;
 import uk.gov.companieshouse.utils.TestContext;
 
+
 public class Hooks {
 
     public final TestContext testContext;
@@ -21,8 +22,7 @@ public class Hooks {
     /**
      * Required constructor for class.
      */
-    public Hooks(TestContext testContext, GlobalNavBar globalNavBar, Logout logout, DocumentDetails documentDetails)
-    {
+    public Hooks(TestContext testContext, GlobalNavBar globalNavBar, Logout logout, DocumentDetails documentDetails) {
         this.testContext = testContext;
         this.globalNavBar = globalNavBar;
         this.logout = logout;
@@ -64,9 +64,6 @@ public class Hooks {
      */
     @After
     public void tearDown() {
-        globalNavBar.clickLogoutLabel();
-        testContext.getWebDriver().switchTo().alert().accept();
-        logout.clickIgnoreOpenBatches();
-        testContext.getWebDriver().close();
+      testContext.getWebDriver().quit();
     }
 }

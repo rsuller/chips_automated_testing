@@ -35,6 +35,8 @@ public class TestContext {
             ieOptions.attachToEdgeChrome();
             ieOptions.ignoreZoomSettings();
             ieOptions.withEdgeExecutablePath("C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe");
+            ieOptions.setCapability(
+                    InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, true);
 
             driver = new InternetExplorerDriver(ieOptions);
 
