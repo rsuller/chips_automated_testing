@@ -40,13 +40,6 @@ public class TestContext {
 
             driver = new InternetExplorerDriver(ieOptions);
 
-            /*
-            Set up for Edge only
-            //TODO Keep this just in case we need to compare with Edge behaviour
-             */
-            //log.info("Setting up Edge Browser");
-            //System.setProperty("webdriver.edge.driver", "drivers/msedgedriver.exe");
-            //driver = new EdgeDriver();
         }
         return driver;
 
