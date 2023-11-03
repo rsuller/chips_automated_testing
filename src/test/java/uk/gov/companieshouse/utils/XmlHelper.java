@@ -20,7 +20,6 @@ import uk.gov.companieshouse.data.datamodel.Director;
 import uk.gov.companieshouse.data.datamodel.PersonOfSignificantControl;
 import uk.gov.companieshouse.data.datamodel.Secretary;
 import uk.gov.companieshouse.data.dbutil.DbUtil;
-import uk.gov.companieshouse.testdata.DocumentDetails;
 
 public class XmlHelper extends ElementInteraction {
 
@@ -41,7 +40,7 @@ public class XmlHelper extends ElementInteraction {
     /**
      * Required constructor for class.
      */
-    public XmlHelper(TestContext testContext, DbUtil dbUtil, DocumentDetails documentDetails) {
+    public XmlHelper(TestContext testContext, DbUtil dbUtil) {
         super(testContext);
         this.dbUtil = dbUtil;
     }
@@ -373,8 +372,7 @@ public class XmlHelper extends ElementInteraction {
      * from the Database. Needed for electronic change forms
      * @param xml xml to be transformed.
      * @param company the corporate body that used to select the existing PSC from the database.
-     * @return xml that was provided with EXISTING_PSC_FIRST_NAME replaced with psc first name and EXISTING_PSC_SURNAME
-     * replaced with the PSC's surname
+     * @return xml that was provided with EXISTING_PSC_FIRST_NAME replaced with first name and EXISTING_PSC_SURNAME replaced with surname
      */
     private String insertExistingPscName(final String xml, Company company) {
         if (xml.contains("${EXISTING_PSC_FIRST_NAME}")) {
