@@ -35,16 +35,11 @@ public class TestContext {
             ieOptions.attachToEdgeChrome();
             ieOptions.ignoreZoomSettings();
             ieOptions.withEdgeExecutablePath("C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe");
+            ieOptions.setCapability(
+                    InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, true);
 
             driver = new InternetExplorerDriver(ieOptions);
 
-            /*
-            Set up for Edge only
-            //TODO Keep this just in case we need to compare with Edge behaviour
-             */
-            //log.info("Setting up Edge Browser");
-            //System.setProperty("webdriver.edge.driver", "drivers/msedgedriver.exe");
-            //driver = new EdgeDriver();
         }
         return driver;
 
