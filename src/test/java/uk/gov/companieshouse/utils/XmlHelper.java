@@ -284,22 +284,6 @@ public class XmlHelper extends ElementInteraction {
     }
 
     /**
-     * Changes any instances of ${PSC_STATEMENT} in the xml with the PSC statement returned from the DB.
-     *
-     * @param xml xml to be transformed
-     * @return xml that was provided with PSC_STATEMENT replaced with the correct PSC statement.
-     */
-    private String insertPscStatement(final String xml, Company company) {
-        if (xml.contains("${PSC_STATEMENT}")) {
-        String pscStatement = dbUtil.getPscStatement(company.getCorporateBodyId());
-        LOG.info("Replacing ${PSC_STATEMENT} with: " + pscStatement);
-        return xml.replaceAll("\\$\\{PSC_STATEMENT}", pscStatement);
-        } else {
-            return xml;
-        }
-    }
-
-    /**
      * Changes any instances of ${DIRECTOR_FIRST_NAME} in the xml with the first name.
      * @param xml xml to be transformed
      * @return xml that was provided with DIRECTOR_FIRST_NAME replaced with firstName
