@@ -266,7 +266,7 @@ public class XmlHelper extends ElementInteraction {
             return xml;
         }
     }
-
+    
     /**
      * Changes any instances of ${PSC_STATEMENT} in the xml with the PSC statement returned from the DB.
      *
