@@ -1,4 +1,4 @@
-@psc @corporate_psc @psc02
+@psc @corporate_psc @psc_appointments @psc02
 Feature: Process a PSC02 giving notice of appointment of a relevant legal entity with significant control
 
   Notes:

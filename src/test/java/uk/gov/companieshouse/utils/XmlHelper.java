@@ -72,6 +72,7 @@ public class XmlHelper extends ElementInteraction {
         xml = insertRlePscName(xml, relevantLegalEntityPsc.getEntityName());
         xml = insertOrpPscName(xml, otherRegistrablePersonPsc.getEntityName());
         xml = insertNewChargeNumber(xml);
+        xml = insertPscStatement(xml, company);
     }
 
     /**
@@ -259,6 +260,22 @@ public class XmlHelper extends ElementInteraction {
             LOG.info("Replacing ${CONFIRMATION_STATEMENT_DATE} with: " + nextCsDue);
             String xmlDateNextCsDue = xmlDateFormatter.format(nextCsDue);
             return xml.replaceAll("\\$\\{CONFIRMATION_STATEMENT_DATE}", xmlDateNextCsDue);
+        } else {
+            return xml;
+        }
+    }
+    
+    /**
+     * Changes any instances of ${PSC_STATEMENT} in the xml with the PSC statement returned from the DB.
+     *
+     * @param xml xml to be transformed
+     * @return xml that was provided with PSC_STATEMENT replaced with the correct PSC statement.
+     */
+    private String insertPscStatement(final String xml, Company company) {
+        if (xml.contains("${PSC_STATEMENT}")) {
+        String pscStatement = dbUtil.getPscStatement(company.getCorporateBodyId());
+        LOG.info("Replacing ${PSC_STATEMENT} with: " + pscStatement);
+        return xml.replaceAll("\\$\\{PSC_STATEMENT}", pscStatement);
         } else {
             return xml;
         }

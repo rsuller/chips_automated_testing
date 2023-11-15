@@ -153,6 +153,32 @@ public class DbUtil {
 
     }
 
+    /**
+     * Use the corporateBodyId stored in memory to return the PSC statement(s) for that company.
+     * @param corporateBodyId the ID of the company used to search the DB for.
+     */
+    public String getPscStatement(String corporateBodyId) {
+        final String sql = "select * "
+                + "from psc_statement_type pst "
+                + "join psc_statement ps on ps.psc_statement_type_id = pst.psc_statement_type_id "
+                + "where corporate_body_id = ?";
+
+        try (Connection conn = dbGetConnection();
+             PreparedStatement preparedStatement = createPreparedStatement(conn, sql, corporateBodyId);
+             ResultSet rs = preparedStatement.executeQuery()) {
+            rs.next();
+            String pscStatement = rs.getString("PSC_STATEMENT_TYPE_DESC");
+            String xmlPscStatement = rs.getString("LABEL_KEY");
+            conn.close();
+            LOG.info("PSC Statement found: {}", pscStatement);
+            LOG.info("XML format PSC statement: {}", xmlPscStatement);
+            return xmlPscStatement;
+        } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException exception) {
+            throw new RuntimeException("Unable to get PSC statement from DB", exception);
+        }
+
+    }
+
     private PreparedStatement createPreparedStatement(Connection conn, String sql, Object... params) throws SQLException {
         final PreparedStatement ps = conn.prepareStatement(sql);
 
