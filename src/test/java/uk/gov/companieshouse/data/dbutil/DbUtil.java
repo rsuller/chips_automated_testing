@@ -9,6 +9,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
@@ -179,6 +181,35 @@ public class DbUtil {
 
     }
 
+    /**
+     * Use the corporateBodyId stored in memory to return the PSC appointment details for that company.
+     * @param corporateBodyId the ID of the company used to search the DB for.
+     */
+    public List<String> getIndividualPscAppointmentName(String corporateBodyId) {
+        final String sql = "select * "
+                + "from corporate_body_appointment "
+                + "where corporate_body_id = ? "
+                + "AND APPOINTMENT_TYPE_ID = 5007 "
+                + "AND resignation_ind = 'N' ";
+
+        try (Connection conn = dbGetConnection();
+             PreparedStatement preparedStatement = createPreparedStatement(conn, sql, corporateBodyId);
+             ResultSet rs = preparedStatement.executeQuery()) {
+            rs.next();
+            String pscForename = rs.getString("OFFICER_FORENAME_1");
+            String pscSurname = rs.getString("OFFICER_SURNAME");
+            List<String> pscFullName = new ArrayList<>();
+            pscFullName.add(pscForename);
+            pscFullName.add(pscSurname);
+            conn.close();
+            LOG.info("PSC found: {} {}", pscForename, pscSurname);
+            return pscFullName;
+        } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException exception) {
+            throw new RuntimeException("Unable to get PSC appointment from DB", exception);
+        }
+
+    }
+  
     private PreparedStatement createPreparedStatement(Connection conn, String sql, Object... params) throws SQLException {
         final PreparedStatement ps = conn.prepareStatement(sql);
 

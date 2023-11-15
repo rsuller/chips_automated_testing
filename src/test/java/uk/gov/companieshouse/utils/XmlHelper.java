@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 import org.apache.commons.io.IOUtils;
@@ -69,6 +70,7 @@ public class XmlHelper extends ElementInteraction {
         xml = insertSecretarySurname(xml, secretary.getSurname());
         xml = insertPscFirstName(xml, individualPsc.getForename());
         xml = insertPscSurname(xml, individualPsc.getSurname());
+        xml = insertExistingPscName(xml, company);
         xml = insertRlePscName(xml, relevantLegalEntityPsc.getEntityName());
         xml = insertOrpPscName(xml, otherRegistrablePersonPsc.getEntityName());
         xml = insertNewChargeNumber(xml);
@@ -360,6 +362,26 @@ public class XmlHelper extends ElementInteraction {
         if (xml.contains("${PSC_SURNAME}")) {
             LOG.info("Replacing ${PSC_SURNAME} with: " + surname);
             return xml.replaceAll("\\$\\{PSC_SURNAME}", surname);
+        } else {
+            return xml;
+        }
+    }
+
+    /**
+     * Changes any instances of ${EXISTING_PSC_FIRST_NAME} and ${EXISTING_PSC_SURNAME} in the xml with the name of the PSC selected
+     * from the Database. Needed for electronic change forms
+     * @param xml xml to be transformed.
+     * @param company the corporate body that used to select the existing PSC from the database.
+     * @return xml that was provided with EXISTING_PSC_FIRST_NAME replaced with first name and EXISTING_PSC_SURNAME replaced with surname
+     */
+    private String insertExistingPscName(final String xml, Company company) {
+        if (xml.contains("${EXISTING_PSC_FIRST_NAME}")) {
+            List<String> pscFullName = dbUtil.getIndividualPscAppointmentName(company.getCorporateBodyId());
+            String pscFirstName = pscFullName.get(0);
+            String pscSurname = pscFullName.get(1);
+            LOG.info("Replacing ${EXISTING_PSC_FIRST_NAME} with: " + pscFirstName);
+            LOG.info("Replacing ${EXISTING_PSC_SURNAME} with: " + pscSurname);
+            return xml.replaceAll("\\$\\{EXISTING_PSC_FIRST_NAME}", pscFirstName).replaceAll("\\$\\{EXISTING_PSC_SURNAME}", pscSurname);
         } else {
             return xml;
         }

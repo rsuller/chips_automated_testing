@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:noNamespaceSchemaLocation="C:/mapforce/mappings/chips_schemas/PSC08schema.xsd"
-      type="PSC08"
+      xsi:noNamespaceSchemaLocation="C:/mapforce/mappings/chips_schemas/PSC04schema.xsd"
+      type="PSC04"
       id="-1">
     <filingDetails>
         <method>web</method>
@@ -24,14 +24,28 @@
         </payment>
         <commsLanguage>en</commsLanguage>
         <formLanguage>en</formLanguage>
+        <registerEntryDate>${RECEIPT_DATE}</registerEntryDate>
     </filingDetails>
     <corporateBody>
         <corporateBodyId>${CORPORATE_BODY_ID}</corporateBodyId>
         <incorporationNumber>${COMPANY_NUMBER}</incorporationNumber>
         <corporateBodyName>${COMPANY_NAME}</corporateBodyName>
-        <pscStatement>
-            <actionDate>${RECEIPT_DATE}</actionDate>
-            <pscStatementType>PSC_EXISTS_BUT_NOT_IDENTIFIED</pscStatementType>
-        </pscStatement>
+        <pscAppointmentChanges>
+            <pscAppointmentChange>
+                <psc>
+                    <actionDate>${RECEIPT_DATE}</actionDate>
+                    <usualResidence>CYMRU</usualResidence>
+                    <natureOfControls>
+                        <natureOfControlType>OWNERSHIPOFSHARES_50TO75PERCENT_AS_PERSON</natureOfControlType>
+                    </natureOfControls>
+                </psc>
+                <pscPreviousDetails>
+                    <personName>
+                        <forename>${EXISTING_PSC_FIRST_NAME}</forename>
+                        <surname>${EXISTING_PSC_SURNAME}</surname>
+                    </personName>
+                </pscPreviousDetails>
+            </pscAppointmentChange>
+        </pscAppointmentChanges>
     </corporateBody>
 </form>
