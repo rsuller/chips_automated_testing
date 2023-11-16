@@ -27,6 +27,7 @@ public class ChangeOfAddressStepDefs {
                 .enterPostCode(address.getPostcode())
                 .clickLookUp()
                 .waitUntilStreetPopulated()
+                .appropriateOfficeAddressCheckBox()
                 .saveForm();
     }
 

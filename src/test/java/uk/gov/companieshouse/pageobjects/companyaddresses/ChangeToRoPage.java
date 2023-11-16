@@ -10,20 +10,10 @@ import uk.gov.companieshouse.pageobjects.AddressPageInterface;
 import uk.gov.companieshouse.pageobjects.ChipsCommonPage;
 import uk.gov.companieshouse.utils.TestContext;
 
-
 public class ChangeToRoPage extends ChipsCommonPage<ChangeToRoPage> implements AddressPageInterface {
 
     public final TestContext testContext;
     public static final Logger log = LoggerFactory.getLogger(ChangeToRoPage.class);
-
-    /**
-     * Required constructor for class.
-     */
-    public ChangeToRoPage(TestContext testContext) {
-        super(testContext);
-        this.testContext = testContext;
-        PageFactory.initElements(testContext.getWebDriver(),this);
-    }
 
     @FindBy(how = How.ID, using = "form1:changeOfAddressScreenTabSheet:changeOfAddressScreen:registeredOffice:"
             + "address:houseNumber:field")
@@ -37,7 +27,18 @@ public class ChangeToRoPage extends ChipsCommonPage<ChangeToRoPage> implements A
     @FindBy(how = How.ID, using = "form1:changeOfAddressScreenTabSheet:changeOfAddressScreen:registeredOffice:"
             + "address:street:field")
     private WebElement elementRoStreet;
+    @FindBy(how = How.ID, using = "form1:changeOfAddressScreenTabSheet:changeOfAddressScreen"
+            + ":appropriateOfficeAddress:field")
+    private WebElement appropriateOfficeAddressCheckBox;
 
+    /**
+     * Required constructor for class.
+     */
+    public ChangeToRoPage(TestContext testContext) {
+        super(testContext);
+        this.testContext = testContext;
+        PageFactory.initElements(testContext.getWebDriver(), this);
+    }
 
     /**
      * Wait until the address fields are populated after postcode lookup.
@@ -63,8 +64,13 @@ public class ChangeToRoPage extends ChipsCommonPage<ChangeToRoPage> implements A
     }
 
     @Override
-    public AddressPageInterface clickLookUp() {
+    public ChangeToRoPage clickLookUp() {
         elementRoLookUp.click();
+        return this;
+    }
+
+    public ChangeToRoPage appropriateOfficeAddressCheckBox() {
+        appropriateOfficeAddressCheckBox.click();
         return this;
     }
 
