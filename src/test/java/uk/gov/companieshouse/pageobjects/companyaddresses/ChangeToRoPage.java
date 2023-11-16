@@ -15,6 +15,9 @@ public class ChangeToRoPage extends ChipsCommonPage<ChangeToRoPage> implements A
 
     public final TestContext testContext;
     public static final Logger log = LoggerFactory.getLogger(ChangeToRoPage.class);
+    @FindBy(how = How.ID, using = "form1:changeOfAddressScreenTabSheet:changeOfAddressScreen"
+            + ":appropriateOfficeAddress:field")
+    private WebElement appropriateOfficeAddressCheckBox;
 
     /**
      * Required constructor for class.
@@ -63,8 +66,13 @@ public class ChangeToRoPage extends ChipsCommonPage<ChangeToRoPage> implements A
     }
 
     @Override
-    public AddressPageInterface clickLookUp() {
+    public ChangeToRoPage clickLookUp() {
         elementRoLookUp.click();
+        return this;
+    }
+
+    public ChangeToRoPage appropriateOfficeAddressCheckBox() {
+        appropriateOfficeAddressCheckBox.click();
         return this;
     }
 

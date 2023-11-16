@@ -1,5 +1,7 @@
 package uk.gov.companieshouse.pageobjects.companysearch;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,36 +48,40 @@ public class CompanyDetailsScreen extends ElementInteraction {
     /**
      * Locates specific transaction from the filing history table.
      */
-    public CompanyDetailsScreen getExpectedTransactionFromHistory(String formName, String docReceivedDate, String
-            transactionStatus, String transactionDescription) {
+    public CompanyDetailsScreen getExpectedTransactionFromHistory(String formName,
+                                                                  String docReceivedDate,
+                                                                  String transactionStatus,
+                                                                  String transactionDescription) {
         Map<String, String> transactionToFind = new HashMap<>();
         transactionToFind.put("Form", formName.toUpperCase());
         transactionToFind.put("Received date", docReceivedDate);
         transactionToFind.put("Transaction status", transactionStatus);
         transactionToFind.put("Transaction description", transactionDescription);
 
+        String todayDate = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         WebElement transaction;
         final String formToFind = transactionToFind.get("Form");
-        log.info("Looking for transaction {} {} {} {} ",
-                formToFind,
-                transactionToFind.get("Received date"),
-                transactionToFind.get("Transaction status"),
-                transactionToFind.get("Transaction description"));
+
+        log.debug("Looking for transaction: {}", transactionToFind);
         while (true) {
             transaction = checkHistoryTableRow(transactionToFind);
             if (transaction != null) {
                 log.info("Transaction history entry found: {}", transaction.getText());
                 break;
             }
-            try {
-                nextPage.click();
-                log.info("{} transaction not found, checking next page.",
-                        formToFind);
-            } catch (NoSuchElementException ignored) {
-                log.error("{} transaction not found, no more pages to check",
-                        formToFind);
-                throw new RuntimeException("The expected " + formToFind
-                        + " transaction was not found");
+
+            if (docReceivedDate.equals(todayDate)) {
+                log.error("{} transaction not found on today's date.", formToFind);
+                throw new RuntimeException("The expected " + formToFind + " transaction was not found on today's date");
+            } else {
+                try {
+                    nextPage.click();
+                    log.debug("Checking next page for {} transaction.", formToFind);
+                } catch (NoSuchElementException noSuchElementException) {
+                    log.error("{} transaction not found, no more pages to check. Error: {}",
+                            formToFind, noSuchElementException.getMessage());
+                    throw new RuntimeException("The expected " + formToFind + " transaction was not found");
+                }
             }
         }
         return this;
