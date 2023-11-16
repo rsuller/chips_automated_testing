@@ -121,8 +121,7 @@ public class DbUtil {
                 docId = rs.getString("input_document_id");
                 LOG.info("Document ID found: {}.  Continuing with test", docId);
                 break;
-            } catch (SQLException | ClassNotFoundException | InstantiationException
-                     | IllegalAccessException exception) {
+            } catch (SQLException  exception) {
                 if (i == maxTries) {
                     LOG.error("Error attempting to find document ID: {}", exception.getMessage());
                     return null;
@@ -149,7 +148,7 @@ public class DbUtil {
             conn.close();
             LOG.info("Last confirmation statement filed on {}", confirmationStatementDate);
             return confirmationStatementDate;
-        } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException exception) {
+        } catch (SQLException  exception) {
             throw new RuntimeException("Unable to get confirmation statement date from DB", exception);
         }
 
@@ -175,7 +174,7 @@ public class DbUtil {
             LOG.info("PSC Statement found: {}", pscStatement);
             LOG.info("XML format PSC statement: {}", xmlPscStatement);
             return xmlPscStatement;
-        } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException exception) {
+        } catch (SQLException exception) {
             throw new RuntimeException("Unable to get PSC statement from DB", exception);
         }
 
@@ -204,7 +203,7 @@ public class DbUtil {
             conn.close();
             LOG.info("PSC found: {} {}", pscForename, pscSurname);
             return pscFullName;
-        } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException exception) {
+        } catch (SQLException exception) {
             throw new RuntimeException("Unable to get PSC appointment from DB", exception);
         }
 
@@ -225,11 +224,7 @@ public class DbUtil {
     private String dbQueryCriteriaCompanyId(String sql, Object intParameter) throws SQLException {
         String companyNumber = null;
         Connection conn;
-        try {
-            conn = dbGetConnection();
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
-            throw new RuntimeException(ex);
-        }
+        conn = dbGetConnection();
         do {
             PreparedStatement preparedStatement = createPreparedStatement(conn, sql, intParameter);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -242,7 +237,7 @@ public class DbUtil {
         return companyNumber;
     }
 
-    private String dbCloneCompany(String companyNumber) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+    private String dbCloneCompany(String companyNumber) throws SQLException {
         final String sql = "{ ? = call tedium_pkg_generic.clonecorporate_body (?) }";
 
         Connection conn = dbGetConnection();
@@ -282,8 +277,7 @@ public class DbUtil {
         }
     }
 
-    private Connection dbGetConnection() throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException {
-        Class.forName("oracle.jdbc.driver.OracleDriver").newInstance();
+    private Connection dbGetConnection() throws SQLException {
         String user = testContext.getEnv().config.getString("chips-db-user");
         String pass = testContext.getEnv().config.getString("chips-db-pass");
         String url = testContext.getEnv().config.getString("chips-jdbc");
