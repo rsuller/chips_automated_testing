@@ -5,6 +5,8 @@ import static uk.gov.companieshouse.utils.RandomStringCreator.randomAlphaNumeric
 
 import io.cucumber.java.en.When;
 import java.util.Date;
+
+import uk.gov.companieshouse.data.datamodel.Company;
 import uk.gov.companieshouse.enums.Form;
 import uk.gov.companieshouse.pageobjects.ConfirmCompanyIdentityPopup;
 import uk.gov.companieshouse.pageobjects.companyname.ChangeCompanyNamePage;
@@ -19,8 +21,13 @@ public class ChangeCompanyNameStepDefs {
     private final CompanyDetails companyDetails;
     private final CompanyDetailsScreen companyDetailsScreen;
     private final DocumentDetails documentDetails;
+
     private final String fullProposedName = "COMPANY NAME CHANGE " + randomAlphaNumeric(6).toUpperCase()
             + " " + getDateAsString(new Date());
+    private final Company company = new Company.CompanyBuilder()
+            .createDefaultCompany()
+            .withName(fullProposedName)
+            .build();
 
 
     /**
@@ -44,9 +51,9 @@ public class ChangeCompanyNameStepDefs {
     public void giveNoticeOfCompanyNameChange() {
         changeCompanyNamePage
                 .waitUntilFormDisplayed(Form.CONNOT)
-                .enterProposedName(fullProposedName)
-                .reKeyProposedName(fullProposedName)
-                .selectNameEnding(companyDetails.getCompanyObject().getNameEnding().trim())
+                .enterProposedName(company.getName())
+                .reKeyProposedName(company.getName())
+                .selectNameEnding(company.getNameEnding())
                 .selectNm01MethodOfChange()
                 .saveForm();
         confirmCompanyIdentityPopup.clickYesLink();
@@ -60,12 +67,14 @@ public class ChangeCompanyNameStepDefs {
     public void confirmChangeOfNameBySpecialResolution() {
         changeCompanyNamePage
                 .waitUntilFormDisplayed(Form.RES15)
-                .enterProposedName(fullProposedName)
-                .reKeyProposedName(fullProposedName)
-                .selectNameEnding(companyDetails.getCompanyObject().getNameEnding().trim())
+                .enterProposedName(company.getName())
+                .reKeyProposedName(company.getName())
+                .selectNameEnding(company.getNameEnding())
                 .enterMeetingDateAsToday()
                 .executeChangeOfName()
                 .saveForm();
+        // set the new company details to be stored memory for company search
+        companyDetails.setCompanyObject(company);
         confirmCompanyIdentityPopup.clickYesLink();
         changeCompanyNamePage.useRoAddressAsPresenter();
     }
@@ -77,7 +86,7 @@ public class ChangeCompanyNameStepDefs {
     public void companyNameIsChangedAndResolutionDisplayed() {
         Form form = Form.RES15;
         companyDetailsScreen
-                .verifyNewCompanyName(fullProposedName + " " + companyDetails.getCompanyObject().getNameEnding())
+                .verifyNewCompanyName(company.getName() + " " + company.getNameEnding())
                 .getExpectedTransactionFromHistory(form.getType(), documentDetails.getReceivedDate(),
                 "ACCEPTED", form.getTransactionHistoryPartialDescription());
     }
