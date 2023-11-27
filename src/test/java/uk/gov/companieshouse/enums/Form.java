@@ -35,8 +35,8 @@ public enum Form {
     PSC07("PSC07", "PSC07", false, "CESSATION OF"),
 
     PSC08("PSC08", "Notification Of PSC Statement", false, "NOTIFICATION OF PSC STATEMENT"),
-    PSC09("PSC09", "Withdrawal of an additional matters", false, "WITHDRAWAL OF A PERSON WITH");
-
+    PSC09("PSC09", "Withdrawal of an additional matters", false, "WITHDRAWAL OF A PERSON WITH"),
+    LLPSC04("LLPSC04", "Change Person with Significant Control", false, "PSC'S CHANGE OF PARTICULARS");
 
 
     private final String type;
