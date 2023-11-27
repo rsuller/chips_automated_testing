@@ -71,6 +71,7 @@ public class XmlHelper extends ElementInteraction {
         xml = insertPscFirstName(xml, individualPsc.getForename());
         xml = insertPscSurname(xml, individualPsc.getSurname());
         xml = insertExistingPscName(xml, company);
+        xml = insertExistingCorporatePscName(xml, company);
         xml = insertRlePscName(xml, relevantLegalEntityPsc.getEntityName());
         xml = insertOrpPscName(xml, otherRegistrablePersonPsc.getEntityName());
         xml = insertNewChargeNumber(xml);
@@ -382,6 +383,23 @@ public class XmlHelper extends ElementInteraction {
             LOG.info("Replacing ${EXISTING_PSC_FIRST_NAME} with: " + pscFirstName);
             LOG.info("Replacing ${EXISTING_PSC_SURNAME} with: " + pscSurname);
             return xml.replaceAll("\\$\\{EXISTING_PSC_FIRST_NAME}", pscFirstName).replaceAll("\\$\\{EXISTING_PSC_SURNAME}", pscSurname);
+        } else {
+            return xml;
+        }
+    }
+
+    /**
+     * Changes any instances of ${EXISTING_CORPORATE_PSC_NAME}in the xml with the name of the PSC selected
+     * from the Database. Needed for electronic change forms
+     * @param xml xml to be transformed.
+     * @param company the corporate body that used to select the existing corporate PSC from the database.
+     * @return xml that was provided with EXISTING_CORPORATE_PSC_NAME replaced with corporate PSC name
+     */
+    private String insertExistingCorporatePscName(final String xml, Company company) {
+        if (xml.contains("${EXISTING_CORPORATE_PSC_NAME}")) {
+            String corporatePscName = dbUtil.getCorporatePscAppointmentName(company.getCorporateBodyId());
+            LOG.info("Replacing ${EXISTING_CORPORATE_PSC_NAME} with: " + corporatePscName);
+            return xml.replaceAll("\\$\\{EXISTING_CORPORATE_PSC_NAME}", corporatePscName).replaceAll("\\$\\{EXISTING_PSC_SURNAME}", corporatePscName);
         } else {
             return xml;
         }

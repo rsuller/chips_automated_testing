@@ -31,6 +31,7 @@ public class EfTestHarnessResponsePage extends ChipsCommonPage<EfTestHarnessResp
      * Verify that the xml submission has returned the expected response.
      */
     public void verifyFormResponse() {
+        waitUntilElementDisplayed(submissionResponseField);
         String submissionResponse = submissionResponseField.getText();
         Verify.verify(submissionResponse.equals("Response code is: 0"), "Received response: " + submissionResponse
                 + ". Expected code should be 0. Check XML submission for errors");

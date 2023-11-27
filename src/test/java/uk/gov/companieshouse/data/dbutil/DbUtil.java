@@ -182,7 +182,7 @@ public class DbUtil {
     }
 
     /**
-     * Use the corporateBodyId stored in memory to return the PSC appointment details for that company.
+     * Use the corporateBodyId stored in memory to return the individual PSC appointment details for that company.
      * @param corporateBodyId the ID of the company used to search the DB for.
      */
     public List<String> getIndividualPscAppointmentName(String corporateBodyId) {
@@ -204,6 +204,31 @@ public class DbUtil {
             conn.close();
             LOG.info("PSC found: {} {}", pscForename, pscSurname);
             return pscFullName;
+        } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException exception) {
+            throw new RuntimeException("Unable to get Individual PSC appointment from DB", exception);
+        }
+
+    }
+
+    /**
+     * Use the corporateBodyId stored in memory to return the corporate PSC appointment details for that company.
+     * @param corporateBodyId the ID of the company used to search the DB for.
+     */
+    public String getCorporatePscAppointmentName(String corporateBodyId) {
+        final String sql = "select * "
+                + "from corporate_body_appointment "
+                + "where corporate_body_id = ? "
+                + "AND APPOINTMENT_TYPE_ID = 5008 "
+                + "AND resignation_ind = 'N' ";
+
+        try (Connection conn = dbGetConnection();
+             PreparedStatement preparedStatement = createPreparedStatement(conn, sql, corporateBodyId);
+             ResultSet rs = preparedStatement.executeQuery()) {
+            rs.next();
+            String corporatePscName = rs.getString("OFFICER_SURNAME");
+            conn.close();
+            LOG.info("Corporate PSC found: {}", corporatePscName);
+            return corporatePscName;
         } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException exception) {
             throw new RuntimeException("Unable to get PSC appointment from DB", exception);
         }

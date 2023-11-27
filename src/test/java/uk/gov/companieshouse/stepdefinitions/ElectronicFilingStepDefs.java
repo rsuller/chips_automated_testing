@@ -107,6 +107,11 @@ public class ElectronicFilingStepDefs {
                 company = dbUtil.cloneCompany(CompanySql.PSC_SQL_LTD_COMPANY_WITH_PSC);
                 autoAccepted = true;
                 break;
+            case "PSC05":
+                filename = "psc05_successful_submission.xml";
+                company = dbUtil.cloneCompany(CompanySql.PSC_SQL_LTD_COMPANY_WITH_RLE_PSC);
+                autoAccepted = true;
+                break;
             case "PSC07":
                 filename = "psc07_successful_submission.xml";
                 company = dbUtil.cloneCompany(CompanySql.PSC_SQL_LTD_COMPANY_WITH_PSC);
