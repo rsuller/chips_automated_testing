@@ -9,7 +9,7 @@ Feature: Process an LLPSC04 giving notice of change of details for individual wi
 
 
   @electronic
-  Scenario: Electronic Filed auto accepted LLPSC04 form processing a change of individual PSC details
-    Given I am logged in as a user in the "RM1" organisational unit
+  Scenario: Electronic Filed auto accepted LLPSC04 form processing a change of individual PSC details for an LLP
+    Given I am logged in as a user in the "Limited Liability Partnerships" organisational unit
     And I process an e-filed "LLPSC04" form for a private limited company
     Then company history information is updated with the accepted LLPSC04 transaction

@@ -122,6 +122,11 @@ public class ElectronicFilingStepDefs {
                 company = dbUtil.cloneCompany(CompanySql.PSC_SQL_LTD_COMPANY_WITH_PSC_STATEMENT);
                 autoAccepted = true;
                 break;
+            case "LLPSC04":
+                filename = "llpsc04_successful_submission.xml";
+                company = dbUtil.cloneCompany(CompanySql.PSC_SQL_LLP_WITH_PSC);
+                autoAccepted = true;
+                break;
             default:
                 throw new RuntimeException("Unable to find SQL for specified form type");
         }

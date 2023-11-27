@@ -80,7 +80,7 @@ public class CompanySearchPage extends ElementInteraction {
     }
 
     private CompanySearchPage enterCompanyName(String companyName) {
-       typeText(elementSearchCompanyName, companyName);
+       elementSearchCompanyName.sendKeys(companyName);
        return this;
     }
 
