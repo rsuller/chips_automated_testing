@@ -203,8 +203,69 @@ public class DbUtil {
             conn.close();
             LOG.info("PSC found: {} {}", pscForename, pscSurname);
             return pscFullName;
-        } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException exception) {
+        } catch (SQLException exception) {
             throw new RuntimeException("Unable to get Individual PSC appointment from DB", exception);
+        }
+
+    }
+
+    /**
+     * Use the corporateBodyId stored in memory to return the director appointment details for that company.
+     * @param corporateBodyId the ID of the company used to search the DB for.
+     */
+    public List<String> getDirectorAppointment(String corporateBodyId) {
+        final String sql = "select cba.officer_forename_1, cba.officer_surname, od.officer_date_of_birth "
+                + "from corporate_body_appointment cba "
+                + "join officer_detail od on cba.officer_id = od.officer_id "
+                + "where corporate_body_id = ? "
+                + "AND cba.APPOINTMENT_TYPE_ID = 2 "
+                + "AND cba.resignation_ind = 'N'";
+
+        try (Connection conn = dbGetConnection();
+             PreparedStatement preparedStatement = createPreparedStatement(conn, sql, corporateBodyId);
+             ResultSet rs = preparedStatement.executeQuery()) {
+            rs.next();
+            String directorForename = rs.getString("OFFICER_FORENAME_1");
+            String directorSurname = rs.getString("OFFICER_SURNAME");
+            String directorDob = rs.getString("OFFICER_DATE_OF_BIRTH");
+            List<String> directorFullDetails = new ArrayList<>();
+            directorFullDetails.add(directorForename);
+            directorFullDetails.add(directorSurname);
+            directorFullDetails.add(directorDob);
+            conn.close();
+            LOG.info("Director found: {} {}", directorForename, directorSurname);
+            return directorFullDetails;
+        } catch (SQLException exception) {
+            throw new RuntimeException("Unable to get director appointment from DB", exception);
+        }
+
+    }
+
+    /**
+     * Use the corporateBodyId stored in memory to return the director appointment details for that company.
+     * @param corporateBodyId the ID of the company used to search the DB for.
+     */
+    public List<String> getSecretaryAppointment(String corporateBodyId) {
+        final String sql = "select * "
+                + "from corporate_body_appointment "
+                + "where corporate_body_id = ? "
+                + "AND APPOINTMENT_TYPE_ID = 1 "
+                + "AND resignation_ind = 'N' ";
+
+        try (Connection conn = dbGetConnection();
+             PreparedStatement preparedStatement = createPreparedStatement(conn, sql, corporateBodyId);
+             ResultSet rs = preparedStatement.executeQuery()) {
+            rs.next();
+            String directorForename = rs.getString("OFFICER_FORENAME_1");
+            String directorSurname = rs.getString("OFFICER_SURNAME");
+            List<String> directorFullName = new ArrayList<>();
+            directorFullName.add(directorForename);
+            directorFullName.add(directorSurname);
+            conn.close();
+            LOG.info("Director found: {} {}", directorForename, directorSurname);
+            return directorFullName;
+        } catch (SQLException exception) {
+            throw new RuntimeException("Unable to get secretary appointment from DB", exception);
         }
 
     }
@@ -228,10 +289,10 @@ public class DbUtil {
             conn.close();
             LOG.info("Corporate PSC found: {}", corporatePscName);
             return corporatePscName;
-        } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException exception) {
         } catch (SQLException exception) {
             throw new RuntimeException("Unable to get PSC appointment from DB", exception);
         }
+
 
     }
   

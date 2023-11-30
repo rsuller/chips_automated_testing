@@ -3,7 +3,7 @@ Feature: TM01 - Termination of a director appointment
 
   As a Chips Examiner
   I want to update company records with a TM01
-  So that the company's records can reflect when a new director has been terminated
+  So that the company's records can reflect when a director has been terminated
 
   TM01: Is the 'termination of appointment of director' form
 
@@ -36,4 +36,10 @@ Feature: TM01 - Termination of a director appointment
     When I process a FES "TM01" for a "private limited company" registered in "Eng/Wales"
     And I select a current active appointment
     And I complete mandatory details to terminate a director
+    Then company history information is updated with the accepted TM01 transaction
+
+  @electronic
+  Scenario: Electronic Filed auto accepted TM01 form processing a director termination
+    Given I am logged in as a user in the "RM1" organisational unit
+    And I process an e-filed "TM01" form for a private limited company
     Then company history information is updated with the accepted TM01 transaction
