@@ -203,7 +203,7 @@ public class DbUtil {
             conn.close();
             LOG.info("PSC found: {} {}", pscForename, pscSurname);
             return pscFullName;
-        } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException exception) {
+        } catch (SQLException exception) {
             throw new RuntimeException("Unable to get Individual PSC appointment from DB", exception);
         }
 
