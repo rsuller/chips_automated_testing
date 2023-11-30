@@ -95,6 +95,8 @@ public class CommonStepDefs {
      */
     @Then("^company history information is updated with the accepted (.*) transaction$")
     public void companyHistoryInformationIsUpdated(String formName) {
+        log.info("Checking company history information is updated with the accepted {} transaction",
+                formName);
         Form form = Form.getFormByType(formName);
         String descriptionToCheck;
         companySearchPage
