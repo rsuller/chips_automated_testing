@@ -228,7 +228,6 @@ public class DbUtil {
             conn.close();
             LOG.info("Corporate PSC found: {}", corporatePscName);
             return corporatePscName;
-        } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException exception) {
         } catch (SQLException exception) {
             throw new RuntimeException("Unable to get PSC appointment from DB", exception);
         }
