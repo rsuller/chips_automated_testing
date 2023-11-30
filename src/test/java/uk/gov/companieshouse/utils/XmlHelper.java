@@ -23,6 +23,7 @@ import uk.gov.companieshouse.data.datamodel.Director;
 import uk.gov.companieshouse.data.datamodel.PersonOfSignificantControl;
 import uk.gov.companieshouse.data.datamodel.Secretary;
 import uk.gov.companieshouse.data.dbutil.DbUtil;
+import uk.gov.companieshouse.testdata.DocumentDetails;
 
 public class XmlHelper extends ElementInteraction {
 
@@ -36,6 +37,7 @@ public class XmlHelper extends ElementInteraction {
             CorporatePersonOfSignificantControl.CorporatePersonOfSignificantControlBuilder().createDefaultCorporatePsc().build();
     private final CorporatePersonOfSignificantControl otherRegistrablePersonPsc = new
             CorporatePersonOfSignificantControl.CorporatePersonOfSignificantControlBuilder().createDefaultCorporatePsc().build();
+    private final DocumentDetails documentDetails;
 
 
     private static final Logger LOG = LoggerFactory.getLogger(XmlHelper.class);
@@ -43,9 +45,10 @@ public class XmlHelper extends ElementInteraction {
     /**
      * Required constructor for class.
      */
-    public XmlHelper(TestContext testContext, DbUtil dbUtil) {
+    public XmlHelper(TestContext testContext, DbUtil dbUtil, DocumentDetails documentDetails) {
         super(testContext);
         this.dbUtil = dbUtil;
+        this.documentDetails = documentDetails;
     }
 
 
@@ -71,8 +74,7 @@ public class XmlHelper extends ElementInteraction {
         xml = insertDirectorSurname(xml, director.getSurname());
         xml = insertSecretaryFirstName(xml, secretary.getForename());
         xml = insertSecretarySurname(xml, secretary.getSurname());
-        xml = insertExistingDirectorDetails(xml, company);
-        //xml = insertExistingSecretaryDetails(xml, company);
+        xml = insertExistingOfficerDetails(xml, company);
         xml = insertPscFirstName(xml, individualPsc.getForename());
         xml = insertPscSurname(xml, individualPsc.getSurname());
         xml = insertExistingPscName(xml, company);
@@ -321,20 +323,28 @@ public class XmlHelper extends ElementInteraction {
     }
 
     /**
-     * Changes any instances of ${EXISTING_DIRECTOR_FIRST_NAME}, ${EXISTING_DIRECTOR_SURNAME} and ${EXISTING_DIRECTOR_DOB}
+     * Changes any instances of ${EXISTING_OFFICER_FIRST_NAME}, ${EXISTING_OFFICER_SURNAME} and ${EXISTING_OFFICER_DOB}
      * in the xml with the details of the director selected from the database. Needed for electronic change forms
      *
      * @param xml     xml to be transformed.
      * @param company the corporate body that used to select the existing director from the database.
-     * @return xml that was provided with EXISTING_DIRECTOR_FIRST_NAME replaced with first name, EXISTING_DIRECTOR_SURNAME
-     * replaced with surname and EXISTING_DIRECTOR_DOB rel=pklaced with the date of birth in XML format
+     * @return xml that was provided with EXISTING_OFFICER_FIRST_NAME replaced with first name, EXISTING_OFFICER_SURNAME
+     *     replaced with surname and EXISTING_OFFICER_DOB replaced with the date of birth in XML format.
      */
-    private String insertExistingDirectorDetails(final String xml, Company company) {
-        if (xml.contains("${EXISTING_DIRECTOR_FIRST_NAME}")) {
+    private String insertExistingOfficerDetails(final String xml, Company company) {
+        if (xml.contains("${EXISTING_OFFICER_FIRST_NAME}")) {
+            // Switch the officer to retrieve based on the form type.
+            String officerType;
+            String formType = documentDetails.getFormType();
+            if (formType.equals("TM01")) {
+                officerType = "director";
+            } else {
+                officerType = "secretary";
+            }
             Date formattedDob;
             SimpleDateFormat directorDobFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             SimpleDateFormat xmlDateFormatter = new SimpleDateFormat("yyyy-MM-dd");
-            List<String> directorDetails = dbUtil.getDirectorAppointment(company.getCorporateBodyId());
+            List<String> directorDetails = dbUtil.getOfficerAppointment(company.getCorporateBodyId(), officerType);
             String directorFirstName = directorDetails.get(0);
             String directorSurname = directorDetails.get(1);
             String directorDobDateFromDb = directorDetails.get(2);
@@ -345,40 +355,17 @@ public class XmlHelper extends ElementInteraction {
             }
             String xmlDobDate = xmlDateFormatter.format(formattedDob);
 
-            LOG.info("Replacing ${EXISTING_DIRECTOR_FIRST_NAME} with: " + directorFirstName);
-            LOG.info("Replacing ${EXISTING_DIRECTOR_SURNAME} with: " + directorSurname);
-            LOG.info("Replacing ${EXISTING_DIRECTOR_DOB} with: " + xmlDobDate);
+            LOG.info("Replacing ${EXISTING_OFFICER_FIRST_NAME} with: " + directorFirstName);
+            LOG.info("Replacing ${EXISTING_OFFICER_SURNAME} with: " + directorSurname);
+            LOG.info("Replacing ${EXISTING_OFFICER_DOB} with: " + xmlDobDate);
             return xml
-                    .replaceAll("\\$\\{EXISTING_DIRECTOR_FIRST_NAME}", directorFirstName)
-                    .replaceAll("\\$\\{EXISTING_DIRECTOR_SURNAME}", directorSurname)
-                    .replaceAll("\\$\\{EXISTING_DIRECTOR_DOB}", xmlDobDate);
+                    .replaceAll("\\$\\{EXISTING_OFFICER_FIRST_NAME}", directorFirstName)
+                    .replaceAll("\\$\\{EXISTING_OFFICER_SURNAME}", directorSurname)
+                    .replaceAll("\\$\\{EXISTING_OFFICER_DOB}", xmlDobDate);
         } else {
             return xml;
         }
     }
-
-//    /**
-//     * Changes any instances of ${EXISTING_SECRETARY_FIRST_NAME} and ${EXISTING_SECRETARY_SURNAME} in the xml with the name
-//     * of the director selected from the database. Needed for electronic change forms
-//     * @param xml xml to be transformed.
-//     * @param company the corporate body that used to select the existing director from the database.
-//     * @return xml that was provided with EXISTING_SECRETARY_FIRST_NAME replaced with first name and EXISTING_SECRETARY_SURNAME
-//     * replaced with surname
-//     */
-//    private String insertExistingSecretaryName(final String xml, Company company) {
-//        if (xml.contains("${EXISTING_SECRETARY_FIRST_NAME}")) {
-//            List<String> secretaryFullName = dbUtil.getSecretaryAppointmentName(company.getCorporateBodyId());
-//            String secretaryFirstName = secretaryFullName.get(0);
-//            String secretarySurname = secretaryFullName.get(1);
-//            LOG.info("Replacing ${EXISTING_SECRETARY_FIRST_NAME} with: " + secretaryFirstName);
-//            LOG.info("Replacing ${EXISTING_SECRETARY_SURNAME} with: " + secretarySurname);
-//            return xml
-//                    .replaceAll("\\$\\{EXISTING_SECRETARY_FIRST_NAME}", secretaryFirstName)
-//                    .replaceAll("\\$\\{EXISTING_SECRETARY_SURNAME}", secretarySurname);
-//        } else {
-//            return xml;
-//        }
-//    }
 
     /**
      * Changes any instances of ${SECRETARY_FIRST_NAME} in the xml with the first name.

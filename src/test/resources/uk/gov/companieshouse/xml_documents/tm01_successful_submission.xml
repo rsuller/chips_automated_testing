@@ -32,10 +32,10 @@
                 <officer>
                     <actionDate>${RECEIPT_DATE}</actionDate>
                     <personName>
-                        <forename>${EXISTING_DIRECTOR_FIRST_NAME}</forename>
-                        <surname>${EXISTING_DIRECTOR_SURNAME}</surname>
+                        <forename>${EXISTING_OFFICER_FIRST_NAME}</forename>
+                        <surname>${EXISTING_OFFICER_SURNAME}</surname>
                     </personName>
-                    <birthDate>${EXISTING_DIRECTOR_DOB}</birthDate>
+                    <birthDate>${EXISTING_OFFICER_DOB}</birthDate>
                     <corporateOfficer>false</corporateOfficer>
                 </officer>
             </officers>
