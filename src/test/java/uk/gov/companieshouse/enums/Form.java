@@ -32,6 +32,7 @@ public enum Form {
     PSC01("PSC01", "Create Person with Significant Control", false, "NOTIFICATION OF A PERSON WITH"),
     PSC02("PSC02", "Relevant Legal Entity with Significant Control", false, "NOTIFICATION OF A PERSON WITH"),
     PSC04("PSC04", "Change Person with Significant Control", false, "PSC'S CHANGE OF PARTICULARS"),
+    PSC05("PSC05", "Change Person with Significant Control", false, "PSC'S CHANGE OF PARTICULARS"),
     PSC07("PSC07", "PSC07", false, "CESSATION OF"),
 
     PSC08("PSC08", "Notification Of PSC Statement", false, "NOTIFICATION OF PSC STATEMENT"),

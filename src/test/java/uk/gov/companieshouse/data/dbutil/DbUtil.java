@@ -181,7 +181,7 @@ public class DbUtil {
     }
 
     /**
-     * Use the corporateBodyId stored in memory to return the PSC appointment details for that company.
+     * Use the corporateBodyId stored in memory to return the individual PSC appointment details for that company.
      * @param corporateBodyId the ID of the company used to search the DB for.
      */
     public List<String> getIndividualPscAppointmentName(String corporateBodyId) {
@@ -204,10 +204,40 @@ public class DbUtil {
             LOG.info("PSC found: {} {}", pscForename, pscSurname);
             return pscFullName;
         } catch (SQLException exception) {
-            throw new RuntimeException("Unable to get PSC appointment from DB", exception);
+            throw new RuntimeException("Unable to get Individual PSC appointment from DB", exception);
         }
 
     }
+
+    /**
+     * Use the corporateBodyId stored in memory to return the corporate PSC appointment details for that company.
+     * @param corporateBodyId the ID of the company used to search the DB for.
+     */
+    public String getCorporatePscAppointmentName(String corporateBodyId) {
+        final String sql = "SELECT officer_surname FROM corporate_body_appointment "
+                + "WHERE corporate_body_id = ? AND appointment_type_id = 5008 "
+                + "AND resignation_ind = 'N'";
+
+        try (Connection conn = dbGetConnection();
+             PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+
+            preparedStatement.setString(1, corporateBodyId);
+
+            try (ResultSet rs = preparedStatement.executeQuery()) {
+                if (rs.next()) {
+                    String corporatePscName = rs.getString("officer_surname");
+                    LOG.info("Corporate PSC found: {}", corporatePscName);
+                    return corporatePscName;
+                } else {
+                    LOG.info("No Corporate PSC found for ID: {}", corporateBodyId);
+                    throw new RuntimeException("No Corporate PSC found for ID: " + corporateBodyId);
+                }
+            }
+        } catch (SQLException exception) {
+            throw new RuntimeException("Unable to get PSC appointment from DB", exception);
+        }
+    }
+
   
     private PreparedStatement createPreparedStatement(Connection conn, String sql, Object... params) throws SQLException {
         final PreparedStatement ps = conn.prepareStatement(sql);
