@@ -222,32 +222,36 @@ public class DbUtil {
                 + "AND cba.APPOINTMENT_TYPE_ID = ? "
                 + "AND cba.resignation_ind = 'N' "
                 + "AND od.officer_date_of_birth is not null";
-        int officerTypeId;
-        if (officerType.equals("secretary")) {
-            officerTypeId = 1;
-        } else {
-            officerTypeId = 2;
-        }
+
+        int officerTypeId = officerType.equals("secretary") ? 1 : 2;
+
 
         try (Connection conn = dbGetConnection();
              PreparedStatement preparedStatement = createPreparedStatement(conn, sql, corporateBodyId, officerTypeId);
              ResultSet rs = preparedStatement.executeQuery()) {
-            rs.next();
-            String officerForename = rs.getString("OFFICER_FORENAME_1");
-            String officerSurname = rs.getString("OFFICER_SURNAME");
-            String officerDob = rs.getString("OFFICER_DATE_OF_BIRTH");
-            List<String> officerFullDetails = new ArrayList<>();
-            officerFullDetails.add(officerForename);
-            officerFullDetails.add(officerSurname);
-            officerFullDetails.add(officerDob);
-            conn.close();
-            LOG.info("{} found: {} {}", officerType, officerForename, officerSurname);
-            return officerFullDetails;
+
+            if (rs.next()) {
+                String officerForename = rs.getString("OFFICER_FORENAME_1");
+                String officerSurname = rs.getString("OFFICER_SURNAME");
+                String officerDob = rs.getString("OFFICER_DATE_OF_BIRTH");
+                List<String> officerFullDetails = new ArrayList<>();
+                officerFullDetails.add(officerForename);
+                officerFullDetails.add(officerSurname);
+                officerFullDetails.add(officerDob);
+
+                LOG.info("{} found: {} {}", officerType, officerForename, officerSurname);
+                return officerFullDetails;
+            }
+
+            LOG.info("No officer appointments found for type {}", officerType);
+            throw new RuntimeException("No officer has been found for type: " + officerType);
+
         } catch (SQLException exception) {
             throw new RuntimeException("Unable to get officer appointment from DB", exception);
         }
 
     }
+
 
     /**
      * Use the corporateBodyId stored in memory to return the corporate PSC appointment details for that company.
