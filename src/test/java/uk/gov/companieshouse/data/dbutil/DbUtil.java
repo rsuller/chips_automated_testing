@@ -214,25 +214,30 @@ public class DbUtil {
      * @param corporateBodyId the ID of the company used to search the DB for.
      */
     public String getCorporatePscAppointmentName(String corporateBodyId) {
-        final String sql = "select * "
-                + "from corporate_body_appointment "
-                + "where corporate_body_id = ? "
-                + "AND APPOINTMENT_TYPE_ID = 5008 "
-                + "AND resignation_ind = 'N' ";
+        final String sql = "SELECT officer_surname FROM corporate_body_appointment "
+                + "WHERE corporate_body_id = ? AND appointment_type_id = 5008 "
+                + "AND resignation_ind = 'N'";
 
         try (Connection conn = dbGetConnection();
-             PreparedStatement preparedStatement = createPreparedStatement(conn, sql, corporateBodyId);
-             ResultSet rs = preparedStatement.executeQuery()) {
-            rs.next();
-            String corporatePscName = rs.getString("OFFICER_SURNAME");
-            conn.close();
-            LOG.info("Corporate PSC found: {}", corporatePscName);
-            return corporatePscName;
+             PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+
+            preparedStatement.setString(1, corporateBodyId);
+
+            try (ResultSet rs = preparedStatement.executeQuery()) {
+                if (rs.next()) {
+                    String corporatePscName = rs.getString("officer_surname");
+                    LOG.info("Corporate PSC found: {}", corporatePscName);
+                    return corporatePscName;
+                } else {
+                    LOG.info("No Corporate PSC found for ID: {}", corporateBodyId);
+                    throw new RuntimeException("No Corporate PSC found for ID: " + corporateBodyId);
+                }
+            }
         } catch (SQLException exception) {
             throw new RuntimeException("Unable to get PSC appointment from DB", exception);
         }
-
     }
+
   
     private PreparedStatement createPreparedStatement(Connection conn, String sql, Object... params) throws SQLException {
         final PreparedStatement ps = conn.prepareStatement(sql);
