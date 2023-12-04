@@ -18,7 +18,8 @@ public enum Form {
     LIQ10("LIQ10", "Process Options - LIQ10", false, "NOTICE OF REMOVAL"),
     LIQ13("LIQ13", "Process Options - LIQ13", false, "NOTICE OF FINAL ACCOUNT "),
     LIQ14("LIQ14", "Process Options - LIQ14", false, "NOTICE OF FINAL ACCOUNT "),
-    TM01("TM01", "Terminate Officers", false, "APPOINTMENT TERMINATED"),
+    TM01("TM01", "Terminate Officers", false, "APPOINTMENT TERMINATED, DIRECT"),
+    TM02("TM02", "Terminate Officers", false, "APPOINTMENT TERMINATED, SECRET"),
     INS_600("600", "Process Options - 600", true, "NOTICE OF APPOINTMENT OF LIQ"),
     LREXEX("LRESEX", "Process Options - LRESEX", true, "EXTRAORDINARY RESOLUTION"),
     LRESSP("LRESSP", "Process Options - LRESSP", true, "SPECIAL RESOLUTION"),
@@ -38,6 +39,7 @@ public enum Form {
     PSC08("PSC08", "Notification Of PSC Statement", false, "NOTIFICATION OF PSC STATEMENT"),
     PSC09("PSC09", "Withdrawal of an additional matters", false, "WITHDRAWAL OF A PERSON WITH"),
     LLPSC04("LLPSC04", "Change Person with Significant Control", false, "PSC'S CHANGE OF PARTICULARS");
+
 
 
     private final String type;

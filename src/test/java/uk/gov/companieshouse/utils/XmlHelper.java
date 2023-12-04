@@ -1,15 +1,18 @@
 package uk.gov.companieshouse.utils;
 
 import com.google.common.base.Charsets;
+
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
+
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.slf4j.Logger;
@@ -20,6 +23,7 @@ import uk.gov.companieshouse.data.datamodel.Director;
 import uk.gov.companieshouse.data.datamodel.PersonOfSignificantControl;
 import uk.gov.companieshouse.data.datamodel.Secretary;
 import uk.gov.companieshouse.data.dbutil.DbUtil;
+import uk.gov.companieshouse.testdata.DocumentDetails;
 
 public class XmlHelper extends ElementInteraction {
 
@@ -33,6 +37,7 @@ public class XmlHelper extends ElementInteraction {
             CorporatePersonOfSignificantControl.CorporatePersonOfSignificantControlBuilder().createDefaultCorporatePsc().build();
     private final CorporatePersonOfSignificantControl otherRegistrablePersonPsc = new
             CorporatePersonOfSignificantControl.CorporatePersonOfSignificantControlBuilder().createDefaultCorporatePsc().build();
+    private final DocumentDetails documentDetails;
 
 
     private static final Logger LOG = LoggerFactory.getLogger(XmlHelper.class);
@@ -40,9 +45,10 @@ public class XmlHelper extends ElementInteraction {
     /**
      * Required constructor for class.
      */
-    public XmlHelper(TestContext testContext, DbUtil dbUtil) {
+    public XmlHelper(TestContext testContext, DbUtil dbUtil, DocumentDetails documentDetails) {
         super(testContext);
         this.dbUtil = dbUtil;
+        this.documentDetails = documentDetails;
     }
 
 
@@ -68,6 +74,7 @@ public class XmlHelper extends ElementInteraction {
         xml = insertDirectorSurname(xml, director.getSurname());
         xml = insertSecretaryFirstName(xml, secretary.getForename());
         xml = insertSecretarySurname(xml, secretary.getSurname());
+        xml = insertExistingOfficerDetails(xml, company);
         xml = insertPscFirstName(xml, individualPsc.getForename());
         xml = insertPscSurname(xml, individualPsc.getSurname());
         xml = insertExistingPscName(xml, company);
@@ -80,6 +87,7 @@ public class XmlHelper extends ElementInteraction {
 
     /**
      * Load the xml file from the resources folder.
+     *
      * @param xmlFile the file to load.
      */
     public void loadXml(String xmlFile) throws IOException {
@@ -267,7 +275,7 @@ public class XmlHelper extends ElementInteraction {
             return xml;
         }
     }
-    
+
     /**
      * Changes any instances of ${PSC_STATEMENT} in the xml with the PSC statement returned from the DB.
      *
@@ -276,9 +284,9 @@ public class XmlHelper extends ElementInteraction {
      */
     private String insertPscStatement(final String xml, Company company) {
         if (xml.contains("${PSC_STATEMENT}")) {
-        String pscStatement = dbUtil.getPscStatement(company.getCorporateBodyId());
-        LOG.info("Replacing ${PSC_STATEMENT} with: " + pscStatement);
-        return xml.replaceAll("\\$\\{PSC_STATEMENT}", pscStatement);
+            String pscStatement = dbUtil.getPscStatement(company.getCorporateBodyId());
+            LOG.info("Replacing ${PSC_STATEMENT} with: " + pscStatement);
+            return xml.replaceAll("\\$\\{PSC_STATEMENT}", pscStatement);
         } else {
             return xml;
         }
@@ -286,6 +294,7 @@ public class XmlHelper extends ElementInteraction {
 
     /**
      * Changes any instances of ${DIRECTOR_FIRST_NAME} in the xml with the first name.
+     *
      * @param xml xml to be transformed
      * @return xml that was provided with DIRECTOR_FIRST_NAME replaced with firstName
      */
@@ -300,6 +309,7 @@ public class XmlHelper extends ElementInteraction {
 
     /**
      * Changes any instances of ${DIRECTOR_SURNAME} in the xml with the surname.
+     *
      * @param xml xml to be transformed
      * @return xml that was provided with DIRECTOR_SURNAME replaced with surname
      */
@@ -313,7 +323,53 @@ public class XmlHelper extends ElementInteraction {
     }
 
     /**
+     * Changes any instances of ${EXISTING_OFFICER_FIRST_NAME}, ${EXISTING_OFFICER_SURNAME} and ${EXISTING_OFFICER_DOB}
+     * in the xml with the details of the director selected from the database. Needed for electronic change forms
+     *
+     * @param xml     xml to be transformed.
+     * @param company the corporate body that used to select the existing director from the database.
+     * @return xml that was provided with EXISTING_OFFICER_FIRST_NAME replaced with first name, EXISTING_OFFICER_SURNAME
+     *     replaced with surname and EXISTING_OFFICER_DOB replaced with the date of birth in XML format.
+     */
+    private String insertExistingOfficerDetails(final String xml, Company company) {
+        if (xml.contains("${EXISTING_OFFICER_FIRST_NAME}")) {
+            // Switch the officer to retrieve based on the form type.
+            String officerType;
+            String formType = documentDetails.getFormType();
+            if (formType.equals("TM01")) {
+                officerType = "director";
+            } else {
+                officerType = "secretary";
+            }
+            Date formattedDob;
+            SimpleDateFormat directorDobFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            SimpleDateFormat xmlDateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+            List<String> directorDetails = dbUtil.getOfficerAppointment(company.getCorporateBodyId(), officerType);
+            String directorFirstName = directorDetails.get(0);
+            String directorSurname = directorDetails.get(1);
+            String directorDobDateFromDb = directorDetails.get(2);
+            try {
+                 formattedDob = directorDobFormatter.parse(directorDobDateFromDb);
+            } catch (ParseException exception) {
+                throw new RuntimeException(exception);
+            }
+            String xmlDobDate = xmlDateFormatter.format(formattedDob);
+
+            LOG.info("Replacing ${EXISTING_OFFICER_FIRST_NAME} with: " + directorFirstName);
+            LOG.info("Replacing ${EXISTING_OFFICER_SURNAME} with: " + directorSurname);
+            LOG.info("Replacing ${EXISTING_OFFICER_DOB} with: " + xmlDobDate);
+            return xml
+                    .replaceAll("\\$\\{EXISTING_OFFICER_FIRST_NAME}", directorFirstName)
+                    .replaceAll("\\$\\{EXISTING_OFFICER_SURNAME}", directorSurname)
+                    .replaceAll("\\$\\{EXISTING_OFFICER_DOB}", xmlDobDate);
+        } else {
+            return xml;
+        }
+    }
+
+    /**
      * Changes any instances of ${SECRETARY_FIRST_NAME} in the xml with the first name.
+     *
      * @param xml xml to be transformed
      * @return xml that was provided with SECRETARY_FIRST_NAME replaced with firstName
      */
@@ -328,6 +384,7 @@ public class XmlHelper extends ElementInteraction {
 
     /**
      * Changes any instances of ${SECRETARY_SURNAME} in the xml with the surname.
+     *
      * @param xml xml to be transformed
      * @return xml that was provided with SECRETARY_SURNAME replaced with surname
      */
@@ -342,6 +399,7 @@ public class XmlHelper extends ElementInteraction {
 
     /**
      * Changes any instances of ${PSC_FIRST_NAME} in the xml with the firstName.
+     *
      * @param xml xml to be transformed
      * @return xml that was provided with PSC_FIRST_NAME replaced with firstName
      */
@@ -356,6 +414,7 @@ public class XmlHelper extends ElementInteraction {
 
     /**
      * Changes any instances of ${PSC_SURNAME} in the xml with the surname.
+     *
      * @param xml xml to be transformed
      * @return xml that was provided with PSC_SURNAME replaced with surname
      */
@@ -371,7 +430,8 @@ public class XmlHelper extends ElementInteraction {
     /**
      * Changes any instances of ${EXISTING_PSC_FIRST_NAME} and ${EXISTING_PSC_SURNAME} in the xml with the name of the PSC selected
      * from the Database. Needed for electronic change forms
-     * @param xml xml to be transformed.
+     *
+     * @param xml     xml to be transformed.
      * @param company the corporate body that used to select the existing PSC from the database.
      * @return xml that was provided with EXISTING_PSC_FIRST_NAME replaced with first name and EXISTING_PSC_SURNAME replaced with surname
      */
@@ -391,7 +451,8 @@ public class XmlHelper extends ElementInteraction {
     /**
      * Changes any instances of ${EXISTING_CORPORATE_PSC_NAME}in the xml with the name of the PSC selected
      * from the Database. Needed for electronic change forms
-     * @param xml xml to be transformed.
+     *
+     * @param xml     xml to be transformed.
      * @param company the corporate body that used to select the existing corporate PSC from the database.
      * @return xml that was provided with EXISTING_CORPORATE_PSC_NAME replaced with corporate PSC name
      */
@@ -407,6 +468,7 @@ public class XmlHelper extends ElementInteraction {
 
     /**
      * Changes any instances of ${RLE_PSC_NAME} in the xml with the entity name.
+     *
      * @param xml xml to be transformed
      * @return xml that was provided with RLE_PSC_NAME replaced with entityName
      */
@@ -421,6 +483,7 @@ public class XmlHelper extends ElementInteraction {
 
     /**
      * Changes any instances of ${ORP_PSC_NAME} in the xml with the entity name.
+     *
      * @param xml xml to be transformed
      * @return xml that was provided with ORP_PSC_NAME replaced with entityName
      */
