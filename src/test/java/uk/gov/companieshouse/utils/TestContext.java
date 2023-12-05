@@ -13,6 +13,7 @@ import uk.gov.companieshouse.testdata.User;
 public class TestContext {
 
     public static final Logger log = LoggerFactory.getLogger(TestContext.class);
+    private final ThreadLocal<WebDriver> threadLocalDriver = new ThreadLocal<>();
     WebDriver driver;
     User user;
 
@@ -24,7 +25,7 @@ public class TestContext {
      * Initialise webdriver for Edge in IE mode.
      */
     public WebDriver getWebDriver() {
-        if (driver == null) {
+        if (threadLocalDriver.get() == null) {
             /*
             Set up for Edge in IE Mode
              */
@@ -39,10 +40,21 @@ public class TestContext {
                     InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, true);
 
             driver = new InternetExplorerDriver(ieOptions);
+            threadLocalDriver.set(driver);
 
         }
-        return driver;
+        return threadLocalDriver.get();
 
+    }
+
+    /**
+     * Closes the webdriver.
+     */
+    public void closeWebDriver() {
+        if (threadLocalDriver.get() != null) {
+            threadLocalDriver.get().quit();
+            threadLocalDriver.remove(); // Removes the WebDriver instance from the current thread
+        }
     }
 
     public void setUpUser(User user) {
