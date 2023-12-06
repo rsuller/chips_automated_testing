@@ -222,12 +222,9 @@ public class DbUtil {
                 + "AND cba.APPOINTMENT_TYPE_ID = ? "
                 + "AND cba.resignation_ind = 'N' "
                 + "AND od.officer_date_of_birth is not null";
-        int officerTypeId;
-        if (officerType.equals("secretary")) {
-            officerTypeId = 1;
-        } else {
-            officerTypeId = 2;
-        }
+
+        int officerTypeId = officerType.equals("secretary") ? 1 : 2;
+
 
         try (Connection conn = dbGetConnection();
              PreparedStatement preparedStatement = createPreparedStatement(conn, sql, corporateBodyId, officerTypeId);
