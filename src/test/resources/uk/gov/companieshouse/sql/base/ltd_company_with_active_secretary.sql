@@ -17,6 +17,7 @@ SELECT *
                                  AND CBA.APPOINTMENT_TYPE_ID = 1
                                  AND corporate_officer_ind = 'N'
                                  AND cba.resignation_ind = 'N'
+                                 AND (SELECT COUNT (1) FROM sight_required_request sr WHERE sr.corporate_body_id = cb.corporate_body_id)=0
                                  AND cb.corporate_body_short_name NOT LIKE '%(cloned)%')
                    WHERE ROWNUM <= 20)
         ORDER BY DBMS_RANDOM.VALUE)

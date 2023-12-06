@@ -232,78 +232,59 @@ public class DbUtil {
         try (Connection conn = dbGetConnection();
              PreparedStatement preparedStatement = createPreparedStatement(conn, sql, corporateBodyId, officerTypeId);
              ResultSet rs = preparedStatement.executeQuery()) {
-            rs.next();
-            String officerForename = rs.getString("OFFICER_FORENAME_1");
-            String officerSurname = rs.getString("OFFICER_SURNAME");
-            String officerDob = rs.getString("OFFICER_DATE_OF_BIRTH");
-            List<String> officerFullDetails = new ArrayList<>();
-            officerFullDetails.add(officerForename);
-            officerFullDetails.add(officerSurname);
-            officerFullDetails.add(officerDob);
-            conn.close();
-            LOG.info("{} found: {} {}", officerType, officerForename, officerSurname);
-            return officerFullDetails;
+
+            if (rs.next()) {
+                String officerForename = rs.getString("OFFICER_FORENAME_1");
+                String officerSurname = rs.getString("OFFICER_SURNAME");
+                String officerDob = rs.getString("OFFICER_DATE_OF_BIRTH");
+                List<String> officerFullDetails = new ArrayList<>();
+                officerFullDetails.add(officerForename);
+                officerFullDetails.add(officerSurname);
+                officerFullDetails.add(officerDob);
+
+                LOG.info("{} found: {} {}", officerType, officerForename, officerSurname);
+                return officerFullDetails;
+            }
+
+            LOG.info("No officer appointments found for type {}", officerType);
+            throw new RuntimeException("No officer has been found for type: " + officerType);
+
         } catch (SQLException exception) {
             throw new RuntimeException("Unable to get officer appointment from DB", exception);
         }
 
     }
 
-    /**
-     * Use the corporateBodyId stored in memory to return the director appointment details for that company.
-     * @param corporateBodyId the ID of the company used to search the DB for.
-     */
-    public List<String> getSecretaryAppointment(String corporateBodyId) {
-        final String sql = "select * "
-                + "from corporate_body_appointment "
-                + "where corporate_body_id = ? "
-                + "AND APPOINTMENT_TYPE_ID = 1 "
-                + "AND resignation_ind = 'N' ";
-
-        try (Connection conn = dbGetConnection();
-             PreparedStatement preparedStatement = createPreparedStatement(conn, sql, corporateBodyId);
-             ResultSet rs = preparedStatement.executeQuery()) {
-            rs.next();
-            String directorForename = rs.getString("OFFICER_FORENAME_1");
-            String directorSurname = rs.getString("OFFICER_SURNAME");
-            List<String> directorFullName = new ArrayList<>();
-            directorFullName.add(directorForename);
-            directorFullName.add(directorSurname);
-            conn.close();
-            LOG.info("Director found: {} {}", directorForename, directorSurname);
-            return directorFullName;
-        } catch (SQLException exception) {
-            throw new RuntimeException("Unable to get secretary appointment from DB", exception);
-        }
-
-    }
 
     /**
      * Use the corporateBodyId stored in memory to return the corporate PSC appointment details for that company.
      * @param corporateBodyId the ID of the company used to search the DB for.
      */
     public String getCorporatePscAppointmentName(String corporateBodyId) {
-        final String sql = "select * "
-                + "from corporate_body_appointment "
-                + "where corporate_body_id = ? "
-                + "AND APPOINTMENT_TYPE_ID = 5008 "
-                + "AND resignation_ind = 'N' ";
+        final String sql = "SELECT officer_surname FROM corporate_body_appointment "
+                + "WHERE corporate_body_id = ? AND appointment_type_id = 5008 "
+                + "AND resignation_ind = 'N'";
 
         try (Connection conn = dbGetConnection();
-             PreparedStatement preparedStatement = createPreparedStatement(conn, sql, corporateBodyId);
-             ResultSet rs = preparedStatement.executeQuery()) {
-            rs.next();
-            String corporatePscName = rs.getString("OFFICER_SURNAME");
-            conn.close();
-            LOG.info("Corporate PSC found: {}", corporatePscName);
-            return corporatePscName;
+             PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+
+            preparedStatement.setString(1, corporateBodyId);
+
+            try (ResultSet rs = preparedStatement.executeQuery()) {
+                if (rs.next()) {
+                    String corporatePscName = rs.getString("officer_surname");
+                    LOG.info("Corporate PSC found: {}", corporatePscName);
+                    return corporatePscName;
+                } else {
+                    LOG.info("No Corporate PSC found for ID: {}", corporateBodyId);
+                    throw new RuntimeException("No Corporate PSC found for ID: " + corporateBodyId);
+                }
+            }
         } catch (SQLException exception) {
             throw new RuntimeException("Unable to get PSC appointment from DB", exception);
         }
-
-
     }
-  
+
     private PreparedStatement createPreparedStatement(Connection conn, String sql, Object... params) throws SQLException {
         final PreparedStatement ps = conn.prepareStatement(sql);
 
