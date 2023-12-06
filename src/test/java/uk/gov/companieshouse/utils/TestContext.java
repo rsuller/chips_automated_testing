@@ -1,6 +1,7 @@
 package uk.gov.companieshouse.utils;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.ie.InternetExplorerOptions;
 import org.slf4j.Logger;
@@ -32,6 +33,7 @@ public class TestContext {
             log.info("Setting up Edge in IE Mode for testing");
 
             System.setProperty("webdriver.ie.driver", "drivers/IEDriverServer.exe");
+            System.setProperty("webdriver.chrome.driver", "drivers/chromedriver.exe");
             InternetExplorerOptions ieOptions = new InternetExplorerOptions();
             ieOptions.attachToEdgeChrome();
             ieOptions.ignoreZoomSettings();
@@ -39,7 +41,7 @@ public class TestContext {
             ieOptions.setCapability(
                     InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, true);
 
-            driver = new InternetExplorerDriver(ieOptions);
+            driver = new ChromeDriver();
             threadLocalDriver.set(driver);
 
         }
