@@ -332,32 +332,38 @@ public class XmlHelper extends ElementInteraction {
      *     replaced with surname and EXISTING_OFFICER_DOB replaced with the date of birth in XML format.
      */
     private String insertExistingOfficerDetails(final String xml, Company company) {
-        if (xml.contains("${EXISTING_OFFICER_FIRST_NAME}")) {
+        if (xml.contains("${EXISTING_OFFICER_FIRST_NAME}") || xml.contains("${EXISTING_OFFICER_SURNAME}")) {
             // Switch the officer to retrieve based on the form type.
             String officerType;
             String formType = documentDetails.getFormType();
             if (formType.equals("TM01") || formType.equals("CH01")) {
                 officerType = "director";
+            } else if (formType.equals("CH04")) {
+                officerType = "corporate secretary";
             } else {
                 officerType = "secretary";
             }
             Date formattedDob;
+            String xmlDobDate = null;
             SimpleDateFormat officerDobFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             SimpleDateFormat xmlDateFormatter = new SimpleDateFormat("yyyy-MM-dd");
             List<String> officerDetails = dbUtil.getOfficerAppointment(company.getCorporateBodyId(), officerType);
             String officerFirstName = officerDetails.get(0);
             String officerSurname = officerDetails.get(1);
             String officerDobDateFromDb = officerDetails.get(2);
-            try {
-                formattedDob = officerDobFormatter.parse(officerDobDateFromDb);
-            } catch (ParseException exception) {
-                throw new RuntimeException(exception);
+            if (officerDobDateFromDb != null) {
+                try {
+                    formattedDob = officerDobFormatter.parse(officerDobDateFromDb);
+                } catch (ParseException exception) {
+                    throw new RuntimeException(exception);
+                }
+                xmlDobDate = xmlDateFormatter.format(formattedDob);
+                LOG.info("Replacing ${EXISTING_OFFICER_DOB} with: " + xmlDobDate);
             }
-            String xmlDobDate = xmlDateFormatter.format(formattedDob);
-
-            LOG.info("Replacing ${EXISTING_OFFICER_FIRST_NAME} with: " + officerFirstName);
+             if (officerFirstName != null) {
+                 LOG.info("Replacing ${EXISTING_OFFICER_FIRST_NAME} with: " + officerFirstName);
+             }
             LOG.info("Replacing ${EXISTING_OFFICER_SURNAME} with: " + officerSurname);
-            LOG.info("Replacing ${EXISTING_OFFICER_DOB} with: " + xmlDobDate);
             return xml
                     .replaceAll("\\$\\{EXISTING_OFFICER_FIRST_NAME}", officerFirstName)
                     .replaceAll("\\$\\{EXISTING_OFFICER_SURNAME}", officerSurname)

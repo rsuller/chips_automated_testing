@@ -25,6 +25,8 @@ public enum CompanySql {
     BASE_SQL_LTD_COMPANY_WITH_ACTIVE_DIRECTOR("base/ltd_company_with_active_director.sql"),
     BASE_SQL_LTD_COMPANY_WITH_ACTIVE_SECRETARY(
             "base/ltd_company_with_active_secretary.sql"),
+    BASE_SQL_LTD_COMPANY_WITH_ACTIVE_CORPORATE_SECRETARY(
+            "base/ltd_company_with_active_corporate_secretary.sql"),
     BASE_SQL_lTD_WITH_ACTIVE_CORPORATE_DIRECTOR("base/ltd_company_with_active_corporate_director.sql"),
     CS_SQL_LTD_COMPANY_WITH_CS_DUE(
             "confirmation_statement/private_limited_company_eng_wales_with_cs_due.sql"),

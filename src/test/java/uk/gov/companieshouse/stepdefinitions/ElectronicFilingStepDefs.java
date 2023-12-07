@@ -152,6 +152,11 @@ public class ElectronicFilingStepDefs {
                 company = dbUtil.cloneCompany(CompanySql.BASE_SQL_LTD_COMPANY_WITH_ACTIVE_SECRETARY);
                 autoAccepted = true;
                 break;
+            case "CH04":
+                filename = "ch04_successful_submission.xml";
+                company = dbUtil.cloneCompany(CompanySql.BASE_SQL_LTD_COMPANY_WITH_ACTIVE_CORPORATE_SECRETARY);
+                autoAccepted = true;
+                break;
             default:
                 throw new RuntimeException("Unable to find SQL for specified form type");
         }
