@@ -2,6 +2,7 @@ package uk.gov.companieshouse;
 
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
+import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.gov.companieshouse.pageobjects.GlobalNavBar;
@@ -35,10 +36,11 @@ public class Hooks {
      */
     @Before
     public void setUp() {
-        testContext.getWebDriver().manage().deleteAllCookies();
-        testContext.getWebDriver().get(
+        WebDriver driver = testContext.getWebDriver();
+        driver.manage().deleteAllCookies();
+        driver.get(
                 testContext.getEnv().config.getString("chips_url"));
-        testContext.getWebDriver().manage().window().maximize();
+        driver.manage().window().maximize();
     }
 
     @Before("@electronic")
@@ -64,6 +66,6 @@ public class Hooks {
      */
     @After
     public void tearDown() {
-      testContext.getWebDriver().quit();
+      testContext.closeWebDriver();
     }
 }
