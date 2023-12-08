@@ -215,7 +215,7 @@ public class DbUtil {
      * @param officerType the type of officer to retrieve.
      */
     public List<String> getOfficerAppointment(String corporateBodyId, String officerType) {
-        final String sql = "select cba.officer_forename_1, cba.officer_surname, od.officer_date_of_birth "
+        String sql = "select cba.officer_forename_1, cba.officer_surname, od.officer_date_of_birth "
                 + "from corporate_body_appointment cba "
                 + "join officer_detail od on cba.officer_id = od.officer_id "
                 + "where corporate_body_id = ? "
@@ -223,7 +223,7 @@ public class DbUtil {
                 + "AND cba.resignation_ind = 'N' ";
         int officerTypeId;
         if (!officerType.contains("corporate")) {
-            sql.concat("AND od.officer_date_of_birth is not null");
+            sql = sql.concat("AND od.officer_date_of_birth is not null");
         }
         if (officerType.contains("secretary")) {
             officerTypeId = 1;
@@ -253,35 +253,6 @@ public class DbUtil {
 
         } catch (SQLException exception) {
             throw new RuntimeException("Unable to get officer appointment from DB", exception);
-        }
-
-    }
-
-    /**
-     * Use the corporateBodyId stored in memory to return the director appointment details for that company.
-     * @param corporateBodyId the ID of the company used to search the DB for.
-     */
-    public List<String> getSecretaryAppointment(String corporateBodyId) {
-        final String sql = "select * "
-                + "from corporate_body_appointment "
-                + "where corporate_body_id = ? "
-                + "AND APPOINTMENT_TYPE_ID = 1 "
-                + "AND resignation_ind = 'N' ";
-
-        try (Connection conn = dbGetConnection();
-             PreparedStatement preparedStatement = createPreparedStatement(conn, sql, corporateBodyId);
-             ResultSet rs = preparedStatement.executeQuery()) {
-            rs.next();
-            String directorForename = rs.getString("OFFICER_FORENAME_1");
-            String directorSurname = rs.getString("OFFICER_SURNAME");
-            List<String> directorFullName = new ArrayList<>();
-            directorFullName.add(directorForename);
-            directorFullName.add(directorSurname);
-            conn.close();
-            LOG.info("Director found: {} {}", directorForename, directorSurname);
-            return directorFullName;
-        } catch (SQLException exception) {
-            throw new RuntimeException("Unable to get secretary appointment from DB", exception);
         }
 
     }

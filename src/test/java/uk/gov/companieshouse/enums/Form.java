@@ -11,7 +11,7 @@ public enum Form {
     CH01("CH01", "Change Officers", false, "DIRECTOR'S CHANGE OF PARTICULA..."),
     CH02("CH02", "Change Officers", false, "CORPORATE DIRECTOR'S CHANGE OF..."),
     CH03("CH03", "Change Officers", false, "SECRETARY'S CHANGE OF PARTICUL..."),
-    CH04("CH04", "Change Officers", false, "CORPORATE SECRETARY'S CHANGE O..."),
+    CH04("CH04", "Change Officers", false, "CORPORATE SECRETARY'S CHANGE"),
     CS01("CS01", "Confirmation Statement", false, "CONFIRMATION STATEMENT"),
     DS01("DS01", "Process Voluntary Dissolution Form DS01/LLDS01", true, "APPLICATION FOR STRIKING-OFF"),
     LIQ01("LIQ01", "Process Options - LIQ01", true, "NOTICE OF STATUTORY DECL"),
