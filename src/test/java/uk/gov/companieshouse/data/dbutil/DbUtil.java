@@ -220,15 +220,15 @@ public class DbUtil {
                 + "join officer_detail od on cba.officer_id = od.officer_id "
                 + "where corporate_body_id = ? "
                 + "AND cba.APPOINTMENT_TYPE_ID = ? "
-                + "AND cba.resignation_ind = 'N' ";
+                + "AND cba.resignation_ind = 'N' "
+                + "AND od.officer_date_of_birth is not null";
         int officerTypeId;
-        if (!officerType.contains("corporate")) {
-            sql = sql.concat("AND od.officer_date_of_birth is not null");
-        }
         if (officerType.contains("secretary")) {
             officerTypeId = 1;
-        } else {
+        } else if (officerType.contains("director")) {
             officerTypeId = 2;
+        } else {
+            officerTypeId = 3;
         }
 
         try (Connection conn = dbGetConnection();
