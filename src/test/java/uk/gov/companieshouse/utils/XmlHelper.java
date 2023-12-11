@@ -336,12 +336,21 @@ public class XmlHelper extends ElementInteraction {
             // Switch the officer to retrieve based on the form type.
             String officerType;
             String formType = documentDetails.getFormType();
-            officerType = switch (formType) {
-                case "TM01", "CH01" -> "director";
-                case "CH04" -> "corporate secretary";
-                case "LLCH01" -> "LLP Member";
-                default -> "secretary";
-            };
+            switch (formType) {
+                case "TM01":
+                case "CH01":
+                    officerType = "director";
+                    break;
+                case "CH04":
+                    officerType = "corporate secretary";
+                    break;
+                case "LLCH01":
+                    officerType = "LLP Member";
+                    break;
+                default:
+                    officerType = "secretary";
+                    break;
+            }
             Date formattedDob;
             String xmlDobDate = null;
             SimpleDateFormat officerDobFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
