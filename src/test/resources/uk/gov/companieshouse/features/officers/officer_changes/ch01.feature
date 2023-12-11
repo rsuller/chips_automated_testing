@@ -46,3 +46,9 @@ Feature: CH01 - Change the details of a director
     When I select a current active appointment
     And I change the "middle name" detail of the director
     Then company history information is updated with the accepted CH01 transaction
+
+  @electronic
+  Scenario: Electronic Filed auto accepted CH01 form processing a change of director details
+    Given I am logged in as a user in the "RM1" organisational unit
+    And I process an e-filed "CH01" form for a private limited company
+    Then company history information is updated with the accepted CH01 transaction

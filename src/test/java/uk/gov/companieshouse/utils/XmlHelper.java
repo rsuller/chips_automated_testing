@@ -332,35 +332,49 @@ public class XmlHelper extends ElementInteraction {
      *     replaced with surname and EXISTING_OFFICER_DOB replaced with the date of birth in XML format.
      */
     private String insertExistingOfficerDetails(final String xml, Company company) {
-        if (xml.contains("${EXISTING_OFFICER_FIRST_NAME}")) {
+        if (xml.contains("${EXISTING_OFFICER_FIRST_NAME}") || xml.contains("${EXISTING_OFFICER_SURNAME}")) {
             // Switch the officer to retrieve based on the form type.
             String officerType;
             String formType = documentDetails.getFormType();
-            if (formType.equals("TM01")) {
-                officerType = "director";
-            } else {
-                officerType = "secretary";
+            switch (formType) {
+                case "TM01":
+                case "CH01":
+                    officerType = "director";
+                    break;
+                case "CH04":
+                    officerType = "corporate secretary";
+                    break;
+                case "LLCH01":
+                    officerType = "LLP Member";
+                    break;
+                default:
+                    officerType = "secretary";
+                    break;
             }
             Date formattedDob;
-            SimpleDateFormat directorDobFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String xmlDobDate = null;
+            SimpleDateFormat officerDobFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             SimpleDateFormat xmlDateFormatter = new SimpleDateFormat("yyyy-MM-dd");
-            List<String> directorDetails = dbUtil.getOfficerAppointment(company.getCorporateBodyId(), officerType);
-            String directorFirstName = directorDetails.get(0);
-            String directorSurname = directorDetails.get(1);
-            String directorDobDateFromDb = directorDetails.get(2);
-            try {
-                 formattedDob = directorDobFormatter.parse(directorDobDateFromDb);
-            } catch (ParseException exception) {
-                throw new RuntimeException(exception);
+            List<String> officerDetails = dbUtil.getOfficerAppointment(company.getCorporateBodyId(), officerType);
+            String officerFirstName = officerDetails.get(0);
+            String officerSurname = officerDetails.get(1);
+            String officerDobDateFromDb = officerDetails.get(2);
+            if (officerDobDateFromDb != null) {
+                try {
+                    formattedDob = officerDobFormatter.parse(officerDobDateFromDb);
+                } catch (ParseException exception) {
+                    throw new RuntimeException(exception);
+                }
+                xmlDobDate = xmlDateFormatter.format(formattedDob);
+                LOG.info("Replacing ${EXISTING_OFFICER_DOB} with: " + xmlDobDate);
             }
-            String xmlDobDate = xmlDateFormatter.format(formattedDob);
-
-            LOG.info("Replacing ${EXISTING_OFFICER_FIRST_NAME} with: " + directorFirstName);
-            LOG.info("Replacing ${EXISTING_OFFICER_SURNAME} with: " + directorSurname);
-            LOG.info("Replacing ${EXISTING_OFFICER_DOB} with: " + xmlDobDate);
+             if (officerFirstName != null) {
+                 LOG.info("Replacing ${EXISTING_OFFICER_FIRST_NAME} with: " + officerFirstName);
+             }
+            LOG.info("Replacing ${EXISTING_OFFICER_SURNAME} with: " + officerSurname);
             return xml
-                    .replaceAll("\\$\\{EXISTING_OFFICER_FIRST_NAME}", directorFirstName)
-                    .replaceAll("\\$\\{EXISTING_OFFICER_SURNAME}", directorSurname)
+                    .replaceAll("\\$\\{EXISTING_OFFICER_FIRST_NAME}", officerFirstName)
+                    .replaceAll("\\$\\{EXISTING_OFFICER_SURNAME}", officerSurname)
                     .replaceAll("\\$\\{EXISTING_OFFICER_DOB}", xmlDobDate);
         } else {
             return xml;

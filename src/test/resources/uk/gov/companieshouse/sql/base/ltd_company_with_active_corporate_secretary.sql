@@ -1,5 +1,5 @@
 ---
---- ltd comapny with active secretary
+--- ltd company with active corporate secretary
 ---
 select cb.*
 from corporate_body_appointment cba
@@ -13,9 +13,8 @@ AND CB.PROOF_TYPE_ID = 0
 AND cb.action_code_type_id = 0
 AND cb.language_type_id = 1
 AND CBA.APPOINTMENT_TYPE_ID = 1
-AND O.CORPORATE_OFFICER_IND = 'N'
+AND O.CORPORATE_OFFICER_IND = 'Y'
 AND cba.RESIGNATION_IND = 'N'
-AND OD.OFFICER_DATE_OF_BIRTH is not null
 AND (SELECT COUNT (1) FROM sight_required_request sr WHERE sr.corporate_body_id = cb.corporate_body_id)=0
 AND cb.corporate_body_short_name NOT LIKE '%(cloned)%'
 AND ROWNUM <= 100

@@ -215,16 +215,21 @@ public class DbUtil {
      * @param officerType the type of officer to retrieve.
      */
     public List<String> getOfficerAppointment(String corporateBodyId, String officerType) {
-        final String sql = "select cba.officer_forename_1, cba.officer_surname, od.officer_date_of_birth "
+        String sql = "select cba.officer_forename_1, cba.officer_surname, od.officer_date_of_birth "
                 + "from corporate_body_appointment cba "
                 + "join officer_detail od on cba.officer_id = od.officer_id "
                 + "where corporate_body_id = ? "
                 + "AND cba.APPOINTMENT_TYPE_ID = ? "
                 + "AND cba.resignation_ind = 'N' "
                 + "AND od.officer_date_of_birth is not null";
-
-        int officerTypeId = officerType.equals("secretary") ? 1 : 2;
-
+        int officerTypeId;
+        if (officerType.contains("secretary")) {
+            officerTypeId = 1;
+        } else if (officerType.contains("director")) {
+            officerTypeId = 2;
+        } else {
+            officerTypeId = 3;
+        }
 
         try (Connection conn = dbGetConnection();
              PreparedStatement preparedStatement = createPreparedStatement(conn, sql, corporateBodyId, officerTypeId);
@@ -251,7 +256,6 @@ public class DbUtil {
         }
 
     }
-
 
     /**
      * Use the corporateBodyId stored in memory to return the corporate PSC appointment details for that company.

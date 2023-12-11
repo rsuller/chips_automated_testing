@@ -10,6 +10,8 @@ public enum Form {
     AP01("AP01", "Officers", false, "DIRECTOR APPOINTED"),
     CH01("CH01", "Change Officers", false, "DIRECTOR'S CHANGE OF PARTICULA..."),
     CH02("CH02", "Change Officers", false, "CORPORATE DIRECTOR'S CHANGE OF..."),
+    CH03("CH03", "Change Officers", false, "SECRETARY'S CHANGE OF PARTICUL..."),
+    CH04("CH04", "Change Officers", false, "CORPORATE SECRETARY'S CHANGE"),
     CS01("CS01", "Confirmation Statement", false, "CONFIRMATION STATEMENT"),
     DS01("DS01", "Process Voluntary Dissolution Form DS01/LLDS01", true, "APPLICATION FOR STRIKING-OFF"),
     LIQ01("LIQ01", "Process Options - LIQ01", true, "NOTICE OF STATUTORY DECL"),
@@ -38,7 +40,8 @@ public enum Form {
 
     PSC08("PSC08", "Notification Of PSC Statement", false, "NOTIFICATION OF PSC STATEMENT"),
     PSC09("PSC09", "Withdrawal of an additional matters", false, "WITHDRAWAL OF A PERSON WITH"),
-    LLPSC04("LLPSC04", "Change Person with Significant Control", false, "PSC'S CHANGE OF PARTICULARS");
+    LLPSC04("LLPSC04", "Change Person with Significant Control", false, "PSC'S CHANGE OF PARTICULARS"),
+    LLCH01("LLCH01", "Change Members", false, "LLP MEMBER'S CHANGE");
 
 
 
