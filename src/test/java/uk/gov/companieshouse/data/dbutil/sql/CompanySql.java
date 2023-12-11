@@ -31,6 +31,8 @@ public enum CompanySql {
     BASE_SQL_LLP_WITH_ACTIVE_MEMBER_EW("base/llp_with_active_member_ew.sql"),
     CS_SQL_LTD_COMPANY_WITH_CS_DUE(
             "confirmation_statement/private_limited_company_eng_wales_with_cs_due.sql"),
+    CS_SQL_LLP_WITH_CS_DUE(
+            "confirmation_statement/llp_eng_wales_with_cs_due.sql"),
     INS_PRIVATE_LTD_COMPANY_ENG_WALES_WITH_MVL_CASE_ACTION_CODE(
             "insolvency/private_limited_company_eng_wales_with_mvl.sql"),
     INS_PRIVATE_LTD_COMPANY_ENG_WALES_WITH_CVL_CASE_ACTION_CODE(
