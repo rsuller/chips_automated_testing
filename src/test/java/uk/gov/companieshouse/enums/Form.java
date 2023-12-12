@@ -23,6 +23,7 @@ public enum Form {
     LIQ14("LIQ14", "Process Options - LIQ14", false, "NOTICE OF FINAL ACCOUNT "),
     TM01("TM01", "Terminate Officers", false, "APPOINTMENT TERMINATED, DIRECT"),
     TM02("TM02", "Terminate Officers", false, "APPOINTMENT TERMINATED, SECRET"),
+    LLTM01("LLTM01", "Terminate Officers", false, "APPOINTMENT TERMINATED, LLP"),
     INS_600("600", "Process Options - 600", true, "NOTICE OF APPOINTMENT OF LIQ"),
     LREXEX("LRESEX", "Process Options - LRESEX", true, "EXTRAORDINARY RESOLUTION"),
     LRESSP("LRESSP", "Process Options - LRESSP", true, "SPECIAL RESOLUTION"),

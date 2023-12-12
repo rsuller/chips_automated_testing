@@ -345,6 +345,7 @@ public class XmlHelper extends ElementInteraction {
                     officerType = "corporate secretary";
                     break;
                 case "LLCH01":
+                case "LLTM01":
                     officerType = "LLP Member";
                     break;
                 default:
