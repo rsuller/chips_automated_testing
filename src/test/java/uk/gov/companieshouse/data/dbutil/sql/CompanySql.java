@@ -47,7 +47,8 @@ public enum CompanySql {
     PSC_SQL_LTD_COMPANY_WITH_PSC("psc/ltd_company_with_psc.sql"),
     PSC_SQL_LTD_COMPANY_WITH_PSC_STATEMENT("psc/ltd_company_with_psc_statement.sql"),
     PSC_SQL_LLP_WITH_PSC("psc/llp_with_psc.sql"),
-    PSC_SQL_LTD_COMPANY_WITH_RLE_PSC("psc/ltd_company_with_rle_psc.sql");
+    PSC_SQL_LTD_COMPANY_WITH_RLE_PSC("psc/ltd_company_with_rle_psc.sql"),
+    PSC_SQL_LLP_PSC_NOT_PREV_FILED_EW("psc/llp_psc_not_prev_filed_ew.sql");
 
     private String sql;
 

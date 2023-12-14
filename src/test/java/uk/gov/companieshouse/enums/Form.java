@@ -43,7 +43,8 @@ public enum Form {
     PSC08("PSC08", "Notification Of PSC Statement", false, "NOTIFICATION OF PSC STATEMENT"),
     PSC09("PSC09", "Withdrawal of an additional matters", false, "WITHDRAWAL OF A PERSON WITH"),
     LLPSC04("LLPSC04", "Change Person with Significant Control", false, "PSC'S CHANGE OF PARTICULARS"),
-    LLCH01("LLCH01", "Change Members", false, "LLP MEMBER'S CHANGE");
+    LLCH01("LLCH01", "Change Members", false, "LLP MEMBER'S CHANGE"),
+    LLPSC01("LLPSC01", "Create Person with Significant Control", false, "NOTIFICATION OF A PERSON WITH");
 
 
 
